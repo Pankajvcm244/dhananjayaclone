@@ -1,0 +1,61 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-05-13 15:35:22.249822",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "suggestions_period_section",
+  "six_months_frequency",
+  "new_donor_period"
+ ],
+ "fields": [
+  {
+   "fieldname": "suggestions_period_section",
+   "fieldtype": "Section Break",
+   "label": "Suggestions Periods"
+  },
+  {
+   "default": "4",
+   "description": "(Number of Months)\nThis tells that for how many times of Donation by a Donor in last 6 months should qualify him to enter into Suggestion Box.",
+   "fieldname": "six_months_frequency",
+   "fieldtype": "Int",
+   "label": "Six Months Frequency",
+   "non_negative": 1
+  },
+  {
+   "default": "1",
+   "description": "(Number of Months)\nThis field tells for how many months, we should keep showing a new donor in Suggestion Box.",
+   "fieldname": "new_donor_period",
+   "fieldtype": "Int",
+   "label": "New Donor Period",
+   "non_negative": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2023-05-13 15:44:02.534528",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "Donor Suggestion Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

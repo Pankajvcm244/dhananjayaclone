@@ -1,0 +1,177 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:seva_name",
+ "creation": "2023-02-20 18:20:48.524847",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "enabled",
+  "seva_name",
+  "amount",
+  "cost_centers",
+  "lft",
+  "rgt",
+  "old_parent",
+  "parent_seva_subtype",
+  "is_group",
+  "patronship_allowed",
+  "include_in_analysis",
+  "priority"
+ ],
+ "fields": [
+  {
+   "default": "1",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  },
+  {
+   "allow_in_quick_entry": 1,
+   "fieldname": "seva_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Seva Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "patronship_allowed",
+   "fieldtype": "Check",
+   "label": "Patronship Allowed"
+  },
+  {
+   "fieldname": "lft",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Left",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "rgt",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Right",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "label": "Is Group"
+  },
+  {
+   "fieldname": "old_parent",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Old Parent",
+   "options": "Seva Subtype",
+   "read_only": 1
+  },
+  {
+   "fieldname": "parent_seva_subtype",
+   "fieldtype": "Link",
+   "label": "Parent Seva Subtype",
+   "options": "Seva Subtype"
+  },
+  {
+   "default": "1",
+   "depends_on": "eval:!doc.is_group",
+   "fieldname": "include_in_analysis",
+   "fieldtype": "Check",
+   "label": "Include in Analysis"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount",
+   "non_negative": 1,
+   "precision": "2"
+  },
+  {
+   "fieldname": "cost_centers",
+   "fieldtype": "Table",
+   "label": "Cost Centers",
+   "options": "Seva Subtype Cost Center"
+  },
+  {
+   "default": "0",
+   "fieldname": "priority",
+   "fieldtype": "Int",
+   "label": "Priority",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_tree": 1,
+ "links": [],
+ "modified": "2024-04-01 10:50:25.058293",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "Seva Subtype",
+ "naming_rule": "By fieldname",
+ "nsm_parent_field": "parent_seva_subtype",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Executive",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Preacher",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Cashier",
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

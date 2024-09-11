@@ -1,0 +1,39 @@
+{
+ "aggregate_function_based_on": "deposit",
+ "based_on": "",
+ "chart_name": "DCC Suspense Last Month",
+ "chart_type": "Group By",
+ "color": "#761ACB",
+ "creation": "2023-05-23 12:27:29.375804",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "document_type": "Bank Transaction",
+ "dynamic_filters_json": "[]",
+ "filters_json": "[[\"Bank Transaction\",\"date\",\"Timespan\",\"last month\",false]]",
+ "group_by_based_on": "status",
+ "group_by_type": "Sum",
+ "idx": 0,
+ "is_public": 1,
+ "is_standard": 1,
+ "last_synced_on": "2023-06-01 15:47:20.944084",
+ "modified": "2023-06-01 15:47:54.778356",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "DCC Suspense Last Month",
+ "number_of_groups": 10,
+ "owner": "ajad@hkm-group.org",
+ "parent_document_type": "",
+ "roles": [
+  {
+   "role": "DCC Manager"
+  }
+ ],
+ "source": "",
+ "time_interval": "Yearly",
+ "timeseries": 0,
+ "timespan": "Last Year",
+ "type": "Donut",
+ "use_report_chart": 0,
+ "value_based_on": "",
+ "y_axis": []
+}

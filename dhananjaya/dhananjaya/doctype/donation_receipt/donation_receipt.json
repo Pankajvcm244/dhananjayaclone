@@ -1,0 +1,824 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "creation": "2023-02-20 15:05:11.325520",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_lc36n",
+  "company",
+  "company_abbreviation",
+  "receipt_series",
+  "receipt_date",
+  "realization_date",
+  "preacher",
+  "column_break_i6oxf",
+  "donor",
+  "full_name",
+  "patron",
+  "patron_name",
+  "sevak_name",
+  "contact_details_section",
+  "contact",
+  "email",
+  "column_break_xmkgt",
+  "address",
+  "donation_details_section",
+  "payment_method",
+  "amount",
+  "payment_gateway_document",
+  "additional_charges",
+  "reference_no",
+  "remarks",
+  "payment_screenshot",
+  "print_remarks_on_receipt",
+  "column_break_1ovlz",
+  "seva_type",
+  "atg_required",
+  "seva_subtype",
+  "is_ecs",
+  "ecs_transaction_id",
+  "ecs_rejection_reason",
+  "auto_generated",
+  "is_csr",
+  "user_remarks",
+  "cheque_details_section",
+  "cheque_number",
+  "cheque_date",
+  "ifsc_code",
+  "column_break_5zywm",
+  "bank_name",
+  "cheque_branch",
+  "amended_from",
+  "realization_tab",
+  "realisation_section",
+  "bank_account",
+  "bank_transaction",
+  "bounce_transaction",
+  "cash_received_date",
+  "column_break_ddi0v",
+  "donation_account",
+  "cash_account",
+  "tds_account",
+  "gateway_expense_account",
+  "accounting_dimensions_section",
+  "cost_center",
+  "dimension_col_break",
+  "project",
+  "extra_tab",
+  "extra_information_section",
+  "donor_creation_request",
+  "column_break_3rw48",
+  "donor_creation_request_name",
+  "kind_donation_tab",
+  "kind_donation_section",
+  "kind_type",
+  "column_break_fyzn",
+  "asset_item",
+  "stock_expense_account",
+  "asset_location",
+  "old_details_tab",
+  "old_details_section",
+  "old_dr_no",
+  "column_break_n01te",
+  "old_ar_no",
+  "old_ar_date",
+  "old_ins_bank",
+  "old_ins_account_number",
+  "old_ins_number",
+  "old_ins_date"
+ ],
+ "fields": [
+  {
+   "fieldname": "donor",
+   "fieldtype": "Link",
+   "label": "Donor",
+   "options": "Donor",
+   "search_index": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "columns": 4,
+   "fetch_from": "donor.full_name",
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Full Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "donation_details_section",
+   "fieldtype": "Section Break",
+   "label": "Donation Details"
+  },
+  {
+   "fieldname": "payment_method",
+   "fieldtype": "Link",
+   "label": "Payment Method",
+   "options": "DJ Mode of Payment",
+   "reqd": 1
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Amount",
+   "options": "Company:company:default_currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Donation Receipt",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fetch_from": "company.abbr",
+   "fieldname": "company_abbreviation",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Company Abbreviation",
+   "read_only": 1
+  },
+  {
+   "fieldname": "receipt_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Receipt Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "reference_no",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Reference No."
+  },
+  {
+   "fieldname": "cheque_details_section",
+   "fieldtype": "Section Break",
+   "label": "Cheque Details"
+  },
+  {
+   "fieldname": "bank_name",
+   "fieldtype": "Data",
+   "label": "Cheque Bank Name"
+  },
+  {
+   "fieldname": "ifsc_code",
+   "fieldtype": "Data",
+   "label": "IFSC Code"
+  },
+  {
+   "fieldname": "cheque_date",
+   "fieldtype": "Date",
+   "label": "Cheque Date"
+  },
+  {
+   "fieldname": "cheque_branch",
+   "fieldtype": "Data",
+   "label": "Cheque Branch"
+  },
+  {
+   "fieldname": "seva_type",
+   "fieldtype": "Link",
+   "label": "Seva Type",
+   "mandatory_depends_on": "eval:doc.donor",
+   "options": "Seva Type",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "seva_subtype",
+   "fieldtype": "Link",
+   "label": "Seva Subtype",
+   "options": "Seva Subtype",
+   "permlevel": 2,
+   "print_hide": 1,
+   "report_hide": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "column_break_1ovlz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_i6oxf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fetch_from": "donor.llp_preacher",
+   "fetch_if_empty": 1,
+   "fieldname": "preacher",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Preacher",
+   "mandatory_depends_on": "eval:doc.donor",
+   "options": "LLP Preacher",
+   "search_index": 1
+  },
+  {
+   "fieldname": "old_details_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "old_dr_no",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Old DR No"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Text",
+   "label": "Transaction Remarks",
+   "max_height": "100px"
+  },
+  {
+   "fieldname": "column_break_n01te",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "old_ar_no",
+   "fieldtype": "Data",
+   "label": "Old AR No",
+   "read_only": 1
+  },
+  {
+   "fieldname": "old_ar_date",
+   "fieldtype": "Date",
+   "label": "Old AR Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "old_ins_bank",
+   "fieldtype": "Data",
+   "label": "Old INS Bank",
+   "read_only": 1
+  },
+  {
+   "fieldname": "old_ins_number",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Old INS Number",
+   "read_only": 1
+  },
+  {
+   "fieldname": "old_ins_date",
+   "fieldtype": "Date",
+   "label": "Old INS Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cheque_number",
+   "fieldtype": "Data",
+   "label": "Cheque Number"
+  },
+  {
+   "fieldname": "old_ins_account_number",
+   "fieldtype": "Data",
+   "label": "Old INS Account Number",
+   "read_only": 1
+  },
+  {
+   "description": "<b>Donation Reconciliation</b>: Exact Bank Statement Entry which has received the donation.",
+   "fieldname": "bank_transaction",
+   "fieldtype": "Link",
+   "label": "Bank Transaction",
+   "options": "Bank Transaction",
+   "permlevel": 3
+  },
+  {
+   "fieldname": "section_break_lc36n",
+   "fieldtype": "Section Break",
+   "label": "Donor Info"
+  },
+  {
+   "fieldname": "column_break_ddi0v",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "<b>Donation Reconciliation</b>: Bank which has received the donation.",
+   "fieldname": "bank_account",
+   "fieldtype": "Link",
+   "label": "Bank Account",
+   "options": "Bank Account",
+   "permlevel": 3
+  },
+  {
+   "depends_on": "eval:!doc.is_new",
+   "fieldname": "realisation_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "description": "In case of <b>Cash donation</b>, this account will be debited.",
+   "fieldname": "cash_account",
+   "fieldtype": "Link",
+   "label": "Cash Account",
+   "options": "Account",
+   "permlevel": 3
+  },
+  {
+   "description": "In case of <b>Gateway Donation</b>, this account will be debited. This is to book the charges by Gateway Provider.",
+   "fieldname": "gateway_expense_account",
+   "fieldtype": "Link",
+   "label": "Gateway Expense Account",
+   "options": "Account",
+   "permlevel": 3
+  },
+  {
+   "description": "This account will be credited when Journal Entry is created.",
+   "fieldname": "donation_account",
+   "fieldtype": "Link",
+   "label": "Donation Account",
+   "options": "Account",
+   "permlevel": 3
+  },
+  {
+   "fieldname": "additional_charges",
+   "fieldtype": "Currency",
+   "label": "Additional Charges"
+  },
+  {
+   "depends_on": "eval:doc.payment_method == 'Gateway'",
+   "fieldname": "payment_gateway_document",
+   "fieldtype": "Link",
+   "label": "Payment Gateway Document",
+   "options": "Payment Gateway Transaction"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_ecs",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is ECS"
+  },
+  {
+   "fieldname": "extra_information_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "donor_creation_request",
+   "fieldtype": "Link",
+   "label": "Donor Creation Request",
+   "options": "Donor Creation Request"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "patron",
+   "fieldtype": "Link",
+   "label": "Patron",
+   "options": "Patron"
+  },
+  {
+   "description": "If the Donor wishes to do seva in the name of someone else.",
+   "fieldname": "sevak_name",
+   "fieldtype": "Data",
+   "label": "In the name of"
+  },
+  {
+   "fieldname": "ecs_rejection_reason",
+   "fieldtype": "Data",
+   "label": "ECS Rejection Reason",
+   "read_only": 1
+  },
+  {
+   "fieldname": "ecs_transaction_id",
+   "fieldtype": "Data",
+   "label": "ECS Transaction ID"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "realization_date",
+   "fieldtype": "Date",
+   "label": "Realization Date",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "contact",
+   "fieldtype": "Data",
+   "label": "Contact No."
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "address",
+   "fieldtype": "Data",
+   "label": "Address",
+   "length": 500,
+   "max_height": "50px"
+  },
+  {
+   "description": "On saving this Document Receipt, if Donor has contact and addresses set, it will fetch them.",
+   "fieldname": "contact_details_section",
+   "fieldtype": "Section Break",
+   "label": "Contact Details"
+  },
+  {
+   "fieldname": "column_break_xmkgt",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Generally in case of <b>Cash donation</b>, Journal Entries are booked as and when Cashier receives the cash. In case, if we wish to book Journal Entry of Cash in other date, this field is helpful.\nOnly allowed to DCC Manager",
+   "fieldname": "cash_received_date",
+   "fieldtype": "Date",
+   "label": "Cash Received Date",
+   "permlevel": 3
+  },
+  {
+   "default": "0",
+   "fieldname": "atg_required",
+   "fieldtype": "Check",
+   "label": "80G Required"
+  },
+  {
+   "allow_on_submit": 1,
+   "description": "If a payment is returned from our bank, an automated process will generate a reverse journal entry based on the this bank statement entry.",
+   "fieldname": "bounce_transaction",
+   "fieldtype": "Link",
+   "label": "Bounce Transaction",
+   "options": "Bank Transaction",
+   "permlevel": 3
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "print_remarks_on_receipt",
+   "fieldtype": "Check",
+   "label": "Print Remarks On Receipt"
+  },
+  {
+   "fieldname": "payment_screenshot",
+   "fieldtype": "Attach Image",
+   "label": "Payment Screenshot"
+  },
+  {
+   "allow_on_submit": 1,
+   "fetch_from": "patron.full_name",
+   "fieldname": "patron_name",
+   "fieldtype": "Data",
+   "label": "Patron Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_5zywm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_3rw48",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "donor_creation_request.full_name",
+   "fetch_if_empty": 1,
+   "fieldname": "donor_creation_request_name",
+   "fieldtype": "Data",
+   "label": "Donor Creation Request Name",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "description": "If the receipt is generated from an API Call.\ne.g. From Marketing Team.",
+   "fieldname": "auto_generated",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Auto Generated",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "is_csr",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is CSR"
+  },
+  {
+   "fieldname": "user_remarks",
+   "fieldtype": "Text",
+   "label": "User Remarks",
+   "max_height": "100px"
+  },
+  {
+   "fieldname": "kind_donation_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "kind_type",
+   "fieldtype": "Select",
+   "label": "Type",
+   "options": "\nConsumable\nAsset"
+  },
+  {
+   "fieldname": "column_break_fyzn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.kind_type===\"Consumable\"",
+   "fieldname": "stock_expense_account",
+   "fieldtype": "Link",
+   "label": "Stock Expense Account",
+   "mandatory_depends_on": "eval:doc.kind_type===\"Consumable\"",
+   "options": "Account"
+  },
+  {
+   "depends_on": "eval:doc.kind_type===\"Asset\"",
+   "fieldname": "asset_item",
+   "fieldtype": "Link",
+   "label": "Asset Item",
+   "mandatory_depends_on": "eval:doc.kind_type===\"Asset\"",
+   "options": "Item"
+  },
+  {
+   "depends_on": "eval:doc.kind_type===\"Asset\"",
+   "fieldname": "asset_location",
+   "fieldtype": "Link",
+   "label": "Asset Location",
+   "mandatory_depends_on": "eval:doc.kind_type===\"Asset\"",
+   "options": "Location"
+  },
+  {
+   "description": "In case of <b>TDS Amount Settlement</b>, this account will be debited.<br>\nSeva Type Account &gt;&gt; TDS Account ",
+   "fieldname": "tds_account",
+   "fieldtype": "Link",
+   "label": "TDS Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "realization_tab",
+   "fieldtype": "Tab Break",
+   "label": "Realization"
+  },
+  {
+   "fieldname": "extra_tab",
+   "fieldtype": "Tab Break",
+   "label": "Extra"
+  },
+  {
+   "fieldname": "kind_donation_tab",
+   "fieldtype": "Tab Break",
+   "label": "Kind Donation"
+  },
+  {
+   "fieldname": "old_details_tab",
+   "fieldtype": "Tab Break",
+   "label": "Old Details"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email"
+  },
+  {
+   "fieldname": "receipt_series",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Series"
+  },
+  {
+   "fieldname": "accounting_dimensions_section",
+   "fieldtype": "Section Break",
+   "label": "Accounting Dimensions"
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center"
+  },
+  {
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project"
+  },
+  {
+   "fieldname": "dimension_col_break",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "image_field": "payment_screenshot",
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-07-01 06:15:33.917464",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "Donation Receipt",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "amend": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Executive",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Cashier",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Preacher",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Auditor",
+   "select": 1,
+   "share": 1
+  },
+  {
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "permlevel": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 2,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Cashier",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 2,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Executive",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 2,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 2,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Preacher",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 3,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Preacher",
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 3,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Cashier",
+   "share": 1
+  },
+  {
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "permlevel": 3,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Executive",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "permlevel": 3,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "report": 1,
+   "role": "Accounts Manager",
+   "select": 1,
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "report": 1,
+   "role": "Accounts User",
+   "select": 1,
+   "share": 1
+  }
+ ],
+ "search_fields": "donor",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "full_name",
+ "track_changes": 1,
+ "track_views": 1
+}

@@ -1,0 +1,526 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2023-02-19 14:28:26.670710",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "profile_image",
+  "salutation",
+  "first_name",
+  "last_name",
+  "full_name",
+  "date_of_birth",
+  "column_break_x7ksb",
+  "llp_preacher",
+  "remarks",
+  "spouse_name",
+  "occupation",
+  "section_break_iejjm",
+  "addresses",
+  "contacts",
+  "emails",
+  "section_break_2k6o4",
+  "old_donor_id",
+  "old_trust_code",
+  "unresolved_fax_column",
+  "extra_section",
+  "donor_creation_request",
+  "kyc_tab",
+  "pan_no",
+  "aadhar_no",
+  "driving_license",
+  "passport",
+  "ecs_details",
+  "ecs_active",
+  "ecs_bank",
+  "ecs_type",
+  "ecs_id",
+  "introducer_preacher",
+  "opening_date",
+  "closing_date",
+  "ecs_amount",
+  "column_break_m5slb",
+  "settlement_day",
+  "periodicity",
+  "number_of_ecs",
+  "months_to_apply",
+  "bank_details_section",
+  "bank",
+  "ifsc_code",
+  "column_break_fxfhp",
+  "ecs_bank_ac_no",
+  "account_holder",
+  "seva_booking_section",
+  "ecs_default_seva_type",
+  "column_break_hsp6w",
+  "ecs_default_patron",
+  "special_puja_section",
+  "puja_details",
+  "donation_calculation_section",
+  "last_donation",
+  "times_donated",
+  "total_donated",
+  "spiritual_status_tab",
+  "ashraya_level"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "DNR-.YYYY.-",
+   "reqd": 1
+  },
+  {
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "First Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "last_name",
+   "fieldtype": "Data",
+   "label": "Last Name"
+  },
+  {
+   "fieldname": "addresses",
+   "fieldtype": "Table",
+   "label": "Addresses",
+   "options": "Donor Address"
+  },
+  {
+   "fieldname": "contacts",
+   "fieldtype": "Table",
+   "label": "Contacts",
+   "options": "Donor Contact"
+  },
+  {
+   "fieldname": "column_break_x7ksb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_iejjm",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_2k6o4",
+   "fieldtype": "Section Break",
+   "label": "Old Details"
+  },
+  {
+   "fieldname": "old_donor_id",
+   "fieldtype": "Data",
+   "in_standard_filter": 1,
+   "label": "Old Donor ID",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "date_of_birth",
+   "fieldtype": "Date",
+   "label": "Date of Birth"
+  },
+  {
+   "fieldname": "kyc_tab",
+   "fieldtype": "Tab Break",
+   "label": "KYC"
+  },
+  {
+   "fieldname": "pan_no",
+   "fieldtype": "Data",
+   "label": "PAN No."
+  },
+  {
+   "fieldname": "aadhar_no",
+   "fieldtype": "Data",
+   "label": "Aadhar No."
+  },
+  {
+   "fieldname": "driving_license",
+   "fieldtype": "Data",
+   "label": "Driving License"
+  },
+  {
+   "fieldname": "passport",
+   "fieldtype": "Data",
+   "label": "Passport"
+  },
+  {
+   "fieldname": "llp_preacher",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "LLP Preacher",
+   "options": "LLP Preacher",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "label": "Full Name",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "salutation",
+   "fieldtype": "Link",
+   "label": "Salutation",
+   "options": "Salutation"
+  },
+  {
+   "fieldname": "emails",
+   "fieldtype": "Table",
+   "label": "Emails",
+   "options": "Donor Email"
+  },
+  {
+   "fieldname": "unresolved_fax_column",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Unresolved Fax Column",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "old_trust_code",
+   "fieldtype": "Int",
+   "label": "Old Trust Code",
+   "permlevel": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "last_donation",
+   "fieldtype": "Date",
+   "label": "Last Donation",
+   "read_only": 1
+  },
+  {
+   "fieldname": "ecs_details",
+   "fieldtype": "Tab Break",
+   "label": "ECS Details"
+  },
+  {
+   "fieldname": "settlement_day",
+   "fieldtype": "Select",
+   "label": "Settlement Day",
+   "options": "7\n14\n21",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "opening_date",
+   "fieldtype": "Date",
+   "label": "Opening Date",
+   "mandatory_depends_on": "eval:doc.ecs_active",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "closing_date",
+   "fieldtype": "Date",
+   "label": "Closing Date",
+   "mandatory_depends_on": "eval:doc.ecs_active",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "periodicity",
+   "fieldtype": "Select",
+   "label": "Periodicity",
+   "options": "Y\nH\nQ\nM",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "number_of_ecs",
+   "fieldtype": "Data",
+   "is_virtual": 1,
+   "label": "Number of ECS"
+  },
+  {
+   "fieldname": "months_to_apply",
+   "fieldtype": "Data",
+   "is_virtual": 1,
+   "label": "Months To Apply"
+  },
+  {
+   "fieldname": "ecs_id",
+   "fieldtype": "Data",
+   "label": "ECS ID",
+   "mandatory_depends_on": "eval:doc.ecs_active",
+   "permlevel": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "introducer_preacher",
+   "fieldtype": "Data",
+   "label": "Introducer Preacher",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "column_break_m5slb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "ecs_active",
+   "fieldtype": "Check",
+   "label": "Is Active",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "bank_details_section",
+   "fieldtype": "Section Break",
+   "label": "Donor Bank Details"
+  },
+  {
+   "fieldname": "bank",
+   "fieldtype": "Data",
+   "label": "Bank",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "ifsc_code",
+   "fieldtype": "Data",
+   "label": "IFSC Code",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "column_break_fxfhp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "ecs_bank_ac_no",
+   "fieldtype": "Data",
+   "label": "Bank A/c No.",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "account_holder",
+   "fieldtype": "Data",
+   "label": "Account Holder",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "ecs_amount",
+   "fieldtype": "Currency",
+   "label": "ECS Amount Commited",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "extra_section",
+   "fieldtype": "Section Break",
+   "label": "Extra"
+  },
+  {
+   "fieldname": "donor_creation_request",
+   "fieldtype": "Link",
+   "label": "Donor Creation Request",
+   "options": "Donor Creation Request",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "ecs_bank",
+   "fieldtype": "Link",
+   "label": "ECS Bank",
+   "options": "Bank",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "special_puja_section",
+   "fieldtype": "Tab Break",
+   "label": "Special Puja"
+  },
+  {
+   "fieldname": "puja_details",
+   "fieldtype": "Table",
+   "label": "Details",
+   "options": "Special Puja Detail"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Data",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "spiritual_status_tab",
+   "fieldtype": "Tab Break",
+   "label": "Spiritual Status"
+  },
+  {
+   "fieldname": "ashraya_level",
+   "fieldtype": "Select",
+   "label": "Ashraya Level",
+   "options": "\n20\n16\n12\n8\n4\n1",
+   "search_index": 1
+  },
+  {
+   "fieldname": "donation_calculation_section",
+   "fieldtype": "Tab Break",
+   "label": "Donation Calculation"
+  },
+  {
+   "fieldname": "times_donated",
+   "fieldtype": "Int",
+   "label": "Times Donated",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_donated",
+   "fieldtype": "Currency",
+   "label": "Total Donated",
+   "read_only": 1
+  },
+  {
+   "default": "E-NACH",
+   "fieldname": "ecs_type",
+   "fieldtype": "Select",
+   "label": "ECS Type",
+   "options": "Physical Mandate\nE-NACH",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "seva_booking_section",
+   "fieldtype": "Section Break",
+   "label": "Seva Booking"
+  },
+  {
+   "fieldname": "ecs_default_seva_type",
+   "fieldtype": "Link",
+   "label": "Default Seva Type",
+   "options": "Seva Type"
+  },
+  {
+   "fieldname": "column_break_hsp6w",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "ecs_default_patron",
+   "fieldtype": "Link",
+   "label": "ECS Default Patron",
+   "options": "Patron"
+  },
+  {
+   "fieldname": "spouse_name",
+   "fieldtype": "Data",
+   "label": "Spouse Name"
+  },
+  {
+   "fieldname": "occupation",
+   "fieldtype": "Data",
+   "label": "Occupation"
+  },
+  {
+   "fieldname": "profile_image",
+   "fieldtype": "Attach Image",
+   "hidden": 1,
+   "label": "Profile Image"
+  }
+ ],
+ "image_field": "profile_image",
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-02-22 10:23:45.902172",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "Donor",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Cashier",
+   "share": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Executive",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Preacher",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "permlevel": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Executive",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "permlevel": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Preacher",
+   "share": 1
+  }
+ ],
+ "search_fields": "llp_preacher,last_donation",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "full_name",
+ "track_changes": 1
+}

@@ -1,0 +1,35 @@
+{
+ "based_on": "receipt_date",
+ "chart_name": "Monthly Donation",
+ "chart_type": "Count",
+ "creation": "2023-03-22 12:53:03.318654",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "document_type": "Donation Receipt",
+ "dynamic_filters_json": "[]",
+ "filters_json": "[[\"Donation Receipt\",\"docstatus\",\"=\",\"1\",false]]",
+ "group_by_type": "Count",
+ "idx": 0,
+ "is_public": 1,
+ "is_standard": 1,
+ "modified": "2023-03-22 12:53:14.778505",
+ "modified_by": "nrhd@hkm-group.org",
+ "module": "Dhananjaya",
+ "name": "Monthly Donation",
+ "number_of_groups": 0,
+ "owner": "nrhd@hkm-group.org",
+ "parent_document_type": "",
+ "roles": [
+  {
+   "role": "DCC Admin"
+  }
+ ],
+ "source": "",
+ "time_interval": "Monthly",
+ "timeseries": 1,
+ "timespan": "Last Year",
+ "type": "Bar",
+ "use_report_chart": 0,
+ "value_based_on": "",
+ "y_axis": []
+}

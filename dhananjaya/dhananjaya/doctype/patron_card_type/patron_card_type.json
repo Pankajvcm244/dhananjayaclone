@@ -1,0 +1,101 @@
+{
+ "actions": [],
+ "autoname": "field:card_name",
+ "creation": "2024-03-06 15:58:50.804390",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "card_name",
+  "threshold_amount",
+  "based_seva_type"
+ ],
+ "fields": [
+  {
+   "fieldname": "card_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Card Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "threshold_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Threshold Amount"
+  },
+  {
+   "default": "0",
+   "fieldname": "based_seva_type",
+   "fieldtype": "Check",
+   "label": "Based on Patron Seva Type"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-06-12 10:09:17.337383",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "Patron Card Type",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Cashier",
+   "share": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Preacher",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Executive",
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

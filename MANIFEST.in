@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include dhananjaya *.css
+recursive-include dhananjaya *.csv
+recursive-include dhananjaya *.html
+recursive-include dhananjaya *.ico
+recursive-include dhananjaya *.js
+recursive-include dhananjaya *.json
+recursive-include dhananjaya *.md
+recursive-include dhananjaya *.png
+recursive-include dhananjaya *.py
+recursive-include dhananjaya *.svg
+recursive-include dhananjaya *.txt
+recursive-exclude dhananjaya *.pyc

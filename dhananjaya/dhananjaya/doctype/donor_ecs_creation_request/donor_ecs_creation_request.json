@@ -1,0 +1,239 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2023-09-23 16:59:42.505725",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "ecs_for",
+  "company",
+  "company_abbreviation",
+  "seva_type",
+  "column_break_ccyhe",
+  "naming_series",
+  "status",
+  "donor",
+  "donor_name",
+  "patron",
+  "patron_name",
+  "ecs_details_section",
+  "account_holder_name",
+  "account_bank_name",
+  "account_number",
+  "amount",
+  "column_break_nbznt",
+  "start_date",
+  "end_date",
+  "debit_pay_on",
+  "frequency",
+  "payment_mode"
+ ],
+ "fields": [
+  {
+   "default": ".company_abbreviation.EC.YY.1.#####",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Series",
+   "options": ".company_abbreviation.EC.YY.1.#####",
+   "read_only": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Pending\nCompleted\nRejected",
+   "read_only": 1
+  },
+  {
+   "fieldname": "donor",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Donor",
+   "options": "Donor",
+   "reqd": 1
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "account_holder_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Account Holder Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "account_bank_name",
+   "fieldtype": "Data",
+   "label": "Account Bank Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "account_number",
+   "fieldtype": "Data",
+   "label": "Account Number",
+   "reqd": 1
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Amount",
+   "reqd": 1
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "End Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "debit_pay_on",
+   "fieldtype": "Select",
+   "label": "Debit Pay On",
+   "options": "7\n14\n21",
+   "reqd": 1
+  },
+  {
+   "fieldname": "frequency",
+   "fieldtype": "Select",
+   "label": "Frequency",
+   "options": "Yearly\nHalf Yearly\nQuarterly\nMonthly",
+   "reqd": 1
+  },
+  {
+   "fieldname": "payment_mode",
+   "fieldtype": "Select",
+   "label": "Payment Mode",
+   "options": "Debit Card\nInternet Banking",
+   "reqd": 1
+  },
+  {
+   "fieldname": "seva_type",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Seva Type",
+   "options": "Seva Type"
+  },
+  {
+   "fieldname": "patron",
+   "fieldtype": "Link",
+   "label": "Patron",
+   "options": "Patron"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "company.abbr",
+   "fieldname": "company_abbreviation",
+   "fieldtype": "Data",
+   "label": "Company Abbreviation",
+   "read_only": 1
+  },
+  {
+   "fieldname": "ecs_for",
+   "fieldtype": "Section Break",
+   "label": "ECS For"
+  },
+  {
+   "fieldname": "column_break_ccyhe",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "ecs_details_section",
+   "fieldtype": "Section Break",
+   "label": "ECS Details"
+  },
+  {
+   "fieldname": "column_break_nbznt",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "donor.full_name",
+   "fieldname": "donor_name",
+   "fieldtype": "Data",
+   "label": "Donor Name",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "patron.full_name",
+   "fieldname": "patron_name",
+   "fieldtype": "Data",
+   "label": "Patron Name",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-04-02 16:21:17.112688",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "Donor ECS Creation Request",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "if_owner": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Preacher",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Executive",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

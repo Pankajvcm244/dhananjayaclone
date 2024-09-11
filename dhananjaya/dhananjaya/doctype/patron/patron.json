@@ -1,0 +1,426 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2023-04-04 15:41:14.299897",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "patron_status_html",
+  "section_break_ngqzq",
+  "naming_series",
+  "profile_image",
+  "salutation",
+  "first_name",
+  "last_name",
+  "full_name",
+  "date_of_birth",
+  "column_break_x7ksb",
+  "llp_preacher",
+  "spouse_name",
+  "occupation",
+  "section_break_iejjm",
+  "addresses",
+  "contacts",
+  "emails",
+  "section_break_2k6o4",
+  "old_patron_id",
+  "old_trust_code",
+  "unresolved_fax_column",
+  "old_patron_number",
+  "patron_details_tab",
+  "enrolled_date",
+  "seva_type",
+  "committed_amount",
+  "column_break_pf6qx",
+  "issued_card_no",
+  "patron_card_sr",
+  "card_valid_from",
+  "cards",
+  "gifts",
+  "section_break_zajlf",
+  "display_names",
+  "kyc_tab",
+  "pan_no",
+  "aadhar_no",
+  "driving_license",
+  "passport",
+  "donation_calculation_tab",
+  "last_donation",
+  "times_donated",
+  "total_donated",
+  "latest_donation"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "PTR-.YYYY.-",
+   "reqd": 1
+  },
+  {
+   "fieldname": "salutation",
+   "fieldtype": "Link",
+   "label": "Salutation",
+   "options": "Salutation"
+  },
+  {
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "label": "First Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "last_name",
+   "fieldtype": "Data",
+   "label": "Last Name"
+  },
+  {
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "label": "Full Name",
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "date_of_birth",
+   "fieldtype": "Date",
+   "label": "Date of Birth"
+  },
+  {
+   "fieldname": "column_break_x7ksb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "llp_preacher",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "LLP Preacher",
+   "options": "LLP Preacher",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "last_donation",
+   "fieldtype": "Date",
+   "label": "Last Donation",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_iejjm",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "addresses",
+   "fieldtype": "Table",
+   "label": "Addresses",
+   "options": "Donor Address"
+  },
+  {
+   "fieldname": "contacts",
+   "fieldtype": "Table",
+   "label": "Contacts",
+   "options": "Donor Contact"
+  },
+  {
+   "fieldname": "emails",
+   "fieldtype": "Table",
+   "label": "Emails",
+   "options": "Donor Email"
+  },
+  {
+   "fieldname": "section_break_2k6o4",
+   "fieldtype": "Section Break",
+   "label": "Old Details"
+  },
+  {
+   "fieldname": "old_patron_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Old Patron ID",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "old_trust_code",
+   "fieldtype": "Int",
+   "label": "Old Trust Code",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "unresolved_fax_column",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Unresolved Fax Column",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "patron_details_tab",
+   "fieldtype": "Tab Break",
+   "label": "Patronship Details"
+  },
+  {
+   "fieldname": "kyc_tab",
+   "fieldtype": "Tab Break",
+   "label": "KYC"
+  },
+  {
+   "fieldname": "pan_no",
+   "fieldtype": "Data",
+   "label": "PAN No."
+  },
+  {
+   "fieldname": "aadhar_no",
+   "fieldtype": "Data",
+   "label": "Aadhar No."
+  },
+  {
+   "fieldname": "driving_license",
+   "fieldtype": "Data",
+   "label": "Driving License"
+  },
+  {
+   "fieldname": "passport",
+   "fieldtype": "Data",
+   "label": "Passport"
+  },
+  {
+   "fieldname": "enrolled_date",
+   "fieldtype": "Date",
+   "label": "Enrolled Date"
+  },
+  {
+   "fetch_from": "seva_type.seva_amount",
+   "fetch_if_empty": 1,
+   "fieldname": "committed_amount",
+   "fieldtype": "Currency",
+   "label": "Committed Amount",
+   "precision": "2"
+  },
+  {
+   "fieldname": "seva_type",
+   "fieldtype": "Link",
+   "label": "Patron Seva Type",
+   "options": "Patron Seva Type",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "issued_card_no",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Issued Card No",
+   "permlevel": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "card_valid_from",
+   "fieldtype": "Date",
+   "hidden": 1,
+   "label": "Card Valid From",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "gifts",
+   "fieldtype": "Table",
+   "label": "Gifts",
+   "options": "Patron Gift Issue",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "column_break_pf6qx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_zajlf",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "patron_status_html",
+   "fieldtype": "HTML",
+   "is_virtual": 1,
+   "label": "Patron Status"
+  },
+  {
+   "fieldname": "section_break_ngqzq",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "patron_card_sr",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Patron Card Serial",
+   "permlevel": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "donation_calculation_tab",
+   "fieldtype": "Tab Break",
+   "label": "Donation Calculation"
+  },
+  {
+   "fieldname": "times_donated",
+   "fieldtype": "Int",
+   "label": "Times Donated",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_donated",
+   "fieldtype": "Currency",
+   "label": "Total Donated",
+   "read_only": 1
+  },
+  {
+   "fieldname": "display_names",
+   "fieldtype": "Table",
+   "label": "Display Names List",
+   "options": "Patron Display Name"
+  },
+  {
+   "fieldname": "cards",
+   "fieldtype": "Table",
+   "label": "Issued Card Details",
+   "options": "Patron Card Detail"
+  },
+  {
+   "fieldname": "spouse_name",
+   "fieldtype": "Data",
+   "label": "Spouse Name"
+  },
+  {
+   "fieldname": "occupation",
+   "fieldtype": "Data",
+   "label": "Occupation"
+  },
+  {
+   "fieldname": "profile_image",
+   "fieldtype": "Attach Image",
+   "hidden": 1,
+   "label": "Profile Image"
+  },
+  {
+   "fieldname": "old_patron_number",
+   "fieldtype": "Data",
+   "label": "Old Patron Number"
+  },
+  {
+   "default": "0",
+   "fieldname": "latest_donation",
+   "fieldtype": "Currency",
+   "label": "Latest Donation",
+   "non_negative": 1,
+   "read_only": 1
+  }
+ ],
+ "image_field": "profile_image",
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-08-12 16:30:57.056687",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "Patron",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Cashier",
+   "share": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Executive",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Preacher",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "permlevel": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Preacher",
+   "share": 1
+  },
+  {
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "permlevel": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "permlevel": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Executive",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "llp_preacher,last_donation",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "full_name",
+ "track_changes": 1
+}

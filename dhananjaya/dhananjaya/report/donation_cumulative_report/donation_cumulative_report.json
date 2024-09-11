@@ -1,0 +1,32 @@
+{
+ "add_total_row": 1,
+ "columns": [],
+ "creation": "2023-05-15 11:26:18.118576",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "modified": "2023-09-28 19:07:14.289521",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "Donation Cumulative Report",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Donation Receipt",
+ "report_name": "Donation Cumulative Report",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "DCC Manager"
+  },
+  {
+   "role": "DCC Executive"
+  }
+ ]
+}

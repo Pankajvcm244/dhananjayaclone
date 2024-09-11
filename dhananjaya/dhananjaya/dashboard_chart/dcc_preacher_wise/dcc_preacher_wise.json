@@ -1,0 +1,42 @@
+{
+ "aggregate_function_based_on": "amount",
+ "based_on": "",
+ "chart_name": "DCC Preacher-wise",
+ "chart_type": "Group By",
+ "color": "#761ACB",
+ "creation": "2023-03-22 13:18:14.335145",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "document_type": "Donation Receipt",
+ "dynamic_filters_json": "[]",
+ "filters_json": "[[\"Donation Receipt\",\"docstatus\",\"=\",\"1\",false],[\"Donation Receipt\",\"realization_date\",\"Timespan\",\"this month\",false]]",
+ "group_by_based_on": "preacher",
+ "group_by_type": "Sum",
+ "idx": 0,
+ "is_public": 1,
+ "is_standard": 1,
+ "last_synced_on": "2023-06-06 07:57:30.406353",
+ "modified": "2023-06-06 07:58:16.581292",
+ "modified_by": "ajad@hkm-group.org",
+ "module": "Dhananjaya",
+ "name": "DCC Preacher-wise",
+ "number_of_groups": 10,
+ "owner": "nrhd@hkm-group.org",
+ "parent_document_type": "",
+ "roles": [
+  {
+   "role": "DCC Manager"
+  },
+  {
+   "role": "DCC Executive"
+  }
+ ],
+ "source": "",
+ "time_interval": "Yearly",
+ "timeseries": 0,
+ "timespan": "Last Year",
+ "type": "Pie",
+ "use_report_chart": 0,
+ "value_based_on": "",
+ "y_axis": []
+}

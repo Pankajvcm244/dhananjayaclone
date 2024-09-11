@@ -1,0 +1,127 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-04-09 13:50:23.721833",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "first_section",
+  "donor_first",
+  "priority_first",
+  "column_break_rtrbv",
+  "donor_second",
+  "priority_second",
+  "data_section",
+  "data_first_html",
+  "data_first",
+  "column_break_qcshe",
+  "data_second_html",
+  "data_second"
+ ],
+ "fields": [
+  {
+   "fieldname": "first_section",
+   "fieldtype": "Section Break",
+   "label": "Select Donors"
+  },
+  {
+   "fieldname": "donor_first",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Donor First",
+   "options": "Donor",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:!doc.priority_second",
+   "fieldname": "priority_first",
+   "fieldtype": "Check",
+   "label": "Priority"
+  },
+  {
+   "fieldname": "column_break_rtrbv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "donor_second",
+   "fieldtype": "Link",
+   "label": "Donor Second",
+   "options": "Donor",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:!doc.priority_first",
+   "fieldname": "priority_second",
+   "fieldtype": "Check",
+   "label": "Priority"
+  },
+  {
+   "fieldname": "data_section",
+   "fieldtype": "Section Break",
+   "label": "Data"
+  },
+  {
+   "fieldname": "column_break_qcshe",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "data_first",
+   "fieldtype": "JSON",
+   "hidden": 1,
+   "label": "Data First"
+  },
+  {
+   "fieldname": "data_second",
+   "fieldtype": "JSON",
+   "hidden": 1,
+   "label": "Data Second"
+  },
+  {
+   "fieldname": "data_first_html",
+   "fieldtype": "HTML",
+   "label": "First "
+  },
+  {
+   "fieldname": "data_second_html",
+   "fieldtype": "HTML",
+   "label": "Second"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2023-05-04 12:20:47.262179",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "Donor Merger",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "DCC Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

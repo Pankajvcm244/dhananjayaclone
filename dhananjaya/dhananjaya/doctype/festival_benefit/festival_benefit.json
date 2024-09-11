@@ -1,0 +1,100 @@
+{
+ "actions": [],
+ "autoname": "format:{festival}-{benefit_name}",
+ "creation": "2023-08-01 17:21:58.564428",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "festival",
+  "benefit_type",
+  "benefit_name",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "festival",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Festival",
+   "options": "Festival",
+   "reqd": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Festival Benefit",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "benefit_type",
+   "fieldtype": "Select",
+   "label": "Benefit Type",
+   "options": "Pass\nBahumana\nOther"
+  },
+  {
+   "fieldname": "benefit_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Benefit Name",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2023-08-02 13:52:13.798876",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "Festival Benefit",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Executive",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

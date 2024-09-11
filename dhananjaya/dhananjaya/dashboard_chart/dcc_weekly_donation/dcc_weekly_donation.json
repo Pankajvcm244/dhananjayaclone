@@ -1,0 +1,42 @@
+{
+ "based_on": "receipt_date",
+ "chart_name": "DCC Weekly Donation",
+ "chart_type": "Sum",
+ "creation": "2023-05-20 07:21:09.341081",
+ "custom_options": "",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "document_type": "Donation Receipt",
+ "dynamic_filters_json": "[]",
+ "filters_json": "[[\"Donation Receipt\",\"docstatus\",\"=\",\"1\",false]]",
+ "from_date": "2023-01-01",
+ "group_by_type": "Count",
+ "idx": 0,
+ "is_public": 1,
+ "is_standard": 1,
+ "last_synced_on": "2023-05-20 07:25:55.439538",
+ "modified": "2023-05-20 07:26:12.188848",
+ "modified_by": "ajad@hkm-group.org",
+ "module": "Dhananjaya",
+ "name": "DCC Weekly Donation",
+ "number_of_groups": 0,
+ "owner": "ajad@hkm-group.org",
+ "parent_document_type": "",
+ "roles": [
+  {
+   "role": "DCC Manager"
+  },
+  {
+   "role": "DCC Executive"
+  }
+ ],
+ "source": "",
+ "time_interval": "Weekly",
+ "timeseries": 1,
+ "timespan": "Select Date Range",
+ "to_date": "2023-05-20",
+ "type": "Heatmap",
+ "use_report_chart": 0,
+ "value_based_on": "amount",
+ "y_axis": []
+}

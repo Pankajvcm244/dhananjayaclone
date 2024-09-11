@@ -1,0 +1,198 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:company",
+ "creation": "2023-03-18 00:24:09.025634",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "company",
+  "section_break_2i7zo",
+  "preacher_allowed_receipt_creation",
+  "column_break_nql5z",
+  "auto_create_journal_entries",
+  "accounts_section",
+  "donation_account",
+  "cash_account",
+  "column_break_lglek",
+  "bank_account",
+  "gateway_expense_account",
+  "donation_credit_section",
+  "credit_value",
+  "receipt_print_details_section",
+  "logo",
+  "seal",
+  "contact_address",
+  "contact_no",
+  "contact_email",
+  "column_break_cahhm",
+  "company_tagline",
+  "authority_name",
+  "authority_position",
+  "authority_signature",
+  "atg_lines",
+  "thanks_note"
+ ],
+ "fields": [
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "donation_account",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Default Donation Account",
+   "options": "Account",
+   "reqd": 1
+  },
+  {
+   "fieldname": "bank_account",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Default Bank Account",
+   "options": "Bank Account"
+  },
+  {
+   "fieldname": "gateway_expense_account",
+   "fieldtype": "Link",
+   "label": "Default Gateway Expense Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "cash_account",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Default Cash Account",
+   "options": "Account",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_lglek",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "description": "If this option is selected, when the Donation Receipt is finalized, a Journal Entry will be automatically generated using the receipt's information.",
+   "fieldname": "auto_create_journal_entries",
+   "fieldtype": "Check",
+   "label": "Auto Create Journal Entries"
+  },
+  {
+   "fieldname": "receipt_print_details_section",
+   "fieldtype": "Section Break",
+   "label": "Receipt Print Details"
+  },
+  {
+   "fieldname": "logo",
+   "fieldtype": "Attach Image",
+   "label": "Logo"
+  },
+  {
+   "fieldname": "contact_address",
+   "fieldtype": "Data",
+   "label": "Contact Address"
+  },
+  {
+   "fieldname": "contact_no",
+   "fieldtype": "Data",
+   "label": "Contact No."
+  },
+  {
+   "fieldname": "contact_email",
+   "fieldtype": "Data",
+   "label": "Contact Email"
+  },
+  {
+   "fieldname": "company_tagline",
+   "fieldtype": "Data",
+   "label": "Company Tagline"
+  },
+  {
+   "fieldname": "authority_name",
+   "fieldtype": "Data",
+   "label": "Authority Name"
+  },
+  {
+   "fieldname": "authority_position",
+   "fieldtype": "Data",
+   "label": "Authority Position"
+  },
+  {
+   "fieldname": "seal",
+   "fieldtype": "Attach Image",
+   "label": "Seal"
+  },
+  {
+   "fieldname": "authority_signature",
+   "fieldtype": "Attach Image",
+   "label": "Authority Signature"
+  },
+  {
+   "fieldname": "atg_lines",
+   "fieldtype": "HTML Editor",
+   "label": "80G Lines",
+   "max_height": "100px"
+  },
+  {
+   "fieldname": "thanks_note",
+   "fieldtype": "HTML Editor",
+   "label": "Thanks Note",
+   "max_height": "100px"
+  },
+  {
+   "fieldname": "column_break_cahhm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "description": "When this checkbox is enabled during the creation of a Donation Receipt, it grants permission to the DCC Preacher to create receipts within this specific company.\nThis feature serves as a means to control and limit the ability of Mobile Apps to generate Donation Receipts for specific companies.",
+   "fieldname": "preacher_allowed_receipt_creation",
+   "fieldtype": "Check",
+   "label": "Preacher Allowed Receipt Creation"
+  },
+  {
+   "fieldname": "accounts_section",
+   "fieldtype": "Section Break",
+   "label": "Accounts"
+  },
+  {
+   "fieldname": "section_break_2i7zo",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_nql5z",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "donation_credit_section",
+   "fieldtype": "Section Break",
+   "label": "Donation Credit"
+  },
+  {
+   "default": "100",
+   "fieldname": "credit_value",
+   "fieldtype": "Int",
+   "label": "Credit Value"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-06-29 06:24:30.720544",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "Dhananjaya Settings Company Details",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

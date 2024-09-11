@@ -1,0 +1,103 @@
+{
+ "actions": [],
+ "creation": "2023-02-19 16:21:58.597637",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "preferred",
+  "type",
+  "address_line_1",
+  "address_line_2",
+  "city",
+  "column_break_jqsqp",
+  "state",
+  "country",
+  "pin_code",
+  "longitude",
+  "latitude"
+ ],
+ "fields": [
+  {
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Type",
+   "options": "Residential\nOffice\nOther\nFactory",
+   "reqd": 1
+  },
+  {
+   "fieldname": "address_line_1",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Address Line 1",
+   "length": 256,
+   "reqd": 1
+  },
+  {
+   "fieldname": "address_line_2",
+   "fieldtype": "Data",
+   "label": "Address Line 2"
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "City/Town"
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "State"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Data",
+   "label": "Country"
+  },
+  {
+   "fieldname": "column_break_jqsqp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "pin_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "PIN Code"
+  },
+  {
+   "fieldname": "longitude",
+   "fieldtype": "Float",
+   "label": "Longitude",
+   "precision": "5",
+   "read_only": 1
+  },
+  {
+   "fieldname": "latitude",
+   "fieldtype": "Float",
+   "label": "Latitude",
+   "precision": "5",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "preferred",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Preferred"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-06-07 20:03:10.773841",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "Donor Address",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,193 @@
+{
+ "actions": [],
+ "autoname": "field:transaction_id",
+ "creation": "2023-03-21 06:09:15.502807",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "company",
+  "receipt_created",
+  "batch",
+  "gateway",
+  "transaction_id",
+  "column_break_aa7wn",
+  "amount",
+  "fee",
+  "donor",
+  "donor_name",
+  "seva_type",
+  "other_details_section",
+  "extra_data",
+  "view_extra"
+ ],
+ "fields": [
+  {
+   "fieldname": "gateway",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Gateway",
+   "options": "Payment Gateway",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "transaction_id",
+   "fieldtype": "Data",
+   "label": "Gateway Transaction ID",
+   "reqd": 1,
+   "set_only_once": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "fee",
+   "fieldtype": "Currency",
+   "label": "Fee",
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "column_break_aa7wn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "other_details_section",
+   "fieldtype": "Section Break",
+   "label": "Other Details"
+  },
+  {
+   "fieldname": "view_extra",
+   "fieldtype": "HTML",
+   "is_virtual": 1,
+   "label": "View"
+  },
+  {
+   "fieldname": "extra_data",
+   "fieldtype": "JSON",
+   "label": "Data",
+   "read_only": 1,
+   "set_only_once": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "receipt_created",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Receipt Created",
+   "read_only": 1
+  },
+  {
+   "fieldname": "donor",
+   "fieldtype": "Link",
+   "label": "Donor",
+   "options": "Donor",
+   "read_only_depends_on": "eval:doc.receipt_created"
+  },
+  {
+   "fieldname": "batch",
+   "fieldtype": "Link",
+   "label": "Batch",
+   "options": "PG Upload Batch",
+   "read_only": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "seva_type",
+   "fieldtype": "Link",
+   "label": "Seva Type",
+   "options": "Seva Type",
+   "read_only_depends_on": "eval:doc.receipt_created"
+  },
+  {
+   "fetch_from": "donor.full_name",
+   "fieldname": "donor_name",
+   "fieldtype": "Data",
+   "label": "Donor Name",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-01-10 17:38:46.416640",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "Payment Gateway Transaction",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Cashier",
+   "share": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Executive",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Preacher",
+   "share": 1
+  }
+ ],
+ "search_fields": "amount,fee,extra_data",
+ "show_preview_popup": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

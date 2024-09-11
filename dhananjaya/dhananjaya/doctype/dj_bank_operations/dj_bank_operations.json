@@ -1,0 +1,70 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-05-08 11:29:23.731000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "bulk_vendor_payment_section",
+  "vendor_payment_gs_link",
+  "process_bulk_vendor_payment"
+ ],
+ "fields": [
+  {
+   "fieldname": "bulk_vendor_payment_section",
+   "fieldtype": "Section Break",
+   "label": "Bulk Vendor Payment"
+  },
+  {
+   "fieldname": "process_bulk_vendor_payment",
+   "fieldtype": "Button",
+   "label": "Process"
+  },
+  {
+   "fieldname": "vendor_payment_gs_link",
+   "fieldtype": "Data",
+   "label": "Google Sheets Link"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-05-08 12:49:05.354018",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "DJ Bank Operations",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Accounts User",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Accounts Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

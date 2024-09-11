@@ -1,0 +1,424 @@
+
+{% set data = get_print_donation(doc.name) %}
+
+
+{%set settings = data[0] %}
+
+{%set donor = data[1] %} 
+
+{% set ACKNOW = false if ( (doc.payment_method == 'Cash' and doc.workflow_state != 'Trashed') or doc.docstatus == 1 ) else true %}
+
+
+
+{% set ATG = true if (
+                (
+                    (doc.payment_method != 'Cash')
+                    or
+                    doc.amount <= 2000           
+                ) 
+                and (donor.pan_no or donor.aadhar_no)
+                ) 
+                else false %}
+
+
+<style>
+    :root{
+        --size1: 40px;
+        --size2: 30px;
+        --size3: 18px;
+        --size4: 15px;
+    }
+    /* @import url('https://fonts.googleapis.com/css2?family=Roboto+Serif:wght@600;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;600;900&display=swap'); */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&family=Poppins:wght@400;600;800&display=swap');
+    /* @font-face {
+        font-family: 'Poppins', sans-serif;
+        font-style: normal;
+        font-weight: 900;
+        src: url('data:font/opentype;charset=utf-8;base64,d09GRgABAAAAAD00AA4A---[large string ommited]----3MAuAH/hbAEjQA=') format("woff"),
+        url('data:font/truetype;charset=utf-8;base64,AAEAAAARAQAABAAQRFNJRwAAAAEAAJUIAAA---[large string ommited]-----wAAAAAAAAAAAAEAAAAA') format("truetype");
+    } */
+
+    /* .print-format{
+        /* background-color: #fafbf487; */
+        /* font-family: 'Poppins', sans-serif; */
+        /* font-family: 'Roboto', sans-serif; */
+        
+        /* height:100% */
+    /* } */
+    .donation_box {
+        font-size: var(--size3);
+        font-family: 'Montserrat', sans-serif;
+        height:90%;
+        padding: 5px ;
+        width: 100% !important;
+        height: 90% !important;
+        
+        color: #000000 !important;
+
+        
+        display: flex !important;
+        flex-direction: column;
+        align-items: center !important;
+        justify-content: space-between !important;
+
+
+        display: -webkit-box;
+        display: -ms-flexbox;
+        -webkit-flex-wrap: wrap;
+        flex-wrap: wrap;
+        /* grid: 1em 10em 3em 4em 3em 9em 15em 4em 13em 1em/ 1em 1fr 1fr 1fr 1em; */
+        /* grid-auto-rows: minmax(100px, auto); */
+        /* column-gap: 2px; */
+        /* place-items:center; */
+    }
+    .dr_details_column {
+        margin: 5px;
+        /* min-width: 200px; */
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+        font-size: var(--size3);
+    }
+
+    .receipt_header {
+        width: 100% !important;
+        /* height: max-content; */
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center;
+    }
+
+    #receipt_header_details {
+        padding-left: 10px;
+        display: flex !important;
+        flex-direction: column;
+        justify-content: start;
+        align-items: flex-end !important;
+        text-align: end;
+    }
+    #watermark
+    {
+    position:fixed;
+    left: 3%;
+    top: 40%;
+    text-align: center;
+    opacity:0.7;
+    font-weight: 900;
+    z-index:99;
+    color:rgba(255, 24, 24, 0.438);
+    font-size: 100px;
+    transform: rotate(-20deg);
+    
+    }
+</style>
+<div class="donation_box">
+    {% if ACKNOW %}
+    <div id = "watermark">
+        {% if doc.workflow_state == 'ECS Rejected' %}
+            ECS REJECTED
+        {% elif doc.workflow_state == 'Bounced' %}
+            BOUNCED
+        {% elif doc.workflow_state == 'Trashed' %}
+            TRASHED
+        {% elif doc.workflow_state == 'Cancelled' %}
+            CANCELLED
+        {% endif %}
+    </div>
+    {% endif %}
+    <!-- <div style="
+        background-color: #2d6daa;;
+        width:90%;height:5px;
+        border-radius: 10px;">
+    </div> -->
+    <div class="receipt_header">
+        <img src="{{settings['logo']}}" height="120px">
+        <div id="receipt_header_details">
+            <p style="margin:0;font-size: var(--size2); font-weight: 600;text-transform: uppercase;">{{doc.company}}
+            </p>
+            <p style="font-size: var(--size4);">(Serving the mission of <br><span style="font-weight: 600;">His Divine Grace A.C. Bhaktivedanta Swami Prabhupada</span>)
+                <br>{{settings.company_tagline}}
+            </p>
+        </div>
+    </div>
+
+    <!-- DR No. & Date LINE -->
+    <div style="
+            width:100%;
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;">
+        <div style="text-align: start;">
+            DR No. : <span style="color: #cd3131;font-weight: 600;">{{ doc.old_dr_no if doc.old_dr_no else doc.name }}</span>
+        </div>
+        <div style="text-align: end;font-weight: 600;">
+            {{ frappe.format_date(doc.receipt_date) }}
+        </div>
+    </div>
+    <div style="min-height: 10px;"></div>
+    <div style="font-size:var(--size1);font-weight:900;text-align: center;margin: 10px 0px;">
+            DONATION RECEIPT
+    </div>
+    <div style="min-height: 10px;"></div>
+    <div style="text-align: center;">
+        This is to acknowledge that <b>{{doc.company.upper()}}</b> has received a donation of
+    </div>
+    <!-- HARE KRISHNA MOVEMENT UDAIPUR -->
+    <!-- <div style="text-align: center; font-size: small;">
+            <b>{{doc.company.upper()}}</b> has received a donation of
+    </div> -->
+    
+
+    <!-- Amount BOX -->
+    <div style="
+            background-color: #deecf829;
+            border: 1px solid #063831;
+            border-radius: 14px;
+            padding: 5px 10px;
+            margin: 10px 0px;
+            text-align:center
+            ">
+        <div style="font-size:var(--size1);font-weight: 600 !important;">
+            {{ frappe.format(doc.amount, {'fieldtype': 'Currency'})[0:-3] }}</div>
+        <div style="font-size:var(--size4);">{{ donor['money_in_words']}}</div>
+    </div>
+
+    <table style="table-layout: fixed; width: 100%;">
+        <tr style="vertical-align: top; height:80px">
+            <td colspan="2">
+                <div class="dr_details_column">
+                    <div style="text-align: left;">
+                        Donor Name
+                    </div>
+                    <div style="text-align: left;font-weight:900 !important;">
+                        {{donor['full_name']}}
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="dr_details_column">
+                    <div style="text-align: left;">
+                        Mobile
+                    </div>
+                    <div style="text-align: left;font-weight: 600 !important;">
+                        {{donor['contact']}}
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="dr_details_column">
+                    <div style="text-align: left;">
+                        To Support Towards
+                    </div>
+                    <div style="text-align: left;font-weight: 600;">
+                        {{ doc.seva_type.split(' - ')[:-1]|join(' - ') }}
+                        <!-- {{doc.seva_type}} -->
+                    </div>
+                    {% if doc.is_csr %}
+                    <div style="text-align: left;font-weight: 600; color: green">
+                        CSR DONATION
+                    </div>
+                    {% endif %}
+                </div>
+            </td>
+            
+            
+        </tr>
+        <tr style="vertical-align: top; height: 100px;">
+            <td colspan="2">
+                <div class="dr_details_column">
+                    <div style="text-align: left;">
+                        Address
+                    </div>
+                    <div style="text-align: left;font-weight: 600 !important;">
+                        {{donor['address']}}
+                    </div>
+                </div>
+            </td>
+            
+            
+            {% if donor['email'] %}
+            <td>
+                <div class="dr_details_column">
+                    <div style="text-align: left;">
+                        Email ID
+                    </div>
+                    <div style="text-align: left;font-weight: 600 !important; overflow-wrap:break-word;">
+                        {{donor['email']}}
+                    </div>
+                </div>
+            </td>
+            {% endif %}
+            <td>
+                {% if donor.pan_no %}
+                <div class="dr_details_column">
+                    <div style="text-align: left;">
+                        PAN
+                    </div>
+                    <div style="text-align: left;font-weight: 600;">
+                        {{donor.pan_no}}
+                    </div>
+                </div>
+                {% elif donor.aadhar_no %}
+                <div class="dr_details_column">
+                    <div style="text-align: left;">
+                        Aadhar No.
+                    </div>
+                    <div style="text-align: left;font-weight: 600;">
+                        {{donor.aadhar_no}}
+                    </div>
+                </div>
+                {% endif %}
+
+            </td>
+        </tr>
+        <tr style="vertical-align: top;">
+            {% if donor['sevak_name'] %}
+            <td colspan="2" >
+                <div class="dr_details_column">
+                    <div style="text-align: left;">
+                        Sevak Name
+                    </div>
+                    <div style="text-align: left;font-weight: 600 !important; overflow-wrap:break-word;color: green;">
+                        {{donor['sevak_name']}}
+                    </div>
+                </div>
+            </td>
+            {% else %}
+            <td colspan="2" >
+                
+            </td>
+            {% endif %}
+            <td>
+                <div class="dr_details_column">
+                    <div style="text-align: left;">
+                        Payment Mode
+                    </div>
+                    <div style="text-align: left;font-weight: 600;">
+                        {{doc.payment_method}}
+                    </div>
+                    {% if doc.cheque_number %}
+                    No.: {{doc.cheque_number}}<br>
+                    {{frappe.format_date(doc.cheque_date)}}
+                    {% endif %}
+
+                    <!-- Reference Number if Available. -->
+                    {% if doc.bank_transaction%}
+                        <div style="font-size: x-small;">
+                            {{donor['reference_number']}}
+                        </div>
+                    {% elif doc.print_remarks_on_receipt %}
+                        <div style="font-size: x-small;">
+                            {{doc.remarks}}
+                        </div>
+                    {% endif %}
+                </div>
+            </td>
+            
+            <td>
+                <div class="dr_details_column">
+                    <div style="text-align: left;">
+                        Received Through
+                    </div>
+                    <div style="text-align: left;font-weight: 600;">
+                        {{donor['preacher_full_name']}}
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div style="text-align: center;">
+            {% if settings.thanks_note %}
+                {{ settings.thanks_note }}
+            {% else %}
+            Thank you for your kind and generous support, you will surely receive the blessings of Sri Sri Krishna Balaram.
+            {% endif %}
+            <br><br>
+            <i style=" color: red;">CHEQUES ARE SUBJECT TO REALIZATION.</i>
+    </div>
+    
+    <!-- Signature Seal -->
+    <div style="margin:10px 0px;display: flex;justify-content: space-between; align-items: center; width: 100%;">
+        <div style="display: flex;
+            align-items: center;justify-content: center;">
+            {% if ATG %}
+            <div style="
+            border:solid #000000;
+            border-width: .1px;
+            border-radius: 10px 10px;
+            width: max-content;
+            padding: 5px 10px;
+            text-align:center;
+            ">
+                <div style="color: #063831;font-size:15px;font-weight: 600;">{{settings.atg_lines}}</div>
+            </div>
+            {% endif %}
+            
+        </div>
+        <img src="{{settings.seal}}" height="100px">
+        <div style="text-align: center;">
+            <div>
+                <div>
+                    Sincerely,
+                </div>
+                <div>
+                    <img src="{{settings.authority_signature}}" height="100px">
+                </div>
+                <div style="font-weight: 600;">
+                    {{settings.authority_name}}
+                </div>
+                <div style="font-weight:lighter;">
+                    {{settings.authority_position}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="
+        background-color: #2d6daa;;
+        width:100%;height:1px;
+        border-radius: 10px;">
+    </div>
+    <div style="min-height: 10px;"></div>
+    <div class="py-2" style="display: flex; justify-content: space-between; font-size:var(--size4)">
+        <div class="px-1" style="width: 150;">
+            <div style="text-align: center;">
+                Contact
+            </div>
+            <div style="text-align: center;font-weight: 600;">
+                {% if donor.preacher_mobile_no is not none %}
+                    {{donor.preacher_mobile_no}}
+                {% else %}
+                    {{settings.contact_no}}
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="px-1" style="width:400px;">
+            <div style="text-align: center;">
+                Email
+            </div>
+            <div style="text-align: center;font-weight: 600;">
+                {{settings.contact_email}}
+            </div>
+        </div>
+        
+        <div class="px-1">
+            <div style="text-align: center;">
+                Address
+            </div>
+            <div style="text-align: center;font-weight: 600;">
+                {{settings.contact_address}}
+            </div>
+        </div>
+    </div>
+    <div style="min-height: 10px;"></div>
+    <div style="
+        background-color: #2d6daa;;
+        width:100%;height:2px;
+        border-radius: 10px;">
+    </div>
+    <div style="min-height: 10px;"></div>
+    <p style="font-size:14px;text-align: center;">◦•●◉✿ Hare Krishna Hare Krishna Krishna Krishna Hare Hare / Hare Ram Hare Ram Ram Ram Hare Hare ✿◉●•◦ </p>
+</div>
+   

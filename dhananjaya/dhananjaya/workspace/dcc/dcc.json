@@ -1,0 +1,526 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"Brm7GPSE0G\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">DCC</span>\",\"col\":12}},{\"id\":\"61Oz-SLqO7\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Search Donor\",\"col\":3}},{\"id\":\"sXOVxTndbH\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Create Receipt\",\"col\":3}},{\"id\":\"J20OA3LVbs\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Create Donor\",\"col\":3}},{\"id\":\"BgU6FrCQ9w\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Donation Report\",\"col\":3}},{\"id\":\"uLGJsEDf95\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Cashier Report\",\"col\":3}},{\"id\":\"ROhPKNaJRW\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Donation Cumulative Report\",\"col\":3}},{\"id\":\"MqSbfdlFuS\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Special Pujas\",\"col\":3}},{\"id\":\"OSZm6K86_R\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"DCC Dashboard\",\"col\":3}},{\"id\":\"lCX_1BTgj1\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Distinct Donors\",\"col\":3}},{\"id\":\"ATw4uVkCs7\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Patron Puja Report\",\"col\":3}},{\"id\":\"TBMN9CGv2O\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Patron Status\",\"col\":3}},{\"id\":\"Oa_WhDoM_u\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"NHdqKXHwuP\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}},{\"id\":\"XZ9lDAjiKO\",\"type\":\"card\",\"data\":{\"card_name\":\"Donation\",\"col\":4}},{\"id\":\"fmP4yBBO3D\",\"type\":\"card\",\"data\":{\"card_name\":\"Patron\",\"col\":4}},{\"id\":\"VdXCKhKmQu\",\"type\":\"card\",\"data\":{\"card_name\":\"Payment Gateway\",\"col\":4}},{\"id\":\"2AjZtCMG7C\",\"type\":\"card\",\"data\":{\"card_name\":\"Bank\",\"col\":4}},{\"id\":\"GiiGry_-BR\",\"type\":\"card\",\"data\":{\"card_name\":\"Settings\",\"col\":4}},{\"id\":\"pp6hNBwsEk\",\"type\":\"card\",\"data\":{\"card_name\":\"ECS\",\"col\":4}},{\"id\":\"a9FEMZ9e15\",\"type\":\"card\",\"data\":{\"card_name\":\"Festival\",\"col\":4}}]",
+ "creation": "2023-03-22 12:34:40.537714",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "income",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "DCC",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Settings",
+   "link_count": 3,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Dhananjaya Settings",
+   "link_count": 0,
+   "link_to": "Dhananjaya Settings",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Donor Merger",
+   "link_count": 0,
+   "link_to": "Donor Merger",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Data Import",
+   "link_count": 0,
+   "link_to": "Data Import",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Festival",
+   "link_count": 4,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Festival",
+   "link_count": 0,
+   "link_to": "Festival",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Festival Benefit",
+   "link_count": 0,
+   "link_to": "Festival Benefit",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Donor Festival Benefit",
+   "link_count": 0,
+   "link_to": "Donor Festival Benefit",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Donor Issued",
+   "link_count": 0,
+   "link_to": "Donor Festival Benefit",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Payment Gateway",
+   "link_count": 3,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Import Entries",
+   "link_count": 0,
+   "link_to": "PG Upload Tool",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Gateway Batch",
+   "link_count": 0,
+   "link_to": "PG Upload Batch",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Payment Gateway Transaction",
+   "link_count": 0,
+   "link_to": "Payment Gateway Transaction",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Masters",
+   "link_count": 7,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "LLP Preacher",
+   "link_count": 0,
+   "link_to": "LLP Preacher",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Seva Type",
+   "link_count": 0,
+   "link_to": "Seva Type",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Seva Subtype",
+   "link_count": 0,
+   "link_to": "Seva Subtype",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Mode of Payment",
+   "link_count": 0,
+   "link_to": "DJ Mode of Payment",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Gateway",
+   "link_count": 0,
+   "link_to": "Payment Gateway",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Donor Creation Request",
+   "link_count": 0,
+   "link_to": "Donor Creation Request",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Payment Mode",
+   "link_count": 0,
+   "link_to": "DJ Payment Detail",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Patron",
+   "link_count": 4,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Patron",
+   "link_count": 0,
+   "link_to": "Patron",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Patron Seva Type",
+   "link_count": 0,
+   "link_to": "Patron Seva Type",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Patron Gift",
+   "link_count": 0,
+   "link_to": "Patron Gift",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Patron Pujas",
+   "link_count": 0,
+   "link_to": "Patron Privilege Puja",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "ECS",
+   "link_count": 3,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Upload ECS",
+   "link_count": 0,
+   "link_to": "ECS Upload Portal",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "ECS Apply Data",
+   "link_count": 0,
+   "link_to": "ECS Apply Data",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Create ECS",
+   "link_count": 0,
+   "link_to": "Donor ECS Creation Request",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Bank",
+   "link_count": 5,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Bank",
+   "link_count": 0,
+   "link_to": "Bank",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Bank Account",
+   "link_count": 0,
+   "link_to": "Bank Account",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Bank Statement",
+   "link_count": 0,
+   "link_to": "Bank Transaction",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Custom Statement Upload",
+   "link_count": 0,
+   "link_to": "Dhananjaya Bank Statement Upload",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Standard Statement Upload",
+   "link_count": 0,
+   "link_to": "Data Import",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Donation",
+   "link_count": 5,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Donor",
+   "link_count": 0,
+   "link_to": "Donor",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Receipt",
+   "link_count": 0,
+   "link_to": "Donation Receipt",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Preacher",
+   "link_count": 0,
+   "link_to": "LLP Preacher",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Donor Claim",
+   "link_count": 0,
+   "link_to": "Donor Claim Request",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Zip Export",
+   "link_count": 0,
+   "link_to": "Dhananjaya Receipts Export",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2024-08-08 13:51:50.073237",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "DCC",
+ "number_cards": [],
+ "owner": "nrhd@hkmjaipur.org",
+ "parent_page": "HKM",
+ "public": 1,
+ "quick_lists": [],
+ "restrict_to_domain": "",
+ "roles": [
+  {
+   "role": "DCC Manager"
+  },
+  {
+   "role": "DCC Executive"
+  },
+  {
+   "role": "DCC Cashier"
+  },
+  {
+   "role": "DCC Preacher"
+  }
+ ],
+ "sequence_id": 3.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Patron Status",
+   "link_to": "Patron Commitment Status",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Distinct Donors",
+   "link_to": "Distinct Donors",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "DCC Dashboard",
+   "link_to": "DCC",
+   "type": "Dashboard"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Patron Puja Report",
+   "link_to": "Upcoming Patron Pujas",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Special Pujas",
+   "link_to": "Upcoming Special Pujas",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Donation Report",
+   "link_to": "Dhananjaya Donation Receipt",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Donation Cumulative Report",
+   "link_to": "Donation Cumulative Report",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Cashier Report",
+   "link_to": "Cashier Report",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "New",
+   "label": "Create Receipt",
+   "link_to": "Donation Receipt",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Search Donor",
+   "link_to": "Donor Search",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "New",
+   "label": "Create Donor",
+   "link_to": "Donor",
+   "type": "DocType"
+  }
+ ],
+ "title": "DCC"
+}

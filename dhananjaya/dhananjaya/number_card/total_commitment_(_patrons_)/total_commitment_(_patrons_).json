@@ -1,0 +1,22 @@
+{
+ "color": "#b5b504",
+ "creation": "2024-01-10 12:31:39.056296",
+ "docstatus": 0,
+ "doctype": "Number Card",
+ "filters_json": "null",
+ "function": "Count",
+ "idx": 0,
+ "is_public": 1,
+ "is_standard": 1,
+ "label": "Total Commitment (Patrons)",
+ "method": "dhananjaya.dhananjaya.number_card.number_card.get_patrons_total_commitment",
+ "modified": "2024-01-10 12:37:04.616887",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "Total Commitment ( Patrons )",
+ "owner": "Administrator",
+ "report_function": "Sum",
+ "show_percentage_stats": 1,
+ "stats_time_interval": "Daily",
+ "type": "Custom"
+}

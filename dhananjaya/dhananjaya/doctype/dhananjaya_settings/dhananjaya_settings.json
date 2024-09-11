@@ -1,0 +1,300 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-02-27 22:35:05.531985",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "admin_role",
+  "cash_mode",
+  "firebase_admin_app",
+  "column_break_tvbte",
+  "default_preacher",
+  "default_marketing_preacher",
+  "gateway_mode",
+  "receipt_format",
+  "section_break_uanlt",
+  "company_details",
+  "other_section",
+  "public_fernet_key",
+  "patron_settings_section",
+  "display_names_allowed",
+  "ecs_settings_section",
+  "default_ecs_bank",
+  "notifier_section",
+  "refresh_versions",
+  "special_settings_section",
+  "separate_accounting_for_csr",
+  "show_patron_seva_level_on_receipt",
+  "receipt_format_template",
+  "mobile_app_section",
+  "hide_others_donors",
+  "email_compulsory_donor_request",
+  "notification_channels_tab",
+  "cash_cheque_collection_channel",
+  "receipt_realisation_channel",
+  "donor_claim_channel",
+  "donor_creation_channel",
+  "ecs_channel",
+  "event_reminder_channel"
+ ],
+ "fields": [
+  {
+   "fieldname": "admin_role",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Admin Role",
+   "options": "Role",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cash_mode",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Cash Mode",
+   "options": "DJ Mode of Payment"
+  },
+  {
+   "fieldname": "gateway_mode",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Gateway Mode",
+   "options": "DJ Mode of Payment"
+  },
+  {
+   "fieldname": "company_details",
+   "fieldtype": "Table",
+   "label": "Details",
+   "options": "Dhananjaya Settings Company Details"
+  },
+  {
+   "fieldname": "other_section",
+   "fieldtype": "Section Break",
+   "label": "Other"
+  },
+  {
+   "fieldname": "public_fernet_key",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Public Fernet Key",
+   "read_only": 1
+  },
+  {
+   "fieldname": "firebase_admin_app",
+   "fieldtype": "Link",
+   "label": "Firebase Admin App",
+   "options": "Firebase Admin App",
+   "reqd": 1
+  },
+  {
+   "fieldname": "patron_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Patron Settings"
+  },
+  {
+   "default": "3",
+   "fieldname": "display_names_allowed",
+   "fieldtype": "Int",
+   "label": "Display Names Allowed",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "ecs_settings_section",
+   "fieldtype": "Section Break",
+   "label": "ECS Settings"
+  },
+  {
+   "fieldname": "default_ecs_bank",
+   "fieldtype": "Link",
+   "label": "Default ECS Bank",
+   "options": "Bank"
+  },
+  {
+   "fieldname": "column_break_tvbte",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "default_preacher",
+   "fieldtype": "Link",
+   "label": "Default Preacher",
+   "options": "LLP Preacher",
+   "reqd": 1
+  },
+  {
+   "fieldname": "default_marketing_preacher",
+   "fieldtype": "Link",
+   "label": "Default Marketing Preacher",
+   "options": "LLP Preacher",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_uanlt",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "notifier_section",
+   "fieldtype": "Section Break",
+   "label": "Notifier"
+  },
+  {
+   "description": "This button is to update the versions of Offline Doctypes which are used in Mobile Applications so that apps can refresh the fresh data from Server.",
+   "fieldname": "refresh_versions",
+   "fieldtype": "Button",
+   "label": "Refresh Versions"
+  },
+  {
+   "default": "0",
+   "fieldname": "separate_accounting_for_csr",
+   "fieldtype": "Check",
+   "label": "Separate accounting for CSR"
+  },
+  {
+   "fieldname": "special_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Special Settings"
+  },
+  {
+   "default": "0",
+   "fieldname": "show_patron_seva_level_on_receipt",
+   "fieldtype": "Check",
+   "label": "Show Patron Seva Level on Receipt"
+  },
+  {
+   "default": "0",
+   "fieldname": "hide_others_donors",
+   "fieldtype": "Check",
+   "label": "Hide Others Donors"
+  },
+  {
+   "fieldname": "mobile_app_section",
+   "fieldtype": "Section Break",
+   "label": "Mobile App"
+  },
+  {
+   "default": "0",
+   "fieldname": "email_compulsory_donor_request",
+   "fieldtype": "Check",
+   "label": "Email Compulsory in New Donor Request"
+  },
+  {
+   "fieldname": "receipt_format_template",
+   "fieldtype": "Data",
+   "label": "Receipt Format Template",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "receipt_format",
+   "fieldtype": "Link",
+   "label": "Receipt Format",
+   "options": "DJ Receipt Format",
+   "reqd": 1
+  },
+  {
+   "fieldname": "notification_channels_tab",
+   "fieldtype": "Tab Break",
+   "label": "Notification Channels"
+  },
+  {
+   "fieldname": "receipt_realisation_channel",
+   "fieldtype": "Link",
+   "label": "Receipt Realisation Channel",
+   "options": "Notification Channel"
+  },
+  {
+   "fieldname": "donor_claim_channel",
+   "fieldtype": "Link",
+   "label": "Donor Claim Channel",
+   "options": "Notification Channel"
+  },
+  {
+   "fieldname": "donor_creation_channel",
+   "fieldtype": "Link",
+   "label": "Donor Creation Channel",
+   "options": "Notification Channel"
+  },
+  {
+   "fieldname": "ecs_channel",
+   "fieldtype": "Link",
+   "label": "ECS Channel",
+   "options": "Notification Channel"
+  },
+  {
+   "fieldname": "cash_cheque_collection_channel",
+   "fieldtype": "Link",
+   "label": "Cash/Cheque Collection Channel",
+   "options": "Notification Channel",
+   "reqd": 1
+  },
+  {
+   "fieldname": "event_reminder_channel",
+   "fieldtype": "Link",
+   "label": "Event Reminder Channel",
+   "options": "Notification Channel"
+  }
+ ],
+ "hide_toolbar": 1,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-07-22 15:11:17.261678",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "Dhananjaya Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "DCC Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "DCC Executive",
+   "share": 1
+  },
+  {
+   "read": 1,
+   "role": "DCC Preacher"
+  },
+  {
+   "read": 1,
+   "role": "DCC Cashier"
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "All",
+   "share": 1
+  },
+  {
+   "delete": 1,
+   "email": 1,
+   "permlevel": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

@@ -1,0 +1,86 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{ref_old_id}-{target_old_id}",
+ "creation": "2023-02-23 18:32:49.001046",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "ref_address",
+  "target_address",
+  "ref_name",
+  "target_name",
+  "ref_erp_id",
+  "target_erp_id",
+  "ref_old_id",
+  "target_old_id"
+ ],
+ "fields": [
+  {
+   "fieldname": "ref_address",
+   "fieldtype": "Data",
+   "label": "Ref Address"
+  },
+  {
+   "fieldname": "target_address",
+   "fieldtype": "Data",
+   "label": "Target Address"
+  },
+  {
+   "fieldname": "ref_name",
+   "fieldtype": "Data",
+   "label": "Ref Name"
+  },
+  {
+   "fieldname": "target_name",
+   "fieldtype": "Data",
+   "label": "Target Name"
+  },
+  {
+   "fieldname": "ref_erp_id",
+   "fieldtype": "Data",
+   "label": "Ref ERP ID"
+  },
+  {
+   "fieldname": "target_erp_id",
+   "fieldtype": "Data",
+   "label": "Target ERP ID"
+  },
+  {
+   "fieldname": "ref_old_id",
+   "fieldtype": "Data",
+   "label": "Ref Old ID"
+  },
+  {
+   "fieldname": "target_old_id",
+   "fieldtype": "Data",
+   "label": "Target Old ID"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-02-23 18:33:45.328633",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "Dhananjaya Import Similar Address",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

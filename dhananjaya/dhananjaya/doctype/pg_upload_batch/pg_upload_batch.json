@@ -1,0 +1,213 @@
+{
+ "actions": [],
+ "autoname": "autoincrement",
+ "creation": "2023-03-21 11:42:56.843974",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "summary_section",
+  "company",
+  "gateway",
+  "gateway_expense_account",
+  "status",
+  "amount_comprehension_section",
+  "total_amount",
+  "total_fee",
+  "batch_amount",
+  "column_break_lfii",
+  "resolved_amount",
+  "resolved_fee",
+  "remaining_amount",
+  "column_break_fiecb",
+  "bank_account",
+  "bank_transaction",
+  "bank_amount",
+  "column_break_uee4h",
+  "final_view"
+ ],
+ "fields": [
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "label": "Total Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_fee",
+   "fieldtype": "Currency",
+   "label": "Total Fee",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_fiecb",
+   "fieldtype": "Section Break",
+   "label": "Matching Details"
+  },
+  {
+   "fieldname": "bank_account",
+   "fieldtype": "Link",
+   "label": "Bank Account",
+   "options": "Bank Account"
+  },
+  {
+   "depends_on": "eval:doc.bank_account",
+   "fieldname": "bank_transaction",
+   "fieldtype": "Link",
+   "label": "Bank Tx",
+   "options": "Bank Transaction"
+  },
+  {
+   "fieldname": "summary_section",
+   "fieldtype": "Section Break",
+   "label": "Summary"
+  },
+  {
+   "fieldname": "column_break_uee4h",
+   "fieldtype": "Column Break",
+   "label": "Final Perspective"
+  },
+  {
+   "fieldname": "final_view",
+   "fieldtype": "HTML",
+   "label": "Final View"
+  },
+  {
+   "depends_on": "eval:doc.bank_transaction",
+   "fetch_from": "bank_transaction.unallocated_amount",
+   "fieldname": "bank_amount",
+   "fieldtype": "Currency",
+   "label": "Bank Tx Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "gateway_expense_account",
+   "fieldtype": "Link",
+   "label": "Gateway Expense Account",
+   "options": "Account"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "gateway",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Gateway",
+   "options": "Payment Gateway",
+   "reqd": 1
+  },
+  {
+   "default": "Open",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Open\nClosed",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amount_comprehension_section",
+   "fieldtype": "Section Break",
+   "label": "Amount Comprehension"
+  },
+  {
+   "fieldname": "batch_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Batch Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_lfii",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "resolved_amount",
+   "fieldtype": "Currency",
+   "label": "Resolved Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "resolved_fee",
+   "fieldtype": "Currency",
+   "label": "Resolved Fee",
+   "read_only": 1
+  },
+  {
+   "description": "Sum of amount of pending transactions for which donation receipts are pending.",
+   "fieldname": "remaining_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Remaining Batch Amount",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-02-23 17:28:57.553738",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "PG Upload Batch",
+ "naming_rule": "Autoincrement",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Executive",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Cashier",
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "gateway",
+ "track_changes": 1
+}

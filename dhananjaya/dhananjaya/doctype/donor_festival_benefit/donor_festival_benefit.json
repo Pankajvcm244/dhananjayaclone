@@ -1,0 +1,198 @@
+{
+ "actions": [],
+ "autoname": "format:DFB-{YY}-{#######}",
+ "creation": "2023-08-01 17:27:45.137163",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "donor",
+  "donor_name",
+  "donation_details_section",
+  "donation_receipt",
+  "receipt_date",
+  "column_break_meu1r",
+  "preacher",
+  "donation_amount",
+  "benefit_section",
+  "festival",
+  "festival_benefit",
+  "type",
+  "column_break_9ivcs",
+  "vip_pass",
+  "invitation_card",
+  "vip_pass_serial",
+  "abhishekam_pass_serial",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "donor",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Donor",
+   "options": "Donor",
+   "reqd": 1
+  },
+  {
+   "fieldname": "festival",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Festival",
+   "options": "Festival",
+   "reqd": 1
+  },
+  {
+   "fieldname": "festival_benefit",
+   "fieldtype": "Link",
+   "label": "Festival Benefit",
+   "options": "Festival Benefit"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Donor Festival Benefit",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fetch_from": "donor.full_name",
+   "fieldname": "donor_name",
+   "fieldtype": "Data",
+   "label": "Donor Name",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "donation_receipt.amount",
+   "fieldname": "donation_amount",
+   "fieldtype": "Currency",
+   "label": "Donation Amount",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "festival_benefit.benefit_type",
+   "fieldname": "type",
+   "fieldtype": "Data",
+   "label": "Type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "donation_receipt",
+   "fieldtype": "Link",
+   "label": "Donation Receipt",
+   "options": "Donation Receipt"
+  },
+  {
+   "fieldname": "donation_details_section",
+   "fieldtype": "Section Break",
+   "label": "Donation Details"
+  },
+  {
+   "fieldname": "column_break_meu1r",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "donation_receipt.preacher",
+   "fieldname": "preacher",
+   "fieldtype": "Link",
+   "label": "Preacher",
+   "options": "LLP Preacher",
+   "read_only": 1
+  },
+  {
+   "fieldname": "benefit_section",
+   "fieldtype": "Section Break",
+   "label": "Benefit"
+  },
+  {
+   "fetch_from": "donation_receipt.receipt_date",
+   "fieldname": "receipt_date",
+   "fieldtype": "Data",
+   "label": "Receipt Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_9ivcs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "vip_pass",
+   "fieldtype": "Check",
+   "label": "VIP Pass"
+  },
+  {
+   "default": "0",
+   "fieldname": "invitation_card",
+   "fieldtype": "Check",
+   "label": "Invitation Card"
+  },
+  {
+   "fieldname": "vip_pass_serial",
+   "fieldtype": "Data",
+   "label": "VIP Pass Serial"
+  },
+  {
+   "fieldname": "abhishekam_pass_serial",
+   "fieldtype": "Data",
+   "label": "Abhishekam Pass Serial"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2023-08-02 13:52:01.779422",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "Donor Festival Benefit",
+ "name_case": "UPPER CASE",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Executive",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

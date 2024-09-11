@@ -1,0 +1,105 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-04-14 17:44:38.301068",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "company",
+  "google_sheets_url",
+  "bank_transaction",
+  "column_break_wuvbs",
+  "final_amount",
+  "seva_type",
+  "section_break_ocfop",
+  "data_view"
+ ],
+ "fields": [
+  {
+   "fieldname": "google_sheets_url",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Google Sheets URL",
+   "reqd": 1
+  },
+  {
+   "fieldname": "data_view",
+   "fieldtype": "HTML",
+   "is_virtual": 1,
+   "label": "Data View"
+  },
+  {
+   "fieldname": "bank_transaction",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Bank Trasaction",
+   "options": "Bank Transaction"
+  },
+  {
+   "bold": 1,
+   "fieldname": "final_amount",
+   "fieldtype": "Currency",
+   "label": "Final Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_wuvbs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_ocfop",
+   "fieldtype": "Section Break"
+  },
+  {
+   "description": "This seva type will by default applied to those Donors who don't have any Seva Type set in their Donor Profile.",
+   "fieldname": "seva_type",
+   "fieldtype": "Link",
+   "label": "Seva Type",
+   "options": "Seva Type"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  }
+ ],
+ "hide_toolbar": 1,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2023-09-27 18:22:59.564122",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "ECS Upload Portal",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "DCC Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,175 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-02-20 13:10:29.773026",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "import_settings_section",
+  "host",
+  "database_name",
+  "companies_to_import",
+  "column_break_2h8sx",
+  "mysql_user",
+  "mysql_password",
+  "is_a_test",
+  "test_run_records",
+  "data_to_rectify_section",
+  "defective_patrons",
+  "export_defective_patron_data",
+  "column_break_8fyh9",
+  "download_patron_correction_template",
+  "patron_correction_template_file",
+  "upload_patron_correction_template",
+  "duplicate_donor_merging_section",
+  "download_donor_data",
+  "download_template_for_merging",
+  "column_break_qd685",
+  "upload_merge_file",
+  "merge_donors"
+ ],
+ "fields": [
+  {
+   "description": "Details of Mysql Server",
+   "fieldname": "import_settings_section",
+   "fieldtype": "Tab Break",
+   "label": "Import Settings"
+  },
+  {
+   "fieldname": "host",
+   "fieldtype": "Data",
+   "label": "Host"
+  },
+  {
+   "fieldname": "database_name",
+   "fieldtype": "Data",
+   "label": "Database Name"
+  },
+  {
+   "fieldname": "column_break_2h8sx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "mysql_user",
+   "fieldtype": "Data",
+   "label": "MySQL User"
+  },
+  {
+   "fieldname": "mysql_password",
+   "fieldtype": "Data",
+   "label": "MySQL Password"
+  },
+  {
+   "fieldname": "companies_to_import",
+   "fieldtype": "Table",
+   "label": "Companies To Import",
+   "options": "Dhananjaya Import Settings Company",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_a_test",
+   "fieldtype": "Check",
+   "label": "Is a Test"
+  },
+  {
+   "description": "Only Applicable for Donors & Receipts Data Import",
+   "fieldname": "test_run_records",
+   "fieldtype": "Int",
+   "label": "Test Run Records"
+  },
+  {
+   "fieldname": "data_to_rectify_section",
+   "fieldtype": "Section Break",
+   "label": "Patron Rectification"
+  },
+  {
+   "fieldname": "export_defective_patron_data",
+   "fieldtype": "Button",
+   "label": "Export Defective Patron Data"
+  },
+  {
+   "fieldname": "defective_patrons",
+   "fieldtype": "Int",
+   "label": "Defective Patrons",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_8fyh9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "download_patron_correction_template",
+   "fieldtype": "Button",
+   "label": "Download Patron Correction Template"
+  },
+  {
+   "fieldname": "patron_correction_template_file",
+   "fieldtype": "Attach",
+   "label": "Patron Correction File"
+  },
+  {
+   "depends_on": "eval:doc.patron_correction_template_file",
+   "fieldname": "upload_patron_correction_template",
+   "fieldtype": "Button",
+   "label": "Upload"
+  },
+  {
+   "fieldname": "duplicate_donor_merging_section",
+   "fieldtype": "Section Break",
+   "label": "Duplicate Donor Merging"
+  },
+  {
+   "fieldname": "column_break_qd685",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "download_template_for_merging",
+   "fieldtype": "Button",
+   "label": "Download Template for Merging"
+  },
+  {
+   "fieldname": "download_donor_data",
+   "fieldtype": "Button",
+   "label": "Download Donor Data"
+  },
+  {
+   "fieldname": "upload_merge_file",
+   "fieldtype": "Attach",
+   "label": "Upload File"
+  },
+  {
+   "depends_on": "eval:doc.upload_merge_file",
+   "fieldname": "merge_donors",
+   "fieldtype": "Button",
+   "label": "Merge"
+  }
+ ],
+ "hide_toolbar": 1,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-03-21 09:40:24.945000",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "Dhananjaya Import Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

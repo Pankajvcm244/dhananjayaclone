@@ -1,0 +1,187 @@
+{
+ "actions": [],
+ "autoname": "autoincrement",
+ "creation": "2023-08-26 10:24:50.057978",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "trust",
+  "type",
+  "bank_account_details_section",
+  "bank",
+  "account_no",
+  "ifsc_code",
+  "branch",
+  "qrupi_details_section",
+  "upi_qr_image",
+  "upi",
+  "gateway_details_section",
+  "gateway_name",
+  "gateway_message",
+  "gateway_image",
+  "document_details_section",
+  "document_name",
+  "document_attachment"
+ ],
+ "fields": [
+  {
+   "fieldname": "trust",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Trust",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "label": "Type",
+   "options": "Account\nUPI\nGateway\nDocument",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.type == 'Account'",
+   "fieldname": "bank_account_details_section",
+   "fieldtype": "Section Break",
+   "label": "Bank Account Details"
+  },
+  {
+   "fieldname": "bank",
+   "fieldtype": "Data",
+   "label": "Bank",
+   "mandatory_depends_on": "eval:doc.type == 'Account'"
+  },
+  {
+   "fieldname": "account_no",
+   "fieldtype": "Data",
+   "label": "Account No",
+   "mandatory_depends_on": "eval:doc.type == 'Account'"
+  },
+  {
+   "depends_on": "eval:doc.type == 'Account'",
+   "fieldname": "ifsc_code",
+   "fieldtype": "Data",
+   "label": "IFSC Code"
+  },
+  {
+   "depends_on": "eval:doc.type == 'UPI'",
+   "fieldname": "qrupi_details_section",
+   "fieldtype": "Section Break",
+   "label": "UPI/QR Details"
+  },
+  {
+   "fieldname": "upi",
+   "fieldtype": "Data",
+   "label": "UPI",
+   "mandatory_depends_on": "eval:doc.type == 'UPI'"
+  },
+  {
+   "depends_on": "eval:doc.type == 'Gateway'",
+   "fieldname": "gateway_details_section",
+   "fieldtype": "Section Break",
+   "label": "Gateway Details"
+  },
+  {
+   "fieldname": "gateway_name",
+   "fieldtype": "Data",
+   "label": "Gateway Name",
+   "mandatory_depends_on": "eval:doc.type == 'Gateway'"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Data",
+   "label": "Branch"
+  },
+  {
+   "fieldname": "upi_qr_image",
+   "fieldtype": "Attach Image",
+   "label": "QR Image",
+   "mandatory_depends_on": "eval:doc.type == 'UPI'"
+  },
+  {
+   "fieldname": "gateway_image",
+   "fieldtype": "Attach Image",
+   "label": "Gateway Image",
+   "mandatory_depends_on": "eval:doc.type == 'Gateway'"
+  },
+  {
+   "fieldname": "gateway_message",
+   "fieldtype": "Long Text",
+   "label": "Gateway Message",
+   "mandatory_depends_on": "eval:doc.type == 'Gateway'"
+  },
+  {
+   "depends_on": "eval:doc.type == 'Document'",
+   "fieldname": "document_details_section",
+   "fieldtype": "Section Break",
+   "label": "Document Details"
+  },
+  {
+   "fieldname": "document_name",
+   "fieldtype": "Data",
+   "label": "Document Name",
+   "mandatory_depends_on": "eval:doc.type == 'Document'"
+  },
+  {
+   "fieldname": "document_attachment",
+   "fieldtype": "Attach",
+   "label": "Document Attachment",
+   "mandatory_depends_on": "eval:doc.type == 'Document'"
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-04-01 10:09:15.197273",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "DJ Payment Detail",
+ "naming_rule": "Autoincrement",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Preacher",
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
