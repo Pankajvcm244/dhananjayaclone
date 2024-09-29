@@ -27,7 +27,6 @@
   "special_settings_section",
   "separate_accounting_for_csr",
   "show_patron_seva_level_on_receipt",
-  "receipt_format_template",
   "mobile_app_section",
   "hide_others_donors",
   "email_compulsory_donor_request",
@@ -178,12 +177,6 @@
    "label": "Email Compulsory in New Donor Request"
   },
   {
-   "fieldname": "receipt_format_template",
-   "fieldtype": "Data",
-   "label": "Receipt Format Template",
-   "permlevel": 1
-  },
-  {
    "fieldname": "receipt_format",
    "fieldtype": "Link",
    "label": "Receipt Format",
@@ -237,7 +230,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-07-22 15:11:17.261678",
+ "modified": "2024-09-29 10:23:09.314121",
  "modified_by": "Administrator",
  "module": "Dhananjaya",
  "name": "Dhananjaya Settings",

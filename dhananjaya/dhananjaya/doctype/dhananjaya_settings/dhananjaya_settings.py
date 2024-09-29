@@ -35,7 +35,6 @@ class DhananjayaSettings(Document):
         hide_others_donors: DF.Check
         public_fernet_key: DF.Data | None
         receipt_format: DF.Link
-        receipt_format_template: DF.Data | None
         receipt_realisation_channel: DF.Link | None
         separate_accounting_for_csr: DF.Check
         show_patron_seva_level_on_receipt: DF.Check

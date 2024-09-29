@@ -193,7 +193,8 @@
   {
    "fieldname": "enrolled_date",
    "fieldtype": "Date",
-   "label": "Enrolled Date"
+   "label": "Enrolled Date",
+   "permlevel": 1
   },
   {
    "fetch_from": "seva_type.seva_amount",
@@ -201,6 +202,7 @@
    "fieldname": "committed_amount",
    "fieldtype": "Currency",
    "label": "Committed Amount",
+   "permlevel": 1,
    "precision": "2"
   },
   {
@@ -286,7 +288,8 @@
    "fieldname": "cards",
    "fieldtype": "Table",
    "label": "Issued Card Details",
-   "options": "Patron Card Detail"
+   "options": "Patron Card Detail",
+   "permlevel": 1
   },
   {
    "fieldname": "spouse_name",
@@ -321,7 +324,7 @@
  "image_field": "profile_image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-12 16:30:57.056687",
+ "modified": "2024-09-29 00:49:05.061715",
  "modified_by": "Administrator",
  "module": "Dhananjaya",
  "name": "Patron",

@@ -27,6 +27,7 @@ from dhananjaya.dhananjaya.utils import (
     get_company_defaults,
     get_pdf_dr,
     get_preacher_users,
+    get_preachers,
     is_donor_kyc_available,
     is_donor_request_kyc_available,
 )
@@ -118,7 +119,6 @@ class DonationReceipt(Document):
         stock_expense_account: DF.Link | None
         tds_account: DF.Link | None
         user_remarks: DF.Text | None
-
     # end: auto-generated types
     def autoname(self):
 
@@ -177,8 +177,8 @@ class DonationReceipt(Document):
                     self.donor,
                 )
             ####
-            # if self.has_value_changed("seva_type"):
-            #     self.on_change_seva_type()  # Use Only in Emergency Cases.
+            if self.has_value_changed("seva_type"):
+                self.on_change_seva_type()  # Use Only in Emergency Cases.
             ## TODO First check the impact of both GL Entry & Payment Ledger Entry
             ###
             if self.has_value_changed("is_csr"):
@@ -441,7 +441,11 @@ class DonationReceipt(Document):
             "voucher_type": (
                 "Cash Entry"
                 if self.payment_method == CASH_PAYMENT_MODE
-                else "Journal Entry" if is_kind_mode else "Bank Entry"
+                else (
+                    "Journal Entry"
+                    if is_kind_mode or self.payment_method == TDS_PAYMENT_MODE
+                    else "Bank Entry"
+                )
             ),
             "company": self.company,
             "donation_receipt": self.name,
@@ -705,6 +709,10 @@ def get_donor(doctype, txt, searchfield, start, page_len, filters):
     fields = get_fields(doctype, fields)
     fields[0] = "donor." + fields[0]
     # fields[1] = "CONCAT(IF(donor.is_patron=1,'🅿','')," + fields[1] + ")"
+    preachers = get_preachers()
+    cond += (
+        " and donor.llp_preacher IN (" + (",".join([f"'{p}'" for p in preachers])) + ")"
+    )
     return frappe.db.sql(
         """
 		select {fields} 

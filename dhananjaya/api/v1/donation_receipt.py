@@ -70,6 +70,9 @@ def create_receipt():
         doc.patron = donation["patron"]
     doc.sevak_name = donation["sevak_name"]
 
+    if "user_remarks" in donation:
+        doc.user_remarks = donation["user_remarks"]
+
     cheque_image_name = ""
     if donation["payment_method"] == "Cheque":
         doc.cheque_date = donation["cheque_date"]

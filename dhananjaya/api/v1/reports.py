@@ -9,7 +9,7 @@ from dhananjaya.dhananjaya.report.donation_cumulative_report.donation_cumulative
 def patron_board():
     preachers = get_preachers()
     preachers_string = ",".join([f"'{p}'" for p in preachers])
-    get_credit_values()
+    # get_credit_values()
     sevas_map = {}
     for seva in frappe.get_all(
         "Patron Seva Type",

@@ -22,7 +22,7 @@ def list(user):
         return "( 0 )"
     else:
         preachers_str = ",".join([f"'{p}'" for p in preachers])
-        return f" ( `preacher` in ( {preachers_str} ) ) "
+        return f" ( `name` in ( {preachers_str} ) ) "
 
 
 def single(doc, user=None, permission_type=None):
@@ -33,7 +33,7 @@ def single(doc, user=None, permission_type=None):
 
     full_access = any(role in DCC_EXCLUDE_ROLES for role in user_roles)
 
-    if full_access or (doc.preacher in get_preachers()):
+    if full_access or (doc.name in get_preachers()):
         return True
 
     return False

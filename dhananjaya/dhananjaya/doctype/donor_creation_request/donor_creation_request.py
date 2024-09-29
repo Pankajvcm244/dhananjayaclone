@@ -1,6 +1,7 @@
 # Copyright (c) 2023, Narahari Dasa and contributors
 # For license information, please see license.txt
 
+from dhananjaya.constants import DCC_EXCLUDE_ROLES
 from dhananjaya.dhananjaya.utils import (
     get_donor_details,
     is_valid_pan_number,
@@ -155,6 +156,13 @@ def get_first_and_last_names(full_name):
 @frappe.whitelist()
 def get_similar_donors(request):
     results = {"first": {}, "second": {}}
+
+    user_roles = frappe.get_roles()
+
+    full_access = any(role in DCC_EXCLUDE_ROLES for role in user_roles)
+
+    if not full_access:
+        return results
 
     import re
 

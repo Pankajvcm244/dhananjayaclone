@@ -3,6 +3,7 @@
 
 frappe.ui.form.on("Donation Receipt", {
   refresh: function (frm) {
+    
     frm.set_query("asset_item", () => {
       return {
         filters: {
@@ -270,7 +271,7 @@ frappe.ui.form.on("Donation Receipt", {
     frm.add_custom_button(__("PDF"), function () {
       let print_format = "80G Receipt";
       window.open(
-        `/api/method/dhananjaya.dhananjaya.utils.download_pdf?doctype=Donation Receipt&name=${frm.doc.name}&format=${print_format}`
+        `/api/method/dhananjaya.dhananjaya.utils.download_pdf?doctype=Donation Receipt&name=${frm.doc.name}`
       );
     });
   },
