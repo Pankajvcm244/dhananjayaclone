@@ -252,3 +252,7 @@ scheduler_events = {
 
 
 accounting_dimension_doctypes = ["Donation Receipt"]
+
+invoice_doctypes = ["Donation Receipt"]
+
+bank_reconciliation_doctypes = ["Donation Receipt"]
