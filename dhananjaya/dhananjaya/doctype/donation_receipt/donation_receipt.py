@@ -710,9 +710,12 @@ def get_donor(doctype, txt, searchfield, start, page_len, filters):
     fields[0] = "donor." + fields[0]
     # fields[1] = "CONCAT(IF(donor.is_patron=1,'🅿','')," + fields[1] + ")"
     preachers = get_preachers()
-    cond += (
-        " and donor.llp_preacher IN (" + (",".join([f"'{p}'" for p in preachers])) + ")"
-    )
+    if preachers:
+        cond += (
+            " and donor.llp_preacher IN ("
+            + (",".join([f"'{p}'" for p in preachers]))
+            + ")"
+        )
     return frappe.db.sql(
         """
 		select {fields} 

@@ -13,7 +13,7 @@ class PatronGiftIssue(Document):
 	if TYPE_CHECKING:
 		from frappe.types import DF
 
-		gift: DF.Link | None
+		gift: DF.Link
 		issued_on: DF.Date | None
 		language: DF.Literal["English", "Hindi", "Bengali", "Marathi", "Gujarati", "Punjabi", "KashmiriAssamese"]
 		parent: DF.Data

@@ -7,7 +7,7 @@ def get_data():
         "heatmap": False,
         "fieldname": "donation_receipt",
         "transactions": [
-            {"label": _("References"), "items": ["Journal Entry"]},
+            {"label": _("References"), "items": ["Journal Entry", "Asset"]},
             {"label": _("Festival Benefits"), "items": ["Donor Festival Benefit"]},
         ],
     }
