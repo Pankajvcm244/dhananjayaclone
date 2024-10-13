@@ -166,10 +166,7 @@ def upload_donation():
     defaults = get_company_defaults(donation_raw.get(F_COMPANY))
 
     if not defaults.auto_create_journal_entries:
-        if donation_raw[F_PAYMENT_METHOD] == "Cash":
-            receipt_doc.db_set("workflow_state", "Received by Cashier")
-        else:
-            receipt_doc.db_set("workflow_state", "Realized")
+        receipt_doc.db_set("workflow_state", "Realized")
         receipt_doc.db_set("docstatus", 1)
 
     frappe.db.commit()

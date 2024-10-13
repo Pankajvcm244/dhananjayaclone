@@ -19,24 +19,10 @@ class DhananjayaDonationReceipt(object):
 
     def set_conditions(self):
         conditions = ""
-        if self.filters.based_on == "realization_date":
-            rd_condition = f""" 
-                    tdr.realization_date BETWEEN "{self.filters.from_date}" AND "{self.filters.to_date}"
-                    """
-            if self.filters.include_non_realized_based_on_receipt_date:
-                rd_condition += f"""
-                                OR (
-                                    tdr.realization_date IS NULL 
-                                    AND 
-                                        tdr.receipt_date
-                                        BETWEEN 
-                                        "{self.filters.from_date}" 
-                                        AND "{self.filters.to_date}"
-                                    )
-                                    """
-            conditions += f" AND ({rd_condition})"
-        else:
-            conditions += f' AND tdr.{self.filters.based_on} BETWEEN "{self.filters.from_date}" AND "{self.filters.to_date}"'
+        conditions += f""" 
+                        AND tdr.receipt_date 
+                            BETWEEN "{self.filters.from_date}" 
+                                AND "{self.filters.to_date}" """
 
         if self.filters.get("company"):
             conditions += f' AND tdr.company = "{self.filters.get("company")}"'
@@ -97,12 +83,6 @@ class DhananjayaDonationReceipt(object):
                 {
                     "fieldname": "receipt_date",
                     "label": "Receipt Date",
-                    "fieldtype": "Date",
-                    "width": 120,
-                },
-                {
-                    "fieldname": "realization_date",
-                    "label": "Realization Date",
                     "fieldtype": "Date",
                     "width": 120,
                 },
@@ -193,7 +173,7 @@ class DhananjayaDonationReceipt(object):
             f"""
                         select *
                         from `tabDonation Receipt` tdr
-                        where docstatus = 1 {self.conditions}
+                        where tdr.workflow_state = 'Realized' {self.conditions}
                         order by receipt_date
                         """,
             as_dict=1,

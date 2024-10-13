@@ -25,18 +25,16 @@ def execute(filters=None):
     columns = get_expense_colums(cash_accounts)
     entries = {"opening": {"voucher_entry": "Opening", **cash_accounts_opening}}
 
-    for j in frappe.db.sql(
+    for gl in frappe.db.sql(
         f"""
 				SELECT 
 					DATE_FORMAT(tgl.creation, "%D %b, %Y") as entry_date,
                     DATE_FORMAT(tgl.creation, "%I:%i %p") as entry_time,
                     tgl.voucher_no as voucher_entry,
 					tgl.posting_date, tgl.against, tgl.account as cash_account, tgl.debit, tgl.credit,
-					tgl.owner as cashier,
-					tje.donation_receipt,
-                    tje.user_remark as remarks
+					tgl.owner as cashier
 				FROM `tabGL Entry` tgl
-                LEFT JOIN `tabJournal Entry` tje ON tje.name = tgl.voucher_no
+                LEFT JOIN `tabDonation Receipt` tdr ON tdr.name = tgl.voucher_no
 				WHERE tgl.company = '{filters.get('company')}'
 				AND tgl.account IN ({cash_accounts_str})
 				AND tgl.posting_date BETWEEN '{filters.get('from_date')}' AND '{filters.get('to_date')}'
@@ -45,11 +43,11 @@ def execute(filters=None):
 						""",
         as_dict=1,
     ):
-        if j.voucher_entry not in entries:
-            entries[j.voucher_entry] = j
+        if gl.voucher_entry not in entries:
+            entries[gl.voucher_entry] = gl
             for c in cash_accounts:
-                entries[j.voucher_entry][c] = 0
-        entries[j.voucher_entry][j.cash_account] += j.debit - j.credit
+                entries[gl.voucher_entry][c] = 0
+        entries[gl.voucher_entry][gl.cash_account] += gl.debit - gl.credit
 
     entries.update({"closing": {"voucher_entry": "Closing", **cash_accounts_closing}})
     data = list(entries.values())
@@ -114,7 +112,7 @@ def get_expense_colums(cash_accounts):
         {
             "fieldname": "voucher_entry",
             "fieldtype": "Data",
-            "label": "Voucher Entry",
+            "label": "Donation Receipt",
             "width": 200,
         },
     ]
@@ -132,20 +130,6 @@ def get_expense_colums(cash_accounts):
     )
     columns.extend(
         [
-            {
-                "fieldname": "donation_receipt",
-                "fieldtype": "Link",
-                "options": "Donation Receipt",
-                "label": "Donation Receipt",
-                "width": 200,
-            },
-            {
-                "fieldname": "against",
-                "fieldtype": "Link",
-                "options": "Account",
-                "label": "Against Head",
-                "width": 300,
-            },
             {
                 "fieldname": "cashier",
                 "fieldtype": "Data",

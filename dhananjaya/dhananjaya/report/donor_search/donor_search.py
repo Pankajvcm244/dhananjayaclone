@@ -30,7 +30,6 @@ def execute(filters=None):
     #     where_string += (
     #         f""" AND td.last_donation IS NOT NULL AND td.last_donation != '' """
     #     )
-    
 
     if filters.get("contact_no"):
         # where_string += f" and tdc.contact_no LIKE '%{filters.get("contact_no")}%'"
@@ -80,7 +79,8 @@ def execute(filters=None):
 						select tdr.donor, count(*) as times, sum(tdr.amount) as total_donation,
 						IF(MAX(tdr.receipt_date) > NOW() - INTERVAL 2 year,"active","non_active") as status
 						from `tabDonation Receipt` tdr
-						where tdr.donor IN ({",".join([f"'{name}'" for name in donors.keys()])}) and tdr.docstatus = 1
+						where tdr.donor IN ({",".join([f"'{name}'" for name in donors.keys()])}) 
+                        and tdr.workflow_state = 'Realized'
 						group by donor
 						""",
             as_dict=1,

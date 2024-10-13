@@ -14,7 +14,7 @@ def create_donor_suggestions():
 			from `tabDonor` td
 			join `tabDonation Receipt` tdr
 			on tdr.donor = td.name
-			where tdr.docstatus = 1 and MONTHNAME(tdr.receipt_date) = MONTHNAME(NOW())
+			where tdr.workflow_state = 'Realized' and MONTHNAME(tdr.receipt_date) = MONTHNAME(NOW())
 			group by td.name
 			""",
         as_dict=1,
@@ -33,7 +33,7 @@ def create_donor_suggestions():
 			from `tabDonor` td
 			join `tabDonation Receipt` tdr
 			on tdr.donor = td.name
-			where tdr.docstatus = 1 and tdr.receipt_date >= DATE_SUB(NOW(), INTERVAL 7 MONTH)
+			where tdr.workflow_state = 'Realized' and tdr.receipt_date >= DATE_SUB(NOW(), INTERVAL 7 MONTH)
 			group by td.name
 			having count(tdr.name) >= {settings.six_months_frequency}
 			""",

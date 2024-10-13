@@ -5,14 +5,6 @@
 frappe.query_reports["Donation Cumulative Report"] = {
   filters: [
     {
-      fieldname: "based_on",
-      label: __("Based On"),
-      fieldtype: "Select",
-      options: ["Realization Date", "Receipt Date"],
-      default: "Realization Date",
-      width: 100,
-    },
-    {
       fieldname: "from_date",
       label: __("From Date"),
       fieldtype: "Date",

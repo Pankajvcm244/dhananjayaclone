@@ -255,10 +255,7 @@ def insert_a_receipt(r, erp_id, company_trust, status=None):
     if status == "Realized":
         # apply_workflow(doc, status)
         doc.db_set("docstatus", 1)
-        if r["PAYMENT_MODE"] == "CH":
-            doc.db_set("workflow_state", "Received by Cashier")
-        else:
-            doc.db_set("workflow_state", "Realized")
+        doc.db_set("workflow_state", "Realized")
     elif status == "Canceled":
         # apply_workflow(doc, status)
         doc.db_set("docstatus", 2)
@@ -304,10 +301,7 @@ def insert_a_receipt_2(r, donor_id, patron_id, company, company_abbr, status=Non
 
     if status == "Realized":
         receipt_doc.db_set("docstatus", 1)
-        if r["PAYMENT_MODE"] == "CH":
-            receipt_doc.db_set("workflow_state", "Received by Cashier")
-        else:
-            receipt_doc.db_set("workflow_state", "Realized")
+        receipt_doc.db_set("workflow_state", "Realized")
     elif status == "Canceled":
         # apply_workflow(doc, status)
         receipt_doc.db_set("docstatus", 2)

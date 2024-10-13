@@ -248,7 +248,7 @@ def get_donor_details(donors):
 						select tdr.donor, count(*) as times, sum(tdr.amount) as total_donation, MAX(tdr.receipt_date) as last_donation,
 						IF(MAX(tdr.receipt_date) > NOW() - INTERVAL 2 year,"active","non_active") as status
 						from `tabDonation Receipt` tdr
-						where tdr.docstatus = 1 and tdr.donor IN ({",".join([f"'{name}'" for name in donor_details.keys()])})
+						where tdr.workflow_state = 'Realized' and tdr.donor IN ({",".join([f"'{name}'" for name in donor_details.keys()])})
 						group by donor
 						""",
             as_dict=1,
@@ -352,7 +352,6 @@ def sanitise_str(val: str):
 
 def send_receipt_in_mail():
     receipt_pdf = get_pdf_dr("Donation Receipt", "HKMJ-DR2401-0030", doc=None)
-    print(receipt_pdf)
     frappe.sendmail(
         recipients=["nrhdasa@gmail.com"],
         attachments=[receipt_pdf],

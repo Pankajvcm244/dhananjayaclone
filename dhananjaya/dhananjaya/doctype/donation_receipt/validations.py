@@ -99,6 +99,15 @@ def validate_kind_donation(doc):
     return
 
 
+def validate_cheque_details(doc):
+    if doc.payment_method == CHEQUE_MODE:
+        if not doc.cheque_number:
+            frappe.throw("Cheque Number is required")
+        if not doc.cheque_date:
+            frappe.throw("Cheque Date is required")
+    return
+
+
 def validate_donation_account(doc):
     ## Check if Donation Account is set where Credit will happend in JE
     if not doc.donation_account:
