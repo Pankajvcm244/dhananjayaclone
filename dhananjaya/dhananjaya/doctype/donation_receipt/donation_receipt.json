@@ -13,7 +13,6 @@
   "company_abbreviation",
   "receipt_series",
   "receipt_date",
-  "realization_date",
   "preacher",
   "column_break_i6oxf",
   "donor",
@@ -58,7 +57,6 @@
   "bank_account",
   "bank_transaction",
   "bounce_transaction",
-  "cash_received_date",
   "column_break_ddi0v",
   "donation_account",
   "cash_account",
@@ -89,7 +87,8 @@
   "old_ins_bank",
   "old_ins_account_number",
   "old_ins_number",
-  "old_ins_date"
+  "old_ins_date",
+  "old_receipt_date"
  ],
  "fields": [
   {
@@ -158,16 +157,6 @@
    "in_list_view": 1,
    "label": "Company Abbreviation",
    "read_only": 1
-  },
-  {
-   "allow_on_submit": 1,
-   "default": "Today",
-   "fieldname": "receipt_date",
-   "fieldtype": "Date",
-   "in_list_view": 1,
-   "label": "Receipt Date",
-   "permlevel": 1,
-   "reqd": 1
   },
   {
    "fieldname": "reference_no",
@@ -306,14 +295,6 @@
    "read_only": 1
   },
   {
-   "description": "<b>Donation Reconciliation</b>: Exact Bank Statement Entry which has received the donation.",
-   "fieldname": "bank_transaction",
-   "fieldtype": "Link",
-   "label": "Bank Transaction",
-   "options": "Bank Transaction",
-   "permlevel": 3
-  },
-  {
    "fieldname": "section_break_lc36n",
    "fieldtype": "Section Break",
    "label": "Donor Info"
@@ -413,13 +394,6 @@
    "label": "ECS Transaction ID"
   },
   {
-   "allow_on_submit": 1,
-   "fieldname": "realization_date",
-   "fieldtype": "Date",
-   "label": "Realization Date",
-   "permlevel": 1
-  },
-  {
    "fieldname": "contact",
    "fieldtype": "Data",
    "label": "Contact No."
@@ -441,13 +415,6 @@
   {
    "fieldname": "column_break_xmkgt",
    "fieldtype": "Column Break"
-  },
-  {
-   "description": "Generally in case of <b>Cash donation</b>, Journal Entries are booked as and when Cashier receives the cash. In case, if we wish to book Journal Entry of Cash in other date, this field is helpful.\nOnly allowed to DCC Manager",
-   "fieldname": "cash_received_date",
-   "fieldtype": "Date",
-   "label": "Cash Received Date",
-   "permlevel": 3
   },
   {
    "default": "0",
@@ -619,13 +586,34 @@
   {
    "fieldname": "dimension_col_break",
    "fieldtype": "Column Break"
+  },
+  {
+   "description": "<b>Donation Reconciliation</b>: Exact Bank Statement Entry which has received the donation.",
+   "fieldname": "bank_transaction",
+   "fieldtype": "Link",
+   "label": "Bank Transaction",
+   "options": "Bank Transaction"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "Today",
+   "fieldname": "receipt_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Receipt Date",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "old_receipt_date",
+   "fieldtype": "Date",
+   "label": "Old Receipt Date"
   }
  ],
  "image_field": "payment_screenshot",
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-09-29 00:28:10.676531",
+ "modified": "2024-10-13 21:04:30.439854",
  "modified_by": "Administrator",
  "module": "Dhananjaya",
  "name": "Donation Receipt",
@@ -633,6 +621,7 @@
  "permissions": [
   {
    "amend": 1,
+   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -647,6 +636,7 @@
   },
   {
    "amend": 1,
+   "cancel": 1,
    "create": 1,
    "email": 1,
    "export": 1,

@@ -34,6 +34,9 @@ class DhananjayaSettingsCompanyDetails(Document):
 		parenttype: DF.Data
 		preacher_allowed_receipt_creation: DF.Check
 		seal: DF.AttachImage | None
+		temporary_cash_account: DF.Link | None
+		temporary_cheque_account: DF.Link | None
+		temporary_gateway_account: DF.Link | None
 		thanks_note: DF.HTMLEditor | None
 	# end: auto-generated types
 	pass

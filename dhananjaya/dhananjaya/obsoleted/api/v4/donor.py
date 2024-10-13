@@ -189,7 +189,7 @@ def member_stats(member, type="donor"):
 					select  company_abbreviation as company, SUM(amount) as amount
 					from `tabDonation Receipt` dr
 					where {}
-					and docstatus = 1
+					and workflow_state = 'Realized'
 					and {} = '{}'
 					group by company_abbreviation
 					order by company,YEAR(receipt_date) desc,MONTH(receipt_date) desc

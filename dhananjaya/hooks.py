@@ -179,10 +179,6 @@ scheduler_events = {
             "dhananjaya.dhananjaya.doctype.patron_privilege_puja.tasks.special_puja_notify",
             "dhananjaya.dhananjaya.doctype.patron_privilege_puja.tasks.privilege_puja_notify",
         ],
-        # Every 4 hours with offset by 10 minutes
-        "10 */4 * * *": [
-            "dhananjaya.dhananjaya.doctype.donation_receipt.tasks.update_realization_date"
-        ],
         # Every 4 hours with offset by 12 minutes
         "13 */4 * * *": [
             "dhananjaya.dhananjaya.doctype.donation_receipt.tasks.update_donation_calculation"
@@ -255,4 +251,4 @@ accounting_dimension_doctypes = ["Donation Receipt"]
 
 invoice_doctypes = ["Donation Receipt"]
 
-bank_reconciliation_doctypes = ["Donation Receipt"]
+# bank_reconciliation_doctypes = ["Donation Receipt"]

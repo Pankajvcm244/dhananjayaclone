@@ -18,6 +18,11 @@
   "column_break_lglek",
   "bank_account",
   "gateway_expense_account",
+  "temporary_accounts_section",
+  "temporary_cash_account",
+  "temporary_gateway_account",
+  "column_break_tsij",
+  "temporary_cheque_account",
   "donation_credit_section",
   "credit_value",
   "receipt_print_details_section",
@@ -180,12 +185,42 @@
    "fieldname": "credit_value",
    "fieldtype": "Int",
    "label": "Credit Value"
+  },
+  {
+   "fieldname": "temporary_accounts_section",
+   "fieldtype": "Section Break",
+   "label": "Temporary Accounts"
+  },
+  {
+   "fieldname": "temporary_cash_account",
+   "fieldtype": "Link",
+   "label": "Temporary Cash Account",
+   "mandatory_depends_on": "eval:doc.auto_create_journal_entries",
+   "options": "Account"
+  },
+  {
+   "fieldname": "temporary_gateway_account",
+   "fieldtype": "Link",
+   "label": "Temporary Gateway Account",
+   "mandatory_depends_on": "eval:doc.auto_create_journal_entries",
+   "options": "Account"
+  },
+  {
+   "fieldname": "column_break_tsij",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "temporary_cheque_account",
+   "fieldtype": "Link",
+   "label": "Temporary Cheque Account",
+   "mandatory_depends_on": "eval:doc.auto_create_journal_entries",
+   "options": "Account"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-06-29 06:24:30.720544",
+ "modified": "2024-10-11 18:49:10.714362",
  "modified_by": "Administrator",
  "module": "Dhananjaya",
  "name": "Dhananjaya Settings Company Details",

@@ -12,7 +12,7 @@ def execute(filters=None):
     conditions = get_conditions()
 
     if filters.get("only_realized"):
-        conditions += "AND tdr.docstatus = 1"
+        conditions += "AND tdr.workflow_state = 'Realized'"
 
     donations = []
 

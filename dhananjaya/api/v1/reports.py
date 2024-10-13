@@ -25,7 +25,7 @@ def patron_board():
                         join `tabPatron` tp on tdr.patron = tp.name
                         where tp.seva_type =  '{seva['name']}'
                         AND tp.llp_preacher IN ({preachers_string})
-                        AND tdr.docstatus = 1
+                        AND tdr.workflow_state = 'Realized'
                         GROUP BY tp.name
                         """,
             as_dict=1,
@@ -100,7 +100,7 @@ def user_stats(based_on="receipt_date"):
                     select  company_abbreviation as company, DATE_FORMAT({based_on}, '%b-%y') as month, SUM(amount) as amount
                     from `tabDonation Receipt` dr
                     where {based_on} >= DATE_FORMAT(DATE_SUB(NOW(), INTERVAL 6 MONTH), '%Y-%m-01')
-                    and docstatus = 1
+                    and workflow_state = 'Realized'
                     and dr.preacher IN ({preachers_string})
                     {include_conditions}
                     group by company_abbreviation, DATE_FORMAT({based_on}, '%b-%y')

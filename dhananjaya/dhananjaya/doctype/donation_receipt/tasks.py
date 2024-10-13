@@ -12,7 +12,7 @@ def update_donation_calculation():
         """
                     select donor, count(name) as times, sum(amount) as donation, max(receipt_date) as last_donation
                     from  `tabDonation Receipt` tdr
-                    where (tdr.docstatus = 1) AND (tdr.donor IS NOT NULL)
+                    where (tdr.workflow_state = 'Realized') AND (tdr.donor IS NOT NULL)
                     group by tdr.donor
                     """,
         as_dict=1,
@@ -40,13 +40,10 @@ def update_patron_calculation():
     for d in frappe.db.sql(
         """
                     SELECT tp.name as patron, count(tdr.name) as times, sum(tdr.amount) as donation, 
-                    MAX(CASE
-                        WHEN tdr.realization_date IS NULL THEN tdr.receipt_date
-                        ELSE tdr.realization_date
-                    END) as last_donation
+                    MAX(tdr.receipt_date) as last_donation
                     FROM `tabPatron` tp
                     LEFT JOIN `tabDonation Receipt` tdr
-                        ON tp.name = tdr.patron AND tdr.docstatus = 1
+                        ON tp.name = tdr.patron AND tdr.workflow_state = 'Realized'
                     GROUP BY tp.name
                     """,
         as_dict=1,
@@ -99,11 +96,8 @@ def update_patron_calculation():
                     f""" 
                         SELECT patron, SUM(amount) as donation
                         FROM `tabDonation Receipt`
-                        WHERE (
-                        ((realization_date IS NULL) AND receipt_date = '{v.last_donation}') 
-                        OR realization_date = '{v.last_donation}'
-                        ) AND patron IS NOT NULL
-                        AND docstatus = 1
+                        WHERE receipt_date = '{v.last_donation}' AND patron IS NOT NULL
+                        AND workflow_state = 'Realized'
                         AND patron = '{k}'
                         GROUP BY patron
                     """
@@ -144,14 +138,11 @@ def update_last_donation():
     donor_map = frappe.db.sql(
         """
                     select d.name as donor, 
-                    case
-                        WHEN realization_date IS NULL THEN max(receipt_date)
-                        ELSE max(realization_date)
-                    end as last_donation
+                    max(receipt_date) as last_donation
                     from `tabDonor` d
                     join `tabDonation Receipt` dr
                     on dr.donor = d.name
-                    where dr.docstatus = 1
+                    where dr.workflow_state = 'Realized'
                     group by d.name
                     """,
         as_dict=1,
@@ -190,24 +181,3 @@ def clean_dhananjaya_data():
                     WHERE 1
                     """
     )
-
-
-def update_realization_date():
-    receipts = frappe.db.sql(
-        """
-                    select je.posting_date as real_date,dr.name as receipt_id
-                    from `tabDonation Receipt` dr
-                    join `tabJournal Entry` je
-                    on je.donation_receipt = dr.name
-                    where dr.realization_date IS NULL
-                    """,
-        as_dict=1,
-    )
-    for r in receipts:
-        frappe.db.set_value(
-            "Donation Receipt",
-            r["receipt_id"],
-            "realization_date",
-            r["real_date"],
-            update_modified=False,
-        )

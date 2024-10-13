@@ -86,11 +86,9 @@ def upload_donation(t):
             ]
 
             donor_dict.update({"addresses": address_single})
-        
+
         if ("email" in t) and t["email"]:
-            donor_dict.update({"emails": [{
-                'email':t['email']
-            }]})
+            donor_dict.update({"emails": [{"email": t["email"]}]})
 
         if clean_contact is not None:
             donor_dict.update({"contacts": [{"contact_no": clean_contact}]})
@@ -107,44 +105,38 @@ def upload_donation(t):
     ### Upload Receipts
     llp_preacher = frappe.db.get_value("Donor", donor, "llp_preacher")
     receipt_dict = {
-            "doctype": "Donation Receipt",
-            "company": "Hare Krishna Movement Mumbai",
-            "receipt_date": t["date"],
-            "preacher": llp_preacher,
-            "donor": donor,
-            "contact": t["mobile"],
-            "address": t["address"],
-            "payment_method": t["mode_of_payment"],
-            "amount": t["amount"],
-            "remarks": t["remarks"],
-            "seva_type": "General Donation - HKMM",
-            "old_dr_no": t["dr_no"],
-        }
+        "doctype": "Donation Receipt",
+        "company": "Hare Krishna Movement Mumbai",
+        "receipt_date": t["date"],
+        "preacher": llp_preacher,
+        "donor": donor,
+        "contact": t["mobile"],
+        "address": t["address"],
+        "payment_method": t["mode_of_payment"],
+        "amount": t["amount"],
+        "remarks": t["remarks"],
+        "seva_type": "General Donation - HKMM",
+        "old_dr_no": t["dr_no"],
+    }
 
     if "additional_charges" in t:
         receipt_dict["additional_charges"] = t["additional_charges"]
-    
+
     receipt_doc = frappe.get_doc(receipt_dict)
     receipt_doc.insert(ignore_permissions=True)
 
     if "status" in t and t["status"] == "Acknowledged":
-        receipt_doc.db_set("workflow_state", t['status'])
+        receipt_doc.db_set("workflow_state", t["status"])
         receipt_doc.db_set("docstatus", 0)
-    elif "status" not in t or t["status"] in ["Realized","Received by Cashier"]:
-        if t["mode_of_payment"]  == "Cash":
-            receipt_doc.db_set("workflow_state", "Received by Cashier")
-        else:
-            receipt_doc.db_set("workflow_state", "Realized")
+    elif "status" not in t or t["status"] == "Realized":
+        receipt_doc.db_set("workflow_state", "Realized")
         receipt_doc.db_set("docstatus", 1)
     else:
-        frappe.throw('Status can only be one of ["Acknowledged", "Realized","Received by Cashier"]')
+        frappe.throw('Status can only be one of ["Acknowledged", "Realized"]')
 
     frappe.db.commit()
 
-    return {
-        "receipt_id":receipt_doc.name,
-        "donor_id": donor
-    }
+    return {"receipt_id": receipt_doc.name, "donor_id": donor}
 
 
 STATES = "|".join(

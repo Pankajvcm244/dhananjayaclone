@@ -46,29 +46,10 @@ def get_backup_files():
 @frappe.whitelist()
 def generate_receipts():
     export_doc = frappe.get_doc("Dhananjaya Receipts Export")
-    based_on_date = (
-        "realization_date"
-        if export_doc.based_on == "Realization Date"
-        else "receipt_date"
-    )
 
     conditions = ""
 
-    if based_on_date == "realization_date":
-        rd_condition = f""" 
-                tdr.realization_date BETWEEN "{export_doc.date_from}" AND "{export_doc.date_to}"
-                OR (
-                    tdr.realization_date IS NULL 
-                    AND 
-                        tdr.receipt_date
-                        BETWEEN 
-                        "{export_doc.date_from}" 
-                        AND "{export_doc.date_to}"
-                    )
-                """
-        conditions += f" AND ({rd_condition})"
-    else:
-        conditions += f' AND tdr.{based_on_date} BETWEEN "{export_doc.date_from}" AND "{export_doc.date_to}"'
+    conditions += f' AND tdr.receipt_date BETWEEN "{export_doc.date_from}" AND "{export_doc.date_to}"'
 
     conditions += f' AND tdr.company = "{export_doc.company}"'
 
@@ -76,8 +57,8 @@ def generate_receipts():
         f"""
         select *
         from `tabDonation Receipt` tdr
-        where docstatus = 1 {conditions}
-        order by {based_on_date}
+        where workflow_state = 'Realized' {conditions}
+        order by receipt_date
         """,
         as_dict=1,
     )
@@ -85,7 +66,7 @@ def generate_receipts():
     receipt_monthly_bundle = {}
 
     for r in receipts:
-        month_year = f"{r[based_on_date].year}-{r[based_on_date].month}"
+        month_year = f"{r["receipt_date"].year}-{r["receipt_date"].month}"
         if month_year not in receipt_monthly_bundle:
             receipt_monthly_bundle[month_year] = []
         receipt_monthly_bundle[month_year].append(r)

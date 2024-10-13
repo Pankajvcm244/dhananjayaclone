@@ -209,39 +209,13 @@ class PatronCommitmentStatus(object):
         else:
             patron_acc_str = f" AND patron IN ( {self.patron_string} )"
 
-        jes = [
-            e
-            for l in frappe.db.sql(
-                f"""
-            SELECT tje.name
-            FROM `tabDonation Receipt` tdr
-            LEFT JOIN `tabJournal Entry` tje
-                ON tje.donation_receipt = tdr.name
-            WHERE tdr.docstatus = 1
-                # AND tje.clearance_date IS NOT NULL
-                AND (
-                        (
-                        tdr.realization_date IS NULL 
-                        AND tdr.receipt_date BETWEEN '{self.filters.from_date}' AND '{self.filters.to_date}'
-                        )
-                        OR
-                        (tdr.realization_date BETWEEN '{self.filters.from_date}' AND '{self.filters.to_date}')
-                    )    
-                {patron_acc_str}
-                """
-            )
-            for e in l
-        ]
-
-        jes_str = ",".join([f"'{j}'" for j in jes])
-
         return frappe.db.sql(
             f"""
             SELECT account, SUM(debit) as total_debit, SUM(credit) as total_credit
-            FROM `tabGL Entry`
-            WHERE voucher_type = 'Journal Entry'
-                AND voucher_no IN ({jes_str}) 
-                AND is_cancelled = 0
+            FROM `tabGL Entry` tgl
+            JOIN `tabDonation Receipt` tdr
+                ON tgl.voucher_type = 'Donation Receipt' AND tgl.voucher_no = tdr.name
+            WHERE 1 {patron_acc_str}
             GROUP BY account
                 """,
             as_dict=1,
@@ -255,15 +229,8 @@ class PatronCommitmentStatus(object):
 					FROM `tabDonation Receipt` tdr
 					WHERE 1
 						AND tdr.patron IN ( {self.patron_string} )
-						AND tdr.docstatus = 1
-                        AND (
-                            (
-                            tdr.realization_date IS NULL 
-                            AND tdr.receipt_date BETWEEN '{m.start_date}' AND '{m.end_date}'
-                            )
-                            OR
-                            (tdr.realization_date BETWEEN '{m.start_date}' AND '{m.end_date}')
-                        )   
+						AND tdr.workflow_state = 'Realized'
+                        AND tdr.receipt_date BETWEEN '{m.start_date}' AND '{m.end_date}'  
 					GROUP BY patron
 							""",
                 as_dict=1,
@@ -278,15 +245,8 @@ class PatronCommitmentStatus(object):
 					FROM `tabDonation Receipt` tdr
 					WHERE 1
 						AND patron IN ( {self.patron_string} )
-						AND docstatus = 1
-                        AND (
-                                (
-                                tdr.realization_date IS NULL 
-                                AND tdr.receipt_date < '{self.filters.get("from_date")}'
-                                )
-                                OR
-                                (tdr.realization_date < '{self.filters.get("from_date")}')
-                            )   
+						AND tdr.workflow_state = 'Realized'
+                        AND tdr.receipt_date < '{self.filters.get("from_date")}'
 					GROUP BY patron
 							""",
             as_dict=1,

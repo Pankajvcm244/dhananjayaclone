@@ -3,6 +3,9 @@
 from erpnext.accounts.doctype.accounting_dimension.accounting_dimension import (
     get_accounting_dimensions,
 )
+from erpnext.accounts.general_ledger import make_gl_entries
+from erpnext.controllers.accounts_controller import AccountsController
+import frappe.utils
 from .templates import prepare_email_body
 from dhananjaya.dhananjaya.doctype.pg_upload_batch.pg_upload_batch import (
     refresh_pg_upload_batch,
@@ -14,6 +17,7 @@ from .validations import (
     validate_atg_required,
     validate_donor,
     validate_govt_laws,
+    validate_cheque_details,
     validate_cheque_screenshot,
     validate_reference_number,
 )
@@ -50,7 +54,7 @@ from .constants import (
 )
 
 
-class DonationReceipt(Document):
+class DonationReceipt(AccountsController):
     # begin: auto-generated types
     # This code is auto-generated. Do not modify anything in this block.
 
@@ -72,7 +76,6 @@ class DonationReceipt(Document):
         bank_transaction: DF.Link | None
         bounce_transaction: DF.Link | None
         cash_account: DF.Link | None
-        cash_received_date: DF.Date | None
         cheque_branch: DF.Data | None
         cheque_date: DF.Date | None
         cheque_number: DF.Data | None
@@ -100,6 +103,7 @@ class DonationReceipt(Document):
         old_ins_bank: DF.Data | None
         old_ins_date: DF.Date | None
         old_ins_number: DF.Data | None
+        old_receipt_date: DF.Date | None
         patron: DF.Link | None
         patron_name: DF.Data | None
         payment_gateway_document: DF.Link | None
@@ -108,8 +112,7 @@ class DonationReceipt(Document):
         preacher: DF.Link | None
         print_remarks_on_receipt: DF.Check
         project: DF.Link | None
-        realization_date: DF.Date | None
-        receipt_date: DF.Date
+        receipt_date: DF.Date | None
         receipt_series: DF.Data | None
         reference_no: DF.Data | None
         remarks: DF.Text | None
@@ -119,7 +122,6 @@ class DonationReceipt(Document):
         stock_expense_account: DF.Link | None
         tds_account: DF.Link | None
         user_remarks: DF.Text | None
-
     # end: auto-generated types
     def autoname(self):
 
@@ -132,9 +134,8 @@ class DonationReceipt(Document):
         elif self.receipt_series:
             self.name = make_autoname(self.receipt_series, "", self)
         else:
-            dateF = getdate(self.receipt_date)
-            year = dateF.strftime("%y")
-            month = dateF.strftime("%m")
+            year = datetime.now().strftime("%y")
+            month = datetime.now().strftime("%m")
             prefix = f"{self.company_abbreviation}-DR{year}{month}-"
             self.name = prefix + getseries(prefix, 4)
 
@@ -144,6 +145,7 @@ class DonationReceipt(Document):
         validate_donor(self)
         validate_atg_required(self)
         validate_govt_laws(self)
+        validate_cheque_details(self)
         # Hundi Donations are to be separately managed by accounts
         # validate_cheque_screenshot(self) # Need to change in API before uncommenting this as screenshot is uploaded post creation
         # validate_reference_number(self)
@@ -178,8 +180,8 @@ class DonationReceipt(Document):
                     self.donor,
                 )
             ####
-            if self.has_value_changed("seva_type"):
-                self.on_change_seva_type()  # Use Only in Emergency Cases.
+            # if self.has_value_changed("seva_type"):
+            #     self.on_change_seva_type()  # Use Only in Emergency Cases.
             ## TODO First check the impact of both GL Entry & Payment Ledger Entry
             ###
             if self.has_value_changed("is_csr"):
@@ -270,8 +272,9 @@ class DonationReceipt(Document):
     ###### BEFORE SAVE : SETTINGS DEFAULT ACCOUNTS OF COMPANY ######
 
     def before_save(self):
+        self.set_receipt_date()
         self.amount_in_words = money_in_words(self.amount, main_currency="Rupees")
-
+        company_detail = get_company_defaults(self.company)
         # Check for Preacher Change
         if (
             not self.flags.is_new_doc
@@ -286,12 +289,6 @@ class DonationReceipt(Document):
             address, contact, email = get_best_contact_address(self.donor)
             self.contact = "" if contact is None else contact
             self.address = "" if address is None else address
-
-        company_detail = get_company_defaults(self.company)
-        if not company_detail:
-            frappe.throw(
-                "There are no settings available for this Company. Please check Dhananjaya Settings"
-            )
         ## Setting Default Accounts in Receipt
 
         if not self.donation_account:
@@ -341,8 +338,47 @@ class DonationReceipt(Document):
                         self.cost_center = c.cost_center
                         break
 
+    def set_receipt_date(self):
+        """
+        1. No Need to update if Receipt Date is already set
+        2. Use today for CASH, KIND Donations
+        3. For GATEWAY Payments
+            -> This will be used only while making receipts manually. So the date will be updated later based on below priorities:
+            a.  Auto Reconcillation from PG Upload Batch
+            b.  From Bank Transaction
+        4. For NEFT/RTGS/UPI Payments
+            -> Initially it will be today but on realisation will be updated to Bank Transaction Date
+        ##TODO : Insert these logics on Realization Workflow
+        """
+        if self.payment_method == CHEQUE_MODE:
+            self.receipt_date = self.cheque_date
+        elif not self.receipt_date:
+            self.receipt_date = today()
+
+    def refactor_receipt_date(self):
+        "Method required to correct the receipt date based on the bank transaction date."
+
+        if (
+            self.payment_method in [CASH_PAYMENT_MODE, TDS_PAYMENT_MODE]
+            or self.is_kind_donation()
+        ):
+            return
+        elif self.payment_method == CHEQUE_MODE:
+            self.receipt_date = self.cheque_date
+        else:
+            bank_tx_date = frappe.get_value(
+                "Bank Transaction", self.bank_transaction, "date"
+            )
+            if bank_tx_date:
+                if self.payment_method == PAYMENT_GATWEWAY_MODE:
+                    if not self.payment_gateway_document:
+                        self.receipt_date = bank_tx_date
+                else:
+                    self.receipt_date = bank_tx_date
+        return
+
     ###### UPDATE WORKFLOW STATE FROM 'SUSPENSE' TO 'REALIZED' ON ENTERING THE RIGHT DONOR ######
-    _saving_flag = False
+    # _saving_flag = False
 
     # def on_update_after_submit(self):
     #     if not self._saving_flag:
@@ -355,7 +391,7 @@ class DonationReceipt(Document):
     ###### BEFORE SUBMIT : CHECK WHETHER REQUIRED ACCOUNTS ARE SET ######
 
     def before_submit(self):
-        ## TODO Revisit it on new version of Dhananjaya
+        self.refactor_receipt_date()
         validate_kind_donation(self)
         company_detail = get_company_defaults(self.company)
         if not company_detail.auto_create_journal_entries:
@@ -368,13 +404,16 @@ class DonationReceipt(Document):
 
     def on_submit(self):
         company_detail = get_company_defaults(self.company)
+        settings_doc = frappe.get_cached_doc("Dhananjaya Settings")
         is_kind_mode = self.is_kind_donation()
         if company_detail.auto_create_journal_entries:
-            je_doc = self.create_journal_entry()
+            # je_doc = self.create_journal_entry()
+            self.make_gl_entries()
             if self.payment_method not in (CASH_PAYMENT_MODE, TDS_PAYMENT_MODE) and (
                 not is_kind_mode
             ):
-                self.reconcile_bank_transaction(je_doc)
+                self.reconcile_bank_transaction()
+
             if (
                 self.payment_method == PAYMENT_GATWEWAY_MODE
                 and self.payment_gateway_document
@@ -382,7 +421,10 @@ class DonationReceipt(Document):
                 self.reconcile_gateway_transaction()
 
         if is_kind_mode and self.asset_item:
-            self.make_asset()
+            asset_name = self.make_asset()
+            frappe.msgprint(
+                f"Asset Created : {get_link_to_form("Asset", asset_name)}", alert=True
+            )
 
     def make_asset(self, is_grouped_asset=False):
         item_doc = frappe.get_doc("Item", self.asset_item)
@@ -397,7 +439,7 @@ class DonationReceipt(Document):
                 "asset_category": item_doc.asset_category,
                 "location": self.asset_location,
                 "company": self.company,
-                "custom_donation_receipt": self.name,
+                "donation_receipt": self.name,
                 "calculate_depreciation": 0,
                 "is_existing_asset": 1,
                 "gross_purchase_amount": self.amount,
@@ -423,11 +465,55 @@ class DonationReceipt(Document):
             COST_CENTER = frappe.db.get_value("Company", self.company, "cost_center")
         return COST_CENTER
 
-    ###### JOURNAL ENTRY AUTOMATION ######
+    def before_cancel(self):
+        frappe.only_for("DCC Manager")
 
-    def create_journal_entry(self):
+        if self.payment_method == CASH_PAYMENT_MODE:
+            frappe.only_for("System Manager")
+        super().before_cancel()
+
+    def on_cancel(self):
+        self.ignore_linked_doctypes = [
+            "GL Entry",
+        ]
+        super().on_cancel()
+        self.make_gl_entries(True)
+        if self.payment_gateway_document:
+            self.unset_payment_gateway()
+        if self.asset_item:
+            self.cancel_asset()
+        self.db_set("workflow_state", "Cancelled")
+
+    def unset_payment_gateway(self):
+        frappe.db.set_value(
+            "Payment Gateway Transaction",
+            self.payment_gateway_document,
+            {"receipt_created": 0, "donor": None, "seva_type": None},
+        )
+        pg_batch = frappe.db.get_value(
+            "Payment Gateway Transaction", self.payment_gateway_document, "batch"
+        )
+        refresh_pg_upload_batch(pg_batch)
+
+    def cancel_asset(self):
+        assets = frappe.db.get_all(
+            "Asset",
+            filters={"donation_receipt": self.name, "docstatus": 1},
+            pluck="name",
+        )
+        if len(assets) > 0:
+            asset = assets[0]
+            asset_doc = frappe.get_doc("Asset", asset)
+            asset_doc.cancel()
+
+    def make_gl_entries(self, cancel=False):
+        gl_entries = self.get_gl_entries()
+        make_gl_entries(gl_entries, cancel=cancel, merge_entries=False)
+
+    def get_gl_entries(self):
         is_kind_mode = self.is_kind_donation()
         seva_type_doc = frappe.get_cached_doc("Seva Type", self.seva_type)
+        company_detail = get_company_defaults(self.company)
         if (not seva_type_doc) or (not seva_type_doc.account):
             frappe.throw(
                 _(
@@ -437,24 +523,7 @@ class DonationReceipt(Document):
 
         default_cost_center = self.get_cost_center()
 
-        je = {
-            "doctype": "Journal Entry",
-            "voucher_type": (
-                "Cash Entry"
-                if self.payment_method == CASH_PAYMENT_MODE
-                else (
-                    "Journal Entry"
-                    if is_kind_mode or self.payment_method == TDS_PAYMENT_MODE
-                    else "Bank Entry"
-                )
-            ),
-            "company": self.company,
-            "donation_receipt": self.name,
-            # "docstatus": 1,
-        }
-
-        ##### In Case of New Donor Request #####
-
+        ## TODO : Below can be eliminated since we don't need donor_name
         if not self.donor:
             if not self.donor_creation_request:
                 frappe.throw(
@@ -466,20 +535,19 @@ class DonationReceipt(Document):
         else:
             donor_name = self.full_name
 
-        ########################################
+        if self.amount <= 0:
+            frappe.throw("Amount can not be Zero.")
 
-        je.setdefault(
-            "user_remark",
-            f"BEING {'KIND' if is_kind_mode else 'AMOUNT'} RECEIVED FOR {self.seva_type} FROM {donor_name} AS PER R.NO.{self.name} DT:{self.receipt_date} {self.preacher} ",
-        )
+        gl_base_entries = []
 
         if is_kind_mode:
-            from erpnext.assets.doctype.asset.asset import is_cwip_accounting_enabled
+            from erpnext.assets.doctype.asset.asset import (
+                is_cwip_accounting_enabled,
+            )
             from erpnext.assets.doctype.asset_category.asset_category import (
                 get_asset_category_account,
             )
 
-            je.setdefault("posting_date", self.receipt_date)
             kind_debit_account = None
             if self.kind_type == CONSUMABLE:
                 kind_debit_account = self.stock_expense_account
@@ -504,52 +572,74 @@ class DonationReceipt(Document):
                         title=_("Missing Account"),
                     )
                 kind_debit_account = asset_category_account
-            # update_accounting_dimensions(self, je_row)
-            credit_entry = {
-                "account": self.donation_account,
-                "credit_in_account_currency": self.amount,
-            }
-            self.update_accounting_dimensions(credit_entry)
 
-            debit_entry = {
-                "account": kind_debit_account,
-                "debit_in_account_currency": self.amount,
-            }
-            je.setdefault("accounts", [credit_entry, debit_entry])
-
-        elif self.payment_method == CASH_PAYMENT_MODE:
-            # Jounrnal Entry date should be the day Cashier received the amount because it has to tally with Cashbook.
-            cash_date = (
-                self.cash_received_date
-                if self.cash_received_date is not None
-                else today()
+            gl_base_entries.extend(
+                [
+                    frappe._dict(
+                        posting_date=self.receipt_date,
+                        account=self.donation_account,
+                        credit=self.amount,
+                        party_type="Donor",
+                        party=self.donor,
+                    ),
+                    frappe._dict(
+                        posting_date=self.receipt_date,
+                        account=kind_debit_account,
+                        debit=self.amount,
+                    ),
+                ]
             )
-            je.setdefault("posting_date", cash_date)
-            credit_entry = {
-                "account": self.donation_account,
-                "credit_in_account_currency": self.amount,
-            }
-            self.update_accounting_dimensions(credit_entry)
-            debit_entry = {
-                "account": self.cash_account,
-                "debit_in_account_currency": self.amount,
-            }
-            je.setdefault("accounts", [credit_entry, debit_entry])
+        elif self.payment_method == CASH_PAYMENT_MODE:
+            gl_base_entries.extend(
+                [
+                    frappe._dict(
+                        posting_date=self.receipt_date,
+                        account=self.donation_account,
+                        credit=self.amount,
+                        party_type="Donor",
+                        party=self.donor,
+                    ),
+                    frappe._dict(
+                        posting_date=today(),
+                        account=self.cash_account,
+                        debit=self.amount,
+                    ),
+                ]
+            )
+            ## Bring in Temporary Ledgers
+            if self.receipt_date != today():
+                gl_base_entries.extend(
+                    [
+                        frappe._dict(
+                            posting_date=self.receipt_date,
+                            account=company_detail.temporary_cash_account,
+                            debit=self.amount,
+                        ),
+                        frappe._dict(
+                            posting_date=today(),
+                            account=company_detail.temporary_cash_account,
+                            credit=self.amount,
+                        ),
+                    ]
+                )
         elif self.payment_method == TDS_PAYMENT_MODE:
             # Jounrnal Entry date should be the receipt date only.
-            je.setdefault("posting_date", self.receipt_date)
-            credit_entry = {
-                "account": self.donation_account,
-                "credit_in_account_currency": self.amount,
-            }
-            self.update_accounting_dimensions(credit_entry)
-            debit_entry = {
-                "account": self.tds_account,
-                "debit_in_account_currency": self.amount,
-            }
-            je.setdefault(
-                "accounts",
-                [credit_entry, debit_entry],
+
+            gl_base_entries.extend(
+                [
+                    frappe._dict(
+                        posting_date=self.receipt_date,
+                        account=self.donation_account,
+                        credit=self.amount,
+                        party_type="Donor",
+                        party=self.donor,
+                    ),
+                    frappe._dict(
+                        posting_date=self.receipt_date,
+                        account=self.tds_account,
+                        debit=self.amount,
+                    ),
+                ]
             )
         else:
             bank_account_ledger = frappe.get_cached_doc(
@@ -558,63 +648,118 @@ class DonationReceipt(Document):
             transaction = frappe.get_doc("Bank Transaction", self.bank_transaction)
 
             if self.payment_method == CHEQUE_MODE:
-                # Transaction Date should be posting date.
-                je.setdefault("posting_date", transaction.date)
-                je.setdefault("cheque_no", self.cheque_number)
-                je.setdefault("cheque_date", self.cheque_date)
-            else:
-                je.setdefault("posting_date", transaction.date)
-                je.setdefault("cheque_no", transaction.description)
-                je.setdefault("cheque_date", self.receipt_date)
-                # je.setdefault('clearance_date',transaction.date)
-            credit_entry = {
-                "account": self.donation_account,
-                "credit_in_account_currency": self.amount,
-            }
-            self.update_accounting_dimensions(credit_entry)
-            debit_entry = {
-                "account": bank_account_ledger.account,
-                "bank_account": self.bank_account,
-                "debit_in_account_currency": self.amount
-                - (0 if not self.additional_charges else self.additional_charges),
-            }
-            je.setdefault(
-                "accounts",
-                [credit_entry, debit_entry],
-            )
+                "Temporary Entries will always exist."
+                gl_base_entries.extend(
+                    [
+                        frappe._dict(
+                            posting_date=self.receipt_date,
+                            account=self.donation_account,
+                            credit=self.amount,
+                            party_type="Donor",
+                            party=self.donor,
+                        ),
+                        frappe._dict(
+                            posting_date=self.receipt_date,
+                            account=company_detail.temporary_cheque_account,
+                            debit=self.amount,
+                        ),
+                        frappe._dict(
+                            posting_date=transaction.date,
+                            account=company_detail.temporary_cheque_account,
+                            credit=self.amount,
+                        ),
+                        frappe._dict(
+                            posting_date=transaction.date,
+                            account=bank_account_ledger.account,
+                            debit=self.amount,
+                        ),
+                    ]
+                )
 
-            if (
-                self.payment_method == PAYMENT_GATWEWAY_MODE
-                and self.additional_charges > 0
-            ):
-                tx_charges_debit_entry = {
-                    "account": self.gateway_expense_account,
-                    "debit_in_account_currency": self.additional_charges,
-                }
-                je["accounts"].append(tx_charges_debit_entry)
-        je_doc = frappe.get_doc(je)
-        je_doc.insert()
-        je_doc.submit()
-        return je_doc
+            elif self.payment_method == PAYMENT_GATWEWAY_MODE:
+                gl_base_entries.extend(
+                    [
+                        frappe._dict(
+                            posting_date=self.receipt_date,
+                            account=self.donation_account,
+                            credit=self.amount,
+                            party_type="Donor",
+                            party=self.donor,
+                        ),
+                        frappe._dict(
+                            posting_date=transaction.date,
+                            account=bank_account_ledger.account,
+                            debit=self.amount - self.additional_charges,
+                        ),
+                    ]
+                )
+                if self.additional_charges:
+                    gl_base_entries.append(
+                        frappe._dict(
+                            posting_date=self.receipt_date,
+                            account=self.gateway_expense_account,
+                            debit=self.additional_charges,
+                        ),
+                    )
+                ## Bring in Temporary Ledgers
+                if self.receipt_date != transaction.date:
+                    gl_base_entries.extend(
+                        [
+                            frappe._dict(
+                                posting_date=self.receipt_date,
+                                account=company_detail.temporary_gateway_account,
+                                debit=self.amount - self.additional_charges,
+                            ),
+                            frappe._dict(
+                                posting_date=transaction.date,
+                                account=company_detail.temporary_gateway_account,
+                                credit=self.amount - self.additional_charges,
+                            ),
+                        ]
+                    )
+            else:
+                gl_base_entries.extend(
+                    [
+                        frappe._dict(
+                            posting_date=self.receipt_date,
+                            account=self.donation_account,
+                            credit=self.amount,
+                            party_type="Donor",
+                            party=self.donor,
+                        ),
+                        frappe._dict(
+                            posting_date=self.receipt_date,
+                            account=bank_account_ledger.account,
+                            debit=self.amount,
+                        ),
+                    ]
+                )
+
+        gl_entries = []
+        for gb in gl_base_entries:
+            gl_entries.append(
+                self.get_gl_dict(
+                    {
+                        **gb,
+                        **{"cost_center": self.cost_center, "project": self.project},
+                    },
+                    item=self,
+                )
+            )
+        return gl_entries
 
     ###### BANK RECONCILLATION AUTOMATION ######
 
-    # Reconciles Bank Transaction with Journal Entry and also updates the Clearance Date in Journal Entry
-    def reconcile_bank_transaction(self, je_doc):
+    ###### Reconciles Bank Transaction with Journal Entry and also updates the Clearance Date in Journal Entry
+    def reconcile_bank_transaction(self):
         voucher = {
-            "payment_doctype": je_doc.doctype,
-            "payment_name": je_doc.name,
+            "payment_doctype": self.doctype,
+            "payment_name": self.name,
             "amount": self.amount
             - (0 if not self.additional_charges else self.additional_charges),
         }
         tx_doc = frappe.get_doc("Bank Transaction", self.bank_transaction)
         add_payment_entry(tx_doc, voucher)
-        frappe.db.set_value(
-            "Journal Entry",
-            je_doc.name,
-            "clearance_date",
-            tx_doc.date.strftime("%Y-%m-%d"),
-        )
 
     ###### BANK RECONCILLATION AUTOMATION ######
 
@@ -628,31 +773,32 @@ class DonationReceipt(Document):
         gateway_doc.receipt_created = 1
         gateway_doc.save()
 
-    def update_accounting_dimensions(self, je_row):
-        for dimension in get_accounting_dimensions():
-            je_row.update({dimension: self.get(dimension)})
+    # def update_accounting_dimensions(self, je_row):
+    #     for dimension in get_accounting_dimensions():
+    #         je_row.update({dimension: self.get(dimension)})
 
-        je_row["cost_center"] = self.cost_center
-        je_row["projext"] = self.project
+    #     je_row["cost_center"] = self.cost_center
+    #     je_row["project"] = self.project
 
-        if not je_row["cost_center"]:
-            je_row["cost_center"] = frappe.get_cached_value(
-                "Company", self.company, "cost_center"
-            )
+    #     if not je_row["cost_center"]:
+    #         je_row["cost_center"] = frappe.get_cached_value(
+    #             "Company", self.company, "cost_center"
+    #         )
 
-        # TODO Update Onchnage
-        # COST_CENTER = None
-        # if self.seva_subtype:
-        #     subseva_doc = frappe.get_doc("Seva Subtype", self.seva_subtype)
-        #     for c in subseva_doc.cost_centers:
-        #         if c.company == self.company:
-        #             COST_CENTER = c.cost_center
-        # if not COST_CENTER:
-        #     COST_CENTER = frappe.db.get_value("Company", self.company, "cost_center")
-        # return COST_CENTER
-        ###
+    # TODO Update Onchnage
+    # COST_CENTER = None
+    # if self.seva_subtype:
+    #     subseva_doc = frappe.get_doc("Seva Subtype", self.seva_subtype)
+    #     for c in subseva_doc.cost_centers:
+    #         if c.company == self.company:
+    #             COST_CENTER = c.cost_center
+    # if not COST_CENTER:
+    #     COST_CENTER = frappe.db.get_value("Company", self.company, "cost_center")
+    # return COST_CENTER
+    ###
 
 
+##TODO: Check if this is needed
 def add_payment_entry(tx_doc, voucher):
     "Add the vouchers with zero allocation. Save() will perform the allocations and clearance"
     if voucher["amount"] > tx_doc.unallocated_amount:
@@ -719,13 +865,13 @@ def get_donor(doctype, txt, searchfield, start, page_len, filters):
         )
     return frappe.db.sql(
         """
-		select {fields} 
-		from `tabDonor` donor
-		{join_stmt}
-		where full_name LIKE %(txt)s
-		{cond}
-		order by last_donation desc,full_name limit %(page_len)s offset %(start)s
-		""".format(
+        select {fields} 
+        from `tabDonor` donor
+        {join_stmt}
+        where full_name LIKE %(txt)s
+        {cond}
+        order by last_donation desc,full_name limit %(page_len)s offset %(start)s
+        """.format(
             **{"fields": ", ".join(fields), "cond": cond, "join_stmt": join_stmt}
         ),
         {"txt": "%" + txt + "%", "start": start, "page_len": 40},
@@ -785,7 +931,7 @@ def process_batch_gateway_payments(batch):
             "address": address,
             "seva_type": tx["seva_type"],
             "donation_account": seva_doc.account,
-            "receipt_date": bank_tx_doc.date,
+            "receipt_date": bank_tx_doc.date,  ##TODO: Actual Date of Payment Gateway Tx to be brought in
             "payment_method": PAYMENT_GATWEWAY_MODE,
             "amount": tx["amount"],
             "additional_charges": tx["fee"],

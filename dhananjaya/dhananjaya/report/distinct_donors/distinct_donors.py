@@ -40,7 +40,12 @@ def execute(filters=None):
             linked_contacts, linked_donors = get_similar_donors(key, [], [])
             mobile_covered.extend(linked_contacts)
             contacts_extended_map.setdefault(
-                key, dict(contact=key, linked_contacts=",".join(linked_contacts), linked_donors=",".join(linked_donors))
+                key,
+                dict(
+                    contact=key,
+                    linked_contacts=",".join(linked_contacts),
+                    linked_donors=",".join(linked_donors),
+                ),
             )
 
     donor_details = get_donation_details(filters)
@@ -66,7 +71,10 @@ def execute(filters=None):
                 max_donation_donor = filtered_donors[fd]
                 max_donation = filtered_donors[fd]["total_donation"]
 
-            if filtered_donors[fd]["last_donation"] and last_donation < filtered_donors[fd]["last_donation"]:
+            if (
+                filtered_donors[fd]["last_donation"]
+                and last_donation < filtered_donors[fd]["last_donation"]
+            ):
                 last_donation = filtered_donors[fd]["last_donation"]
 
             if filtered_donors[fd]["first_donation"]:
@@ -107,7 +115,11 @@ def execute(filters=None):
 
 
 def get_contacts_map():
-    contacts = frappe.get_all("Donor Contact", fields=["*"], filters={"parent": ["!=", ""], "parenttype": "Donor"})
+    contacts = frappe.get_all(
+        "Donor Contact",
+        fields=["*"],
+        filters={"parent": ["!=", ""], "parenttype": "Donor"},
+    )
     contacts_map = {}
 
     for i, c in enumerate(contacts):
@@ -179,7 +191,7 @@ def get_donation_details(filters):
                             max(tdr.receipt_date) as last_donation
 						from `tabDonation Receipt` tdr
                         join `tabDonor` td on td.name = tdr.donor
-						where tdr.docstatus = 1
+						where tdr.workflow_state = 'Realized'
                         and tdr.receipt_date >= '{filters.get("from_date")}'
                         and tdr.company in ({companies_string})
 						group by td.name

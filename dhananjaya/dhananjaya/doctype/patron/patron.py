@@ -19,12 +19,22 @@ class Patron(Document):
     from typing import TYPE_CHECKING
 
     if TYPE_CHECKING:
-        from dhananjaya.dhananjaya.doctype.donor_address.donor_address import DonorAddress
-        from dhananjaya.dhananjaya.doctype.donor_contact.donor_contact import DonorContact
+        from dhananjaya.dhananjaya.doctype.donor_address.donor_address import (
+            DonorAddress,
+        )
+        from dhananjaya.dhananjaya.doctype.donor_contact.donor_contact import (
+            DonorContact,
+        )
         from dhananjaya.dhananjaya.doctype.donor_email.donor_email import DonorEmail
-        from dhananjaya.dhananjaya.doctype.patron_card_detail.patron_card_detail import PatronCardDetail
-        from dhananjaya.dhananjaya.doctype.patron_display_name.patron_display_name import PatronDisplayName
-        from dhananjaya.dhananjaya.doctype.patron_gift_issue.patron_gift_issue import PatronGiftIssue
+        from dhananjaya.dhananjaya.doctype.patron_card_detail.patron_card_detail import (
+            PatronCardDetail,
+        )
+        from dhananjaya.dhananjaya.doctype.patron_display_name.patron_display_name import (
+            PatronDisplayName,
+        )
+        from dhananjaya.dhananjaya.doctype.patron_gift_issue.patron_gift_issue import (
+            PatronGiftIssue,
+        )
         from frappe.types import DF
 
         aadhar_no: DF.Data | None
@@ -61,6 +71,7 @@ class Patron(Document):
         times_donated: DF.Int
         total_donated: DF.Currency
         unresolved_fax_column: DF.Data | None
+
     # end: auto-generated types
     def validate(self):
         self.validate_display_names()
@@ -106,7 +117,7 @@ class Patron(Document):
     def total_donation(self):
         donations = frappe.db.get_all(
             "Donation Receipt",
-            filters={"docstatus": 1, "patron": self.name},
+            filters={"workflow_state": "Realized", "patron": self.name},
             pluck="amount",
         )
         return sum(donations)

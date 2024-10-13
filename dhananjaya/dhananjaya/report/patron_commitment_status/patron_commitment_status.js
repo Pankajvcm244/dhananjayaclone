@@ -63,23 +63,4 @@ frappe.query_reports["Patron Commitment Status"] = {
     }
     return value;
   },
-
-  // formatCurrencyIndianStyle: function (amount) {
-  //   // Convert the amount to a string and remove any decimals
-  //   let amountStr = Math.floor(amount).toString();
-
-  //   // Reverse the string to process from right to left
-  //   let reversedWhole = amountStr.split("").reverse().join("");
-
-  //   // Group the digits: first group is 3 digits, then groups of 2 digits
-  //   let groupedDigits = [reversedWhole.slice(0, 3)];
-  //   for (let i = 3; i < reversedWhole.length; i += 2) {
-  //     groupedDigits.push(reversedWhole.slice(i, i + 2));
-  //   }
-
-  //   // Reverse back the groups and join them with commas
-  //   let indianFormatted = groupedDigits.join(",").split("").reverse().join("");
-
-  //   return indianFormatted;
-  // },
 };

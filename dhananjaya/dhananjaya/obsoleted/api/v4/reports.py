@@ -9,7 +9,10 @@ def patron_board():
     frappe.get_all("Donation Receipt")
     sevas_map = {}
     for seva in frappe.get_all(
-        "Patron Seva Type", filters={"enabled": 1}, fields=["name", "seva_amount"], order_by="seva_amount desc"
+        "Patron Seva Type",
+        filters={"enabled": 1},
+        fields=["name", "seva_amount"],
+        order_by="seva_amount desc",
     ):
         patrons_map = {}
         for i in frappe.db.sql(
@@ -19,7 +22,7 @@ def patron_board():
                         join `tabPatron` tp on tdr.patron = tp.name
                         where tp.seva_type =  '{seva['name']}'
                         AND tp.llp_preacher IN ({preachers_string})
-                        AND tdr.docstatus = 1
+                        AND tdr.workflow_state = 'Realized'
                         GROUP BY tp.name
                         """,
             as_dict=1,
@@ -69,7 +72,10 @@ def ashraya_board():
     }
     for i in frappe.get_all(
         "Donor",
-        filters=[["llp_preacher", "in", preachers], ["ashraya_level", "not in", ["null", ""]]],
+        filters=[
+            ["llp_preacher", "in", preachers],
+            ["ashraya_level", "not in", ["null", ""]],
+        ],
         fields=["ashraya_level, count(name) as count"],
         group_by="ashraya_level",
     ):

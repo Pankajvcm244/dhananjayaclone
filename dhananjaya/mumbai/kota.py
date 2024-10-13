@@ -69,14 +69,11 @@ def create_receipt():
     # if "status" in t and t["status"] == "Acknowledged":
     #     receipt_doc.db_set("workflow_state", t['status'])
     #     receipt_doc.db_set("docstatus", 0)
-    # elif "status" not in t or t["status"] in ["Realized","Received by Cashier"]:
-    #     if t["mode_of_payment"]  == "Cash":
-    #         receipt_doc.db_set("workflow_state", "Received by Cashier")
-    #     else:
-    #         receipt_doc.db_set("workflow_state", "Realized")
+    # elif "status" not in t or t["status"] in ["Realized"]:
+    #     receipt_doc.db_set("workflow_state", "Realized")
     #     receipt_doc.db_set("docstatus", 1)
     # else:
-    #     frappe.throw('Status can only be one of ["Acknowledged", "Realized","Received by Cashier"]')
+    #     frappe.throw('Status can only be one of ["Acknowledged", "Realized"]')
 
     # if not frappe.db.exists({"doctype": "Devotee", "name1": receipt_doc.preacher}):
     #     devotee_doc = frappe.get_doc({
@@ -164,26 +161,6 @@ def create_receipt_from_bank_suspense():
     receipt_doc = frappe.get_doc(receipt_dict)
     receipt_doc.insert(ignore_permissions=True)
 
-    # if "status" in t and t["status"] == "Acknowledged":
-    #     receipt_doc.db_set("workflow_state", t['status'])
-    #     receipt_doc.db_set("docstatus", 0)
-    # elif "status" not in t or t["status"] in ["Realized","Received by Cashier"]:
-    #     if t["mode_of_payment"]  == "Cash":
-    #         receipt_doc.db_set("workflow_state", "Received by Cashier")
-    #     else:
-    #         receipt_doc.db_set("workflow_state", "Realized")
-    #     receipt_doc.db_set("docstatus", 1)
-    # else:
-    #     frappe.throw('Status can only be one of ["Acknowledged", "Realized","Received by Cashier"]')
-
-    # if not frappe.db.exists({"doctype": "Devotee", "name1": receipt_doc.preacher}):
-    #     devotee_doc = frappe.get_doc({
-    #         "doctype":"Devotee",
-    #         "name1":receipt_doc.preacher
-    #     })
-    #     devotee_doc.insert()
-    #     frappe.db.commit()
-
     receipt_doc.db_set("workflow_state", "Realized")
     receipt_doc.db_set("docstatus", 1)
 
@@ -265,7 +242,7 @@ def check_donor_or_create(t):
                 {
                     "address_line_1": "Jaipur",
                     "city": "Jaipur",
-                    "state": "Rajasthan"
+                    "state": "Rajasthan",
                     # "pin_code": resolved_address[4],
                 }
             ]

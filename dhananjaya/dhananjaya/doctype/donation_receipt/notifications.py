@@ -1,6 +1,7 @@
 import frappe
 from datetime import datetime
-from dhananjaya.dhananjaya.utils import  get_preacher_users
+from dhananjaya.dhananjaya.utils import get_preacher_users
+
 
 ## SEND NOTIFICATION TO DHANANJAYA APP USERS ON VARIOUS STATES OF RECEIPTS
 def notify_mobile_app_users(doc):
@@ -8,7 +9,7 @@ def notify_mobile_app_users(doc):
     message = title = None
     current_time = datetime.now().strftime("%d %B, %Y %I:%M %p")
     notification_channel = None
-    if doc.workflow_state == "Received by Cashier" and doc.payment_method == "Cash":
+    if doc.workflow_state == "Realized" and doc.payment_method == "Cash":
         title = f"{doc.payment_method} Acknowledgement"
         message = f"This is to acknowledge that Cashier has received a cash of Rs. {doc.amount} from you at {current_time}."
         notification_channel = settings_doc.cash_cheque_collection_channel

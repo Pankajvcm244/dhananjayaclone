@@ -8,6 +8,7 @@ from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
 def execute():
     make_custom_records()
 
+
 def make_custom_records():
     records = [
         {"doctype": "Role", "role_name": "DCC Preacher"},
@@ -53,11 +54,6 @@ def get_states_and_actions():
             "doctype": "Workflow State",
             "workflow_state_name": "Suspense",
             "style": "Warning",
-        },
-        {
-            "doctype": "Workflow State",
-            "workflow_state_name": "Received by Cashier",
-            "style": "Success",
         },
         {
             "doctype": "Workflow State",
@@ -123,7 +119,7 @@ def get_workflow():
                 "idx": 2,
                 "state": "Acknowledged",
                 "action": "Receive Cash",
-                "next_state": "Received by Cashier",
+                "next_state": "Realized",
                 "allowed": "DCC Cashier",
                 "allow_self_approval": 1,
                 "condition": "doc.payment_method == 'Cash'  and (doc.donor or doc.donor_creation_request)",
@@ -250,17 +246,6 @@ def get_workflow():
                 "doc_status": "0",
                 "is_optional_state": 0,
                 "allow_edit": "DCC Executive",
-                "parent": "Donation Receipt Workflow",
-                "parentfield": "states",
-                "parenttype": "Workflow",
-                "doctype": "Workflow Document State",
-            },
-            {
-                "idx": 4,
-                "state": "Received by Cashier",
-                "doc_status": "1",
-                "is_optional_state": 0,
-                "allow_edit": "DCC Manager",
                 "parent": "Donation Receipt Workflow",
                 "parentfield": "states",
                 "parenttype": "Workflow",

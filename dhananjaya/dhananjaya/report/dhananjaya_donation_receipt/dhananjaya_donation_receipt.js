@@ -19,23 +19,6 @@ frappe.query_reports["Dhananjaya Donation Receipt"] = {
       width: 80,
     },
     {
-      fieldname: "based_on",
-      label: __("Based On"),
-      fieldtype: "Select",
-      options: [
-        {
-          label: "Realization Date",
-          value: "realization_date",
-        },
-        {
-          label: "Receipt Date",
-          value: "receipt_date",
-        },
-      ],
-      default: "realization_date",
-      width: 100,
-    },
-    {
       fieldname: "from_date",
       label: __("From Date"),
       fieldtype: "Date",
