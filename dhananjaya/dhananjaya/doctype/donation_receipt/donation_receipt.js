@@ -9,6 +9,7 @@ frappe.ui.form.on("Donation Receipt", {
       "Asset Depreciation Schedule",
       "Repost Accounting Ledger",
       "Bank Transaction",
+      "Donation Receipt",
     ];
   },
   refresh: function (frm) {
@@ -16,6 +17,14 @@ frappe.ui.form.on("Donation Receipt", {
       return {
         filters: {
           is_fixed_asset: 1,
+          disabled: 0,
+        },
+      };
+    });
+    frm.set_query("cost_center", () => {
+      return {
+        filters: {
+          company: frm.doc.company,
           disabled: 0,
         },
       };
@@ -176,49 +185,49 @@ frappe.ui.form.on("Donation Receipt", {
           "Operations"
         );
       }
-      frm.add_custom_button(
-        __("Bounce"),
-        function () {
-          var warning_message = "";
-          if (frm.doc.bounce_transaction) {
-            warning_message =
-              "This action will consequently create a bounced Journal Entry and reconcile the Bank Statement as well.";
-          } else {
-            warning_message =
-              "This action will directly put the receipt in Bounced State without going through Realization.";
-            if (frm.doc.docstatus == 1) {
-              frappe.msgprint(
-                "Bounce Transaction is mandatory for Realized State"
-              );
-              return;
-            }
-          }
-
-          frappe.warn(
-            "Are you sure you want to proceed to bounce this Cheque Donation?",
-            warning_message,
-            () => {
-              frappe.call({
-                freeze: true,
-                freeze_message: "Bouncing Cheque Donation",
-                method:
-                  "dhananjaya.dhananjaya.doctype.donation_receipt.operations.receipt_bounce_operations",
-                args: {
-                  receipt: frm.doc.name,
-                },
-                callback: function (r) {
-                  if (!r.exc) {
-                    frappe.msgprint("Successfully Bounced.");
-                  }
-                },
-              });
-            },
-            () => {}
-          );
-        },
-        "Operations"
-      );
     }
+    frm.add_custom_button(
+      __("Bounce"),
+      function () {
+        var warning_message = "";
+        if (frm.doc.bounce_transaction) {
+          warning_message =
+            "This action will consequently create a bounced Journal Entry and reconcile the Bank Statement as well.";
+        } else {
+          warning_message =
+            "This action will directly put the receipt in Bounced State without going through Realization.";
+          if (frm.doc.docstatus == 1) {
+            frappe.msgprint(
+              "Bounce Transaction is mandatory for Realized State"
+            );
+            return;
+          }
+        }
+
+        frappe.warn(
+          "Are you sure you want to proceed to bounce this Cheque Donation?",
+          warning_message,
+          () => {
+            frappe.call({
+              freeze: true,
+              freeze_message: "Bouncing Cheque Donation",
+              method:
+                "dhananjaya.dhananjaya.doctype.donation_receipt.operations.receipt_bounce_operations",
+              args: {
+                receipt: frm.doc.name,
+              },
+              callback: function (r) {
+                if (!r.exc) {
+                  frappe.msgprint("Successfully Bounced.");
+                }
+              },
+            });
+          },
+          () => {}
+        );
+      },
+      "Operations"
+    );
     frm.add_custom_button(
       __("Send Receipt/Acknowledgement"),
       async function () {
@@ -259,21 +268,17 @@ frappe.ui.form.on("Donation Receipt", {
       );
     });
     if (frm.doc.docstatus > 0) {
-      frm.add_custom_button(
-        __("Accounting Ledger"),
-        function () {
-          frappe.route_options = {
-            voucher_no: frm.doc.name,
-            company: frm.doc.company,
-            from_date: frm.doc.receipt_date,
-            to_date: moment(frm.doc.modified).format("YYYY-MM-DD"),
-            group_by: "Group by Voucher (Consolidated)",
-            show_cancelled_entries: frm.doc.docstatus === 2,
-          };
-          frappe.set_route("query-report", "General Ledger");
-        },
-        __("View")
-      );
+      frm.add_custom_button(__("Ledger"), function () {
+        frappe.route_options = {
+          voucher_no: frm.doc.name,
+          company: frm.doc.company,
+          from_date: frm.doc.receipt_date,
+          to_date: moment(frm.doc.modified).format("YYYY-MM-DD"),
+          group_by: "Group by Voucher (Consolidated)",
+          show_cancelled_entries: frm.doc.docstatus === 2,
+        };
+        frappe.set_route("query-report", "General Ledger");
+      });
     }
   },
   send_receipt_email(frm, recipient) {

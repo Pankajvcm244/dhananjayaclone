@@ -111,8 +111,9 @@ def get_expense_colums(cash_accounts):
         },
         {
             "fieldname": "voucher_entry",
-            "fieldtype": "Data",
             "label": "Donation Receipt",
+            "fieldtype": "Link",
+            "options": "Donation Receipt",
             "width": 200,
         },
     ]

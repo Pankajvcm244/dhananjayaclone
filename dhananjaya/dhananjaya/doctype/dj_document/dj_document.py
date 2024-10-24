@@ -6,6 +6,19 @@ from frappe.model.document import Document
 
 
 class DJDocument(Document):
+    # begin: auto-generated types
+    # This code is auto-generated. Do not modify anything in this block.
+
+    from typing import TYPE_CHECKING
+
+    if TYPE_CHECKING:
+        from frappe.types import DF
+
+        attachment: DF.Attach
+        company: DF.Link
+        title: DF.Data
+        type: DF.Literal["General", "Patron"]
+    # end: auto-generated types
 
     def on_update(self):
         self.delete_box_key()

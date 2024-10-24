@@ -9,7 +9,7 @@ from frappe.query_builder.utils import DocType
 from frappe.utils import add_to_date
 from datetime import datetime
 from dhananjaya.dhananjaya.utils import get_credit_values
-from frappe import _
+from frappe import _, cstr
 from frappe.utils.data import date_diff
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
@@ -63,6 +63,10 @@ class PatronCommitmentStatus(object):
                 </div>		
             """
         for account in self.patron_accounts:
+            net_debit = account.total_debit - account.total_credit
+            account.total_debit, account.total_credit = (
+                (net_debit, 0) if net_debit > 0 else (0, -net_debit)
+            )
             patrons_block += f"""
                 <div class="row section-break bold">
                     <div class="col-xs-6 column-break" >
@@ -108,6 +112,10 @@ class PatronCommitmentStatus(object):
                 </div>		
             """
         for account in self.non_patron_accounts:
+            net_debit = account.total_debit - account.total_credit
+            account.total_debit, account.total_credit = (
+                (net_debit, 0) if net_debit > 0 else (0, -net_debit)
+            )
             non_patrons_block += f"""
                 <div class="row section-break bold">
                     <div class="col-xs-6 column-break" >
@@ -195,18 +203,16 @@ class PatronCommitmentStatus(object):
 
     def get_donation_accounts_calculation(self, patron=True):
         if not patron:
+            "To calculate donation of Non Patrons. These donation can be only of HKM Jaipur and of Seva Types which are actually meant for Patronship Donations."
+
             seva_types = frappe.get_all(
                 "Seva Type", filters={"patronship_allowed": 1, "kind": 0}, pluck="name"
             )
             seva_types_str = ",".join([f"'{s}'" for s in seva_types])
             patron_acc_str = f" AND (patron IS NULL OR patron = '') AND tdr.seva_type IN ({seva_types_str})"
-            patron_acc_str += (
-                " AND tdr.company != 'Sri Radha Krishna Mandir Foundation'"
-            )
-
-            patron_acc_str += f" AND tdr.donor != 'DNR-2023-40763'"
-            ## Donor SHouldn't be SRI RADHA KRISHNA MANDIR FOUNDATION
         else:
+            "To calculate donation of Patrons"
+
             patron_acc_str = f" AND patron IN ( {self.patron_string} )"
 
         return frappe.db.sql(
@@ -215,7 +221,9 @@ class PatronCommitmentStatus(object):
             FROM `tabGL Entry` tgl
             JOIN `tabDonation Receipt` tdr
                 ON tgl.voucher_type = 'Donation Receipt' AND tgl.voucher_no = tdr.name
-            WHERE 1 {patron_acc_str}
+            WHERE 1 
+                AND tdr.receipt_date BETWEEN '{self.filters.from_date}' AND '{self.filters.to_date}'
+                {patron_acc_str}
             GROUP BY account
                 """,
             as_dict=1,
@@ -408,7 +416,8 @@ class PatronCommitmentStatus(object):
             {
                 "fieldname": "id",
                 "label": "Patron ID",
-                "fieldtype": "Data",
+                "fieldtype": "Link",
+                "options": "Patron",
                 "width": 140,
             },
             {

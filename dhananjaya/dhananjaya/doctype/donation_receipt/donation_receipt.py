@@ -1,5 +1,6 @@
 # Copyright (c) 2023, Narahari Dasa and contributors
 # For license information, please see license.txt
+import erpnext
 from erpnext.accounts.doctype.accounting_dimension.accounting_dimension import (
     get_accounting_dimensions,
 )
@@ -74,6 +75,7 @@ class DonationReceipt(AccountsController):
         bank_account: DF.Link | None
         bank_name: DF.Data | None
         bank_transaction: DF.Link | None
+        bank_transaction_description: DF.SmallText | None
         bounce_transaction: DF.Link | None
         cash_account: DF.Link | None
         cheque_branch: DF.Data | None
@@ -122,6 +124,7 @@ class DonationReceipt(AccountsController):
         stock_expense_account: DF.Link | None
         tds_account: DF.Link | None
         user_remarks: DF.Text | None
+
     # end: auto-generated types
     def autoname(self):
 
@@ -363,18 +366,23 @@ class DonationReceipt(AccountsController):
             or self.is_kind_donation()
         ):
             return
-        elif self.payment_method == CHEQUE_MODE:
-            self.receipt_date = self.cheque_date
         else:
             bank_tx_date = frappe.get_value(
                 "Bank Transaction", self.bank_transaction, "date"
             )
             if bank_tx_date:
-                if self.payment_method == PAYMENT_GATWEWAY_MODE:
+                if self.payment_method == CHEQUE_MODE:
+                    self.receipt_date = self.cheque_date
+                    if self.receipt_date > bank_tx_date:
+                        frappe.throw(
+                            "Receipt Date cannot be greater than Bank Transaction Date in case of Cheque."
+                        )
+                elif self.payment_method == PAYMENT_GATWEWAY_MODE:
                     if not self.payment_gateway_document:
                         self.receipt_date = bank_tx_date
                 else:
                     self.receipt_date = bank_tx_date
+
         return
 
     ###### UPDATE WORKFLOW STATE FROM 'SUSPENSE' TO 'REALIZED' ON ENTERING THE RIGHT DONOR ######
@@ -392,6 +400,9 @@ class DonationReceipt(AccountsController):
 
     def before_submit(self):
         self.refactor_receipt_date()
+        self.cost_center = (
+            self.cost_center or erpnext.get_default_cost_center(self.company),
+        )
         validate_kind_donation(self)
         company_detail = get_company_defaults(self.company)
         if not company_detail.auto_create_journal_entries:
@@ -422,10 +433,13 @@ class DonationReceipt(AccountsController):
 
         if is_kind_mode and self.asset_item:
             asset_name = self.make_asset()
-            frappe.msgprint(
-                f"Asset Created : {get_link_to_form("Asset", asset_name)}", alert=True
-            )
+            asset_link = get_link_to_form("Asset", asset_name)
+            frappe.msgprint(f"Asset Created : {asset_link}", alert=True)
+        # frappe.errprint(self.receipt_date)
+        # frappe.errprint(self.receipt_date)
+        # frappe.throw("ERROR")
 
+    #
     def make_asset(self, is_grouped_asset=False):
         item_doc = frappe.get_doc("Item", self.asset_item)
         if not self.asset_location:
@@ -477,7 +491,8 @@ class DonationReceipt(AccountsController):
             "GL Entry",
         ]
         super().on_cancel()
-        self.make_gl_entries(True)
+        if frappe.db.exists("GL Entry", {"voucher_no": self.name}):
+            self.make_gl_entries(cancel=True)
         if self.payment_gateway_document:
             self.unset_payment_gateway()
         if self.asset_item:
@@ -606,8 +621,9 @@ class DonationReceipt(AccountsController):
                     ),
                 ]
             )
+
             ## Bring in Temporary Ledgers
-            if self.receipt_date != today():
+            if str(self.receipt_date) != today():
                 gl_base_entries.extend(
                     [
                         frappe._dict(
@@ -645,7 +661,9 @@ class DonationReceipt(AccountsController):
             bank_account_ledger = frappe.get_cached_doc(
                 "Bank Account", self.bank_account
             )
-            transaction = frappe.get_doc("Bank Transaction", self.bank_transaction)
+            transaction = None
+            if self.bank_transaction:
+                transaction = frappe.get_doc("Bank Transaction", self.bank_transaction)
 
             if self.payment_method == CHEQUE_MODE:
                 "Temporary Entries will always exist."
@@ -664,12 +682,20 @@ class DonationReceipt(AccountsController):
                             debit=self.amount,
                         ),
                         frappe._dict(
-                            posting_date=transaction.date,
+                            posting_date=(
+                                self.receipt_date
+                                if not transaction
+                                else transaction.date
+                            ),
                             account=company_detail.temporary_cheque_account,
                             credit=self.amount,
                         ),
                         frappe._dict(
-                            posting_date=transaction.date,
+                            posting_date=(
+                                self.receipt_date
+                                if not transaction
+                                else transaction.date
+                            ),
                             account=bank_account_ledger.account,
                             debit=self.amount,
                         ),
@@ -687,7 +713,11 @@ class DonationReceipt(AccountsController):
                             party=self.donor,
                         ),
                         frappe._dict(
-                            posting_date=transaction.date,
+                            posting_date=(
+                                self.receipt_date
+                                if not transaction
+                                else transaction.date
+                            ),
                             account=bank_account_ledger.account,
                             debit=self.amount - self.additional_charges,
                         ),
@@ -702,7 +732,7 @@ class DonationReceipt(AccountsController):
                         ),
                     )
                 ## Bring in Temporary Ledgers
-                if self.receipt_date != transaction.date:
+                if transaction and self.receipt_date != transaction.date:
                     gl_base_entries.extend(
                         [
                             frappe._dict(
@@ -736,6 +766,7 @@ class DonationReceipt(AccountsController):
                 )
 
         gl_entries = []
+
         for gb in gl_base_entries:
             gl_entries.append(
                 self.get_gl_dict(

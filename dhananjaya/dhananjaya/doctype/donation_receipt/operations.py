@@ -48,8 +48,10 @@ def receipt_bounce_operations(receipt):
 
     receipt_doc = frappe.get_doc("Donation Receipt", receipt)
 
-    if receipt_doc.payment_method != CHEQUE_MODE:
-        frappe.throw("Only allowed for Cheque")
+    if receipt_doc.docstatus == 0:
+        receipt_doc.db_set("workflow_state", "Bounced")
+        receipt_doc.db_set("docstatus", 1)
+        return
 
     if receipt_doc.docstatus != 1 or not receipt_doc.bounce_transaction:
         frappe.throw("Bounced Transaction is Required for Realised Receipts.")

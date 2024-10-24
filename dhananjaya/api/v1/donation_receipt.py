@@ -196,7 +196,7 @@ def search_receipts(filters, order_by, limit_start, limit):
             descendants = get_descendants_of("Seva Subtype", ftr[2])
             types = [ftr[2]]
             if descendants:
-                types = types.extend(descendants)
+                types.extend(descendants)
             types_str = ",".join([f"'{t}'" for t in types])
             where_string += f""" AND seva_subtype IN ({types_str}) """
         if "workflow_state" in ftr:
@@ -287,3 +287,19 @@ def cashier_approve_receipt(docname):
     elif doc.payment_method == "Cheque":
         apply_workflow(doc, "Collect Cheque")
         frappe.db.commit()
+
+
+@frappe.whitelist()
+def check_receipts_with_payment_reference(payment_references):
+    if not payment_references:
+        return []
+    payment_references = json.loads(payment_references)
+    pr_str = ",".join([f"'{pr}'" for pr in payment_references])
+    available_prs = frappe.db.sql(
+        f"""
+         SELECT payment_gateway_document
+         FROM `tabDonation Receipt`
+         WHERE payment_gateway_document IN ({pr_str})""",
+        pluck="payment_gateway_document",
+    )
+    return available_prs

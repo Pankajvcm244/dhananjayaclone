@@ -100,6 +100,7 @@ permission_query_conditions = {
     "Patron": "dhananjaya.dhananjaya.doctype.patron.patron_filter.list",
     "LLP Preacher": "dhananjaya.dhananjaya.doctype.llp_preacher.llp_preacher_filter.list",
     "Donor Creation Request": "dhananjaya.dhananjaya.doctype.donor_creation_request.donor_creation_request_filter.list",
+    "Patron Privilege Puja": "dhananjaya.dhananjaya.doctype.patron_privilege_puja.patron_privilege_puja_filter.list",
 }
 
 has_permission = {
@@ -108,6 +109,7 @@ has_permission = {
     "Patron": "dhananjaya.dhananjaya.doctype.patron.patron_filter.single",
     "LLP Preacher": "dhananjaya.dhananjaya.doctype.llp_preacher.llp_preacher_filter.single",
     "Donor Creation Request": "dhananjaya.dhananjaya.doctype.donor_creation_request.donor_creation_request_filter.single",
+    "Patron Privilege Puja": "dhananjaya.dhananjaya.doctype.patron_privilege_puja.patron_privilege_puja_filter.single",
 }
 
 

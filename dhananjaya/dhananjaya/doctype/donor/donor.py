@@ -25,16 +25,10 @@ class Donor(Document):
     from typing import TYPE_CHECKING
 
     if TYPE_CHECKING:
-        from dhananjaya.dhananjaya.doctype.donor_address.donor_address import (
-            DonorAddress,
-        )
-        from dhananjaya.dhananjaya.doctype.donor_contact.donor_contact import (
-            DonorContact,
-        )
+        from dhananjaya.dhananjaya.doctype.donor_address.donor_address import DonorAddress
+        from dhananjaya.dhananjaya.doctype.donor_contact.donor_contact import DonorContact
         from dhananjaya.dhananjaya.doctype.donor_email.donor_email import DonorEmail
-        from dhananjaya.dhananjaya.doctype.special_puja_detail.special_puja_detail import (
-            SpecialPujaDetail,
-        )
+        from dhananjaya.dhananjaya.doctype.special_puja_detail.special_puja_detail import SpecialPujaDetail
         from frappe.types import DF
 
         aadhar_no: DF.Data | None
@@ -82,7 +76,6 @@ class Donor(Document):
         times_donated: DF.Int
         total_donated: DF.Currency
         unresolved_fax_column: DF.Data | None
-
     # end: auto-generated types
     def after_insert(self):
         if self.donor_creation_request:

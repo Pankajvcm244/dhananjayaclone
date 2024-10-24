@@ -9,6 +9,7 @@
  "field_order": [
   "patron",
   "patron_name",
+  "preacher",
   "day",
   "month",
   "occasion",
@@ -61,11 +62,18 @@
    "fieldtype": "Data",
    "label": "Patron Name",
    "read_only": 1
+  },
+  {
+   "fetch_from": "patron.llp_preacher",
+   "fieldname": "preacher",
+   "fieldtype": "Link",
+   "label": "Preacher",
+   "options": "LLP Preacher"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-11-07 14:38:49.648554",
+ "modified": "2024-10-16 10:57:04.033763",
  "modified_by": "Administrator",
  "module": "Dhananjaya",
  "name": "Patron Privilege Puja",
