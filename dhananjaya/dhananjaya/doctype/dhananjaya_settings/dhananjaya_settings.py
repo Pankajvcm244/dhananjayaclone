@@ -14,7 +14,9 @@ class DhananjayaSettings(Document):
     from typing import TYPE_CHECKING
 
     if TYPE_CHECKING:
-        from dhananjaya.dhananjaya.doctype.dhananjaya_settings_company_details.dhananjaya_settings_company_details import DhananjayaSettingsCompanyDetails
+        from dhananjaya.dhananjaya.doctype.dhananjaya_settings_company_details.dhananjaya_settings_company_details import (
+            DhananjayaSettingsCompanyDetails,
+        )
         from frappe.types import DF
 
         admin_role: DF.Link
@@ -80,8 +82,6 @@ def get_print_donation(dr):
             "email": "" if email is None else email,
             "money_in_words": money_in_words(dr_doc.amount, main_currency="Rupees"),
         }
-        if sevak_name:
-            dr_data.update({"sevak_name": sevak_name})
     else:
         donor_creation_request_doc = frappe.get_doc(
             "Donor Creation Request", dr_doc.donor_creation_request
@@ -108,6 +108,9 @@ def get_print_donation(dr):
             "email": None,
             "money_in_words": money_in_words(dr_doc.amount, main_currency="Rupees"),
         }
+
+    if sevak_name:
+        dr_data.update({"sevak_name": sevak_name})
 
     ### Get Reference Number also if Realised.
     dr_data.update({"reference_number": ""})

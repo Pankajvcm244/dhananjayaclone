@@ -18,6 +18,7 @@
   "address_line_2",
   "city",
   "state",
+  "country",
   "pin_code",
   "longitude",
   "latitude",
@@ -62,9 +63,8 @@
   },
   {
    "fieldname": "state",
-   "fieldtype": "Select",
+   "fieldtype": "Data",
    "label": "State",
-   "options": "\nAndaman and Nicobar Islands\nAndhra Pradesh\nArunachal Pradesh\nAssam\nBihar\nChandigarh\nChhattisgarh\nDadra and Nagar Haveli and Daman and Diu\nDelhi\nGoa\nGujarat\nHaryana\nHimachal Pradesh\nJammu and Kashmir\nJharkhand\nKarnataka\nKerala\nLadakh\nLakshadweep Islands\nMadhya Pradesh\nMaharashtra\nManipur\nMeghalaya\nMizoram\nNagaland\nOdisha\nOther Territory\nPondicherry\nPunjab\nRajasthan\nSikkim\nTamil Nadu\nTelangana\nTripura\nUttar Pradesh\nUttarakhand\nWest Bengal",
    "reqd": 1
   },
   {
@@ -139,12 +139,17 @@
    "fieldname": "latitude",
    "fieldtype": "Float",
    "label": "Latitude"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Data",
+   "label": "Country"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-04-26 19:37:38.678022",
+ "modified": "2024-10-24 15:57:12.360104",
  "modified_by": "Administrator",
  "module": "Dhananjaya",
  "name": "Donor Creation Request",

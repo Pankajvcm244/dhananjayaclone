@@ -8,6 +8,16 @@ import frappe
 #     remove_old_jes()
 
 
+# def set_precher_in_puja():
+#     for pp in frappe.get_all(
+#         "Patron Privilege Puja",
+#         filters={"preacher": ("is", "not set")},
+#         fields=["name", "patron"],
+#     ):
+#         preacher = frappe.get_value("Patron", pp["patron"], "llp_preacher")
+#         frappe.set_value("Patron Privilege Puja", pp["name"], "preacher", preacher)
+
+
 def correct_cheques():
     for c in frappe.db.sql(
         """
