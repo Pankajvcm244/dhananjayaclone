@@ -3,6 +3,13 @@ from erpnext.accounts.general_ledger import make_gl_entries
 import frappe
 
 
+# def cheque_donation_adjustment():
+# for d in frappe.get_all(
+#     "Donation Receipt",
+#     filters={"payment_method": ("=", "Cheque")},
+#     fields=["name", "cheque_date"],
+# )
+
 # def execute():
 #     set_cost_center_in_exisintg_receipt()
 #     remove_old_jes()

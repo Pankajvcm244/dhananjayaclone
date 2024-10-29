@@ -97,7 +97,7 @@ def create_receipt():
         content_type = guess_type(fileref)[0]
         if content_type.startswith("image/"):
             args = {"content": content, "content_type": content_type}
-            args["max_width"] = 1200
+            args["quality"] = 100
             content = optimize_image(**args)
 
         filename = (

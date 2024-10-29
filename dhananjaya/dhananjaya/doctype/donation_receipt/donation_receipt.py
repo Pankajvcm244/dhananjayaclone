@@ -78,6 +78,7 @@ class DonationReceipt(AccountsController):
         bank_transaction_description: DF.SmallText | None
         bounce_transaction: DF.Link | None
         cash_account: DF.Link | None
+        cash_received_date: DF.Date | None
         cheque_branch: DF.Data | None
         cheque_date: DF.Date | None
         cheque_number: DF.Data | None
@@ -605,6 +606,11 @@ class DonationReceipt(AccountsController):
                 ]
             )
         elif self.payment_method == CASH_PAYMENT_MODE:
+            if self.cash_received_date:
+                cashier_received_date = self.cash_received_date
+            else:
+                cashier_received_date = today()
+
             gl_base_entries.extend(
                 [
                     frappe._dict(
@@ -615,7 +621,7 @@ class DonationReceipt(AccountsController):
                         party=self.donor,
                     ),
                     frappe._dict(
-                        posting_date=today(),
+                        posting_date=cashier_received_date,
                         account=self.cash_account,
                         debit=self.amount,
                     ),
@@ -623,7 +629,8 @@ class DonationReceipt(AccountsController):
             )
 
             ## Bring in Temporary Ledgers
-            if str(self.receipt_date) != today():
+
+            if str(self.receipt_date) != str(cashier_received_date):
                 gl_base_entries.extend(
                     [
                         frappe._dict(
@@ -632,7 +639,7 @@ class DonationReceipt(AccountsController):
                             debit=self.amount,
                         ),
                         frappe._dict(
-                            posting_date=today(),
+                            posting_date=cashier_received_date,
                             account=company_detail.temporary_cash_account,
                             credit=self.amount,
                         ),

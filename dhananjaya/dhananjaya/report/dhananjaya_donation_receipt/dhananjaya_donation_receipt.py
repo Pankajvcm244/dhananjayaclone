@@ -1,6 +1,10 @@
 # Copyright (c) 2023, Narahari Dasa and contributors
 # For license information, please see license.txt
 
+from dhananjaya.dhananjaya.doctype.donation_receipt.constants import (
+    CASH_PAYMENT_MODE,
+    TDS_PAYMENT_MODE,
+)
 import frappe
 from collections import defaultdict
 
@@ -20,9 +24,14 @@ class DhananjayaDonationReceipt(object):
     def set_conditions(self):
         conditions = ""
         conditions += f""" 
-                        AND tdr.receipt_date 
+                        AND tdr.receipt_date
                             BETWEEN "{self.filters.from_date}" 
-                                AND "{self.filters.to_date}" """
+                                AND "{self.filters.to_date}" 
+                        AND (gle.name IS NULL OR gle.posting_date
+                            BETWEEN "{self.filters.from_date}" 
+                                AND "{self.filters.to_date}"
+                                )
+                        """
 
         if self.filters.get("company"):
             conditions += f' AND tdr.company = "{self.filters.get("company")}"'
@@ -41,7 +50,83 @@ class DhananjayaDonationReceipt(object):
                 f' AND tdr.seva_subtype = "{self.filters.get("seva_subtype")}"'
             )
 
+        conditions += f""" AND (
+                                ( gle.name IS NULL AND tdr.workflow_state = 'Realized') 
+                                OR (gle.name IS NOT NULL and gle.account = tdr.donation_account)
+                            )"""
+
         self.conditions = conditions
+
+    def get_data(self):
+        receipts = {}
+        for i in frappe.db.sql(
+            f"""
+                        select tdr.*, 
+                            COALESCE( SUM(gle.credit - gle.debit), tdr.amount) as total_donation,
+                            CASE tdr.payment_method
+                                WHEN '{CASH_PAYMENT_MODE}' THEN tdr.cash_account
+                                WHEN '{TDS_PAYMENT_MODE}' THEN tdr.tds_account
+                                ELSE tdr.bank_account
+                            END as destination
+                        from `tabDonation Receipt` tdr
+                        left join `tabGL Entry` gle on gle.voucher_no = tdr.name
+                        where 1 {self.conditions}
+                        group by tdr.name
+                        order by tdr.receipt_date
+                        """,
+            as_dict=1,
+        ):
+            i["total_received"] = i["total_donation"] - i["additional_charges"]
+            receipts.setdefault(i["name"], i)
+
+        donors = {}
+
+        if len(receipts.keys()) > 0:
+            for i in frappe.db.sql(
+                f"""
+                        select name as donor_id,
+                        pan_no,
+                        aadhar_no
+                        from `tabDonor`
+                        where name IN ({",".join([f"'{receipt['donor']}'" for receipt in receipts.values()])})
+                        group by name
+                        """,
+                as_dict=1,
+            ):
+                donors.setdefault(i["donor_id"], i)
+            for r in receipts:
+                donor_id = receipts[r]["donor"]
+                if donor_id:
+                    receipts[r]["kyc"] = (
+                        donors[donor_id]["pan_no"]
+                        if donors[donor_id]["pan_no"]
+                        else donors[donor_id]["aadhar_no"]
+                    )
+
+        if self.filters.get("group_by_seva_type"):
+            seva_type_map = {}
+            for r in receipts.values():
+                if (r["seva_type"], r["donation_account"]) not in seva_type_map:
+                    seva_type_map.setdefault(
+                        (r["seva_type"], r["donation_account"]),
+                        frappe._dict(
+                            seva_type=r["seva_type"],
+                            donation_account=r["donation_account"],
+                            total_donation=r["total_donation"],
+                        ),
+                    )
+                else:
+                    seva_type_map[(r["seva_type"], r["donation_account"])][
+                        "total_donation"
+                    ] += r["total_donation"]
+            data = list(seva_type_map.values())
+            data.sort(key=lambda x: (x["seva_type"]))
+        else:
+            data = list(receipts.values())
+            data.sort(key=lambda x: (x["company"], x["receipt_date"]), reverse=True)
+
+        # columns, data = [], []
+        return self.columns, data
 
     def set_columns(self):
         if self.filters.group_by_seva_type:
@@ -59,8 +144,8 @@ class DhananjayaDonationReceipt(object):
                     "width": 250,
                 },
                 {
-                    "fieldname": "amount",
-                    "label": "Amount",
+                    "fieldname": "total_donation",
+                    "label": "Total Donation (Given Duration)",
                     "fieldtype": "Currency",
                     "width": 200,
                 },
@@ -112,14 +197,32 @@ class DhananjayaDonationReceipt(object):
                     "width": 100,
                 },
                 {
-                    "fieldname": "amount",
-                    "label": "Amount",
+                    "fieldname": "total_donation",
+                    "label": "Total Donation (Given Duration)",
                     "fieldtype": "Currency",
-                    "width": 120,
+                    "width": 200,
+                },
+                {
+                    "fieldname": "additional_charges",
+                    "label": "Charges",
+                    "fieldtype": "Currency",
+                    "width": 200,
+                },
+                {
+                    "fieldname": "total_received",
+                    "label": "Total Received",
+                    "fieldtype": "Currency",
+                    "width": 200,
                 },
                 {
                     "fieldname": "payment_method",
                     "label": "Payment Method",
+                    "fieldtype": "Data",
+                    "width": 120,
+                },
+                {
+                    "fieldname": "destination",
+                    "label": "Destination",
                     "fieldtype": "Data",
                     "width": 120,
                 },
@@ -166,65 +269,3 @@ class DhananjayaDonationReceipt(object):
                     "width": 100,
                 },
             ]
-
-    def get_data(self):
-        receipts = {}
-        for i in frappe.db.sql(
-            f"""
-                        select *
-                        from `tabDonation Receipt` tdr
-                        where tdr.workflow_state = 'Realized' {self.conditions}
-                        order by receipt_date
-                        """,
-            as_dict=1,
-        ):
-            receipts.setdefault(i["name"], i)
-
-        donors = {}
-
-        if len(receipts.keys()) > 0:
-            for i in frappe.db.sql(
-                f"""
-                        select name as donor_id,
-                        pan_no,
-                        aadhar_no
-                        from `tabDonor`
-                        where name IN ({",".join([f"'{receipt['donor']}'" for receipt in receipts.values()])})
-                        group by name
-                        """,
-                as_dict=1,
-            ):
-                donors.setdefault(i["donor_id"], i)
-            for r in receipts:
-                donor_id = receipts[r]["donor"]
-                if donor_id:
-                    receipts[r]["kyc"] = (
-                        donors[donor_id]["pan_no"]
-                        if donors[donor_id]["pan_no"]
-                        else donors[donor_id]["aadhar_no"]
-                    )
-
-        if self.filters.get("group_by_seva_type"):
-            seva_type_map = {}
-            for r in receipts.values():
-                if (r["seva_type"], r["donation_account"]) not in seva_type_map:
-                    seva_type_map.setdefault(
-                        (r["seva_type"], r["donation_account"]),
-                        frappe._dict(
-                            seva_type=r["seva_type"],
-                            donation_account=r["donation_account"],
-                            amount=r["amount"],
-                        ),
-                    )
-                else:
-                    seva_type_map[(r["seva_type"], r["donation_account"])][
-                        "amount"
-                    ] += r["amount"]
-            data = list(seva_type_map.values())
-            data.sort(key=lambda x: (x["seva_type"]))
-        else:
-            data = list(receipts.values())
-            data.sort(key=lambda x: (x["company"], x["receipt_date"]), reverse=True)
-
-        # columns, data = [], []
-        return self.columns, data
