@@ -1,5 +1,4 @@
-[post_model_sync]
-dhananjaya.patches.v_0_0.create_custom_fields #new4
+dhananjaya.patches.v_0_0.create_custom_fields
 dhananjaya.patches.v_0_1.create_initial_dj_notifier
 
 

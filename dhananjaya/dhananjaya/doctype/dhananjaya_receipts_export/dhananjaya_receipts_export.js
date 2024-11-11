@@ -6,9 +6,10 @@ frappe.ui.form.on("Dhananjaya Receipts Export", {
     frappe.call({
       method:
         "dhananjaya.dhananjaya.doctype.dhananjaya_receipts_export.dhananjaya_receipts_export.get_backup_files",
+      freeze: true,
+      freeze_message: "Processing...",
       callback: function (r) {
         if (!r.exc) {
-          console.log(r.message);
           var html = frm.events.get_html_data(frm, r.message);
           frm.set_df_property("files_html", "options", html);
         }
@@ -17,30 +18,35 @@ frappe.ui.form.on("Dhananjaya Receipts Export", {
   },
   get_html_data(frm, files) {
     var files_html = "";
+    console.log(files);
     for (let key in files) {
       let file_data = files[key];
       files_html += `
 							  <tr>
 								<td class="text-center">${parseInt(key) + 1}.</td>
-								<td>${file_data["name"]}</td>
+								<td>${file_data["name"]}<br>${file_data["last_modified"]}</td>
+								<td>${file_data["size"]} KB </td>
 								<td><a class="btn btn-xs btn-default" href = "${
                   file_data["link"]
-                }"> Download </a></td>
+                }"> Download </a>
+                </td>
 							  </tr>
 							  `;
     }
 
     files_parent_html = `
-						  <h4>Backup Files</h4>
+						  <h4>Bundled Files</h4>
 						  <table>
 							<tr>
 							  <td>S.No.</td>
-							  <td>File Name</td>
-							  <td>File Link</td>
+							  <td>Name</td>
+                <td>Size</td>
+							  <td>Link</td>
 							<tr>
 							${files_html}
 						  </table>
 						  <br><br>
+              <p style="color:red">Note: Above bundled files will be deleted after 10 days.</p>
 						  `;
 
     return (
@@ -55,10 +61,8 @@ frappe.ui.form.on("Dhananjaya Receipts Export", {
     );
   },
 
-  onload: function (frm) {
-    frm.trigger("get_files");
-  },
   refresh: function (frm) {
+    frm.trigger("get_files");
     frm.add_custom_button(__("Prepare Zip"), function () {
       frappe.warn(
         "Are you sure you want to proceed?",

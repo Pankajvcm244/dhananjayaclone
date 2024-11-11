@@ -13,6 +13,14 @@ frappe.ui.form.on("Donation Receipt", {
     ];
   },
   refresh: function (frm) {
+    frm.set_query("yatra_registration", () => {
+      return {
+        filters: {
+          seva_subtype: frm.doc.seva_subtype,
+          docstatus: 1,
+        },
+      };
+    });
     frm.set_query("asset_item", () => {
       return {
         filters: {

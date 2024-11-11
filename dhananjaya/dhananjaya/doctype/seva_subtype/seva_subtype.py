@@ -22,10 +22,14 @@ class SevaSubtype(NestedSet):
         )
         from frappe.types import DF
 
+        adult_cost: DF.Currency
         amount: DF.Currency
+        child_cost: DF.Currency
         cost_centers: DF.Table[SevaSubtypeCostCenter]
         enabled: DF.Check
+        from_date: DF.Date | None
         include_in_analysis: DF.Check
+        is_a_yatra: DF.Check
         is_group: DF.Check
         lft: DF.Int
         old_parent: DF.Link | None
@@ -33,7 +37,9 @@ class SevaSubtype(NestedSet):
         patronship_allowed: DF.Check
         priority: DF.Int
         rgt: DF.Int
+        seats: DF.Int
         seva_name: DF.Data
+        to_date: DF.Date | None
     # end: auto-generated types
     nsm_parent_field = "parent_seva_subtype"
 
@@ -49,6 +55,12 @@ class SevaSubtype(NestedSet):
 
     def delete_box_key(self):
         frappe.cache().hdel("dhananjaya_box", "seva_subtype")
+
+    def validate_from_to_dates(self, from_date_field: str, to_date_field: str) -> None:
+        return super().validate_from_to_dates(from_date_field, to_date_field)
+
+    def validate(self):
+        self.validate_from_to_dates("from_date", "to_date")
 
 
 @frappe.whitelist()

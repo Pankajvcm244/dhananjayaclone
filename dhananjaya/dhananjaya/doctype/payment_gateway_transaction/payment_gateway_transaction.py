@@ -9,6 +9,26 @@ from frappe.model.document import Document
 
 
 class PaymentGatewayTransaction(Document):
+    # begin: auto-generated types
+    # This code is auto-generated. Do not modify anything in this block.
+
+    from typing import TYPE_CHECKING
+
+    if TYPE_CHECKING:
+        from frappe.types import DF
+
+        amount: DF.Currency
+        batch: DF.Link | None
+        company: DF.Link
+        donor: DF.Link | None
+        donor_name: DF.Data | None
+        extra_data: DF.JSON | None
+        fee: DF.Currency
+        gateway: DF.Link
+        receipt_created: DF.Check
+        seva_type: DF.Link | None
+        transaction_id: DF.Data
+    # end: auto-generated types
 
     def on_update(self):
         self.update_donor_receipt_matching_transaction()

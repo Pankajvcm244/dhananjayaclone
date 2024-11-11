@@ -37,6 +37,7 @@ class DonorCreationRequest(Document):
         pin_code: DF.Data | None
         state: DF.Data
         status: DF.Literal["Draft", "Closed", "Open", "Rejected"]
+
     # end: auto-generated types
     def on_submit(self):
         self.db_set("status", "Open", commit=True)

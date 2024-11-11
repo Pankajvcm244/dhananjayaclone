@@ -72,9 +72,7 @@
   {
    "fieldname": "extra_data",
    "fieldtype": "JSON",
-   "label": "Data",
-   "read_only": 1,
-   "set_only_once": 1
+   "label": "Data"
   },
   {
    "default": "0",
@@ -123,7 +121,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-01-10 17:38:46.416640",
+ "modified": "2024-11-03 21:05:10.853670",
  "modified_by": "Administrator",
  "module": "Dhananjaya",
  "name": "Payment Gateway Transaction",

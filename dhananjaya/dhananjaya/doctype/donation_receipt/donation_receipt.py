@@ -125,7 +125,7 @@ class DonationReceipt(AccountsController):
         stock_expense_account: DF.Link | None
         tds_account: DF.Link | None
         user_remarks: DF.Text | None
-
+        yatra_registration: DF.Link | None
     # end: auto-generated types
     def autoname(self):
 

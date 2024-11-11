@@ -36,7 +36,14 @@
   "donor_claim_channel",
   "donor_creation_channel",
   "ecs_channel",
-  "event_reminder_channel"
+  "event_reminder_channel",
+  "receipts_export_tab",
+  "s3_settings_section",
+  "re_access_key_id",
+  "re_endpoint_url",
+  "column_break_rqst",
+  "re_access_key_secret",
+  "re_bucket_name"
  ],
  "fields": [
   {
@@ -224,13 +231,47 @@
    "fieldtype": "Link",
    "label": "Event Reminder Channel",
    "options": "Notification Channel"
+  },
+  {
+   "fieldname": "receipts_export_tab",
+   "fieldtype": "Tab Break",
+   "label": "Receipts Export"
+  },
+  {
+   "fieldname": "s3_settings_section",
+   "fieldtype": "Section Break",
+   "label": "S3 Settings"
+  },
+  {
+   "fieldname": "re_access_key_id",
+   "fieldtype": "Data",
+   "label": "S3 Access Key ID"
+  },
+  {
+   "fieldname": "re_endpoint_url",
+   "fieldtype": "Data",
+   "label": "S3 Endpoint URL"
+  },
+  {
+   "fieldname": "column_break_rqst",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "re_access_key_secret",
+   "fieldtype": "Password",
+   "label": "S3 Access Key Secret"
+  },
+  {
+   "fieldname": "re_bucket_name",
+   "fieldtype": "Data",
+   "label": "Bucket Name"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-09-29 10:23:09.314121",
+ "modified": "2024-11-01 14:55:24.416377",
  "modified_by": "Administrator",
  "module": "Dhananjaya",
  "name": "Dhananjaya Settings",

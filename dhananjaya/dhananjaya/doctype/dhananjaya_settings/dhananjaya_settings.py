@@ -14,9 +14,7 @@ class DhananjayaSettings(Document):
     from typing import TYPE_CHECKING
 
     if TYPE_CHECKING:
-        from dhananjaya.dhananjaya.doctype.dhananjaya_settings_company_details.dhananjaya_settings_company_details import (
-            DhananjayaSettingsCompanyDetails,
-        )
+        from dhananjaya.dhananjaya.doctype.dhananjaya_settings_company_details.dhananjaya_settings_company_details import DhananjayaSettingsCompanyDetails
         from frappe.types import DF
 
         admin_role: DF.Link
@@ -36,6 +34,10 @@ class DhananjayaSettings(Document):
         gateway_mode: DF.Link | None
         hide_others_donors: DF.Check
         public_fernet_key: DF.Data | None
+        re_access_key_id: DF.Data | None
+        re_access_key_secret: DF.Password | None
+        re_bucket_name: DF.Data | None
+        re_endpoint_url: DF.Data | None
         receipt_format: DF.Link
         receipt_realisation_channel: DF.Link | None
         separate_accounting_for_csr: DF.Check

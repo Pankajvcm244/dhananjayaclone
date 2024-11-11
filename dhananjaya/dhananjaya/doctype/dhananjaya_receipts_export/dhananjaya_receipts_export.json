@@ -8,7 +8,6 @@
  "engine": "InnoDB",
  "field_order": [
   "company",
-  "based_on",
   "date_from",
   "date_to",
   "files_html"
@@ -33,14 +32,6 @@
    "reqd": 1
   },
   {
-   "default": "Receipt Date",
-   "fieldname": "based_on",
-   "fieldtype": "Select",
-   "label": "Based On",
-   "options": "Receipt Date\nRealization Date",
-   "reqd": 1
-  },
-  {
    "fieldname": "files_html",
    "fieldtype": "HTML",
    "label": "Files"
@@ -49,7 +40,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-05-23 13:26:09.160678",
+ "modified": "2024-11-01 18:13:53.978877",
  "modified_by": "Administrator",
  "module": "Dhananjaya",
  "name": "Dhananjaya Receipts Export",

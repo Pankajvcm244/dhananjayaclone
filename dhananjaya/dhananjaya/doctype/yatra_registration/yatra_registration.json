@@ -1,0 +1,147 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-11-07 13:11:12.132547",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_rorz",
+  "seva_subtype",
+  "amended_from",
+  "column_break_ewua",
+  "from_date",
+  "to_date",
+  "section_break_nhup",
+  "donor",
+  "donor_creation_request",
+  "donor_name",
+  "preacher",
+  "column_break_hszn",
+  "adult_seats",
+  "children_seats",
+  "total_cost"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_rorz",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Yatra Registration",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fetch_from": "seva_subtype.from_date",
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "label": "From Date",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "seva_subtype.to_date",
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "label": "To Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "seva_subtype",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Seva Subtype",
+   "options": "Seva Subtype",
+   "reqd": 1,
+   "set_only_once": 1
+  },
+  {
+   "fieldname": "column_break_ewua",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "donor",
+   "fieldtype": "Link",
+   "label": "Donor",
+   "options": "Donor"
+  },
+  {
+   "fieldname": "section_break_nhup",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "adult_seats",
+   "fieldtype": "Int",
+   "label": "Adult Seats",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "children_seats",
+   "fieldtype": "Int",
+   "label": "Children Seats",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "total_cost",
+   "fieldtype": "Currency",
+   "label": "Total Cost",
+   "non_negative": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "donor_creation_request",
+   "fieldtype": "Link",
+   "label": "Donor Creation Request",
+   "options": "Donor Creation Request"
+  },
+  {
+   "fieldname": "donor_name",
+   "fieldtype": "Data",
+   "label": "Donor Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_hszn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "preacher",
+   "fieldtype": "Link",
+   "label": "Preacher",
+   "options": "LLP Preacher",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-11-11 13:51:07.580599",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "Yatra Registration",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "show_title_field_in_link": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "donor_name"
+}
