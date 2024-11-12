@@ -113,13 +113,13 @@
    "fieldtype": "Link",
    "label": "Preacher",
    "options": "LLP Preacher",
-   "reqd": 1
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-11-11 13:51:07.580599",
+ "modified": "2024-11-12 12:52:42.356700",
  "modified_by": "Administrator",
  "module": "Dhananjaya",
  "name": "Yatra Registration",
@@ -134,6 +134,21 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "DCC Preacher",
+   "select": 1,
    "share": 1,
    "submit": 1,
    "write": 1
