@@ -22,7 +22,7 @@ class YatraRegistration(Document):
         donor_creation_request: DF.Link | None
         donor_name: DF.Data | None
         from_date: DF.Date | None
-        preacher: DF.Link
+        preacher: DF.Link | None
         seva_subtype: DF.Link
         to_date: DF.Date | None
         total_cost: DF.Currency
@@ -35,10 +35,19 @@ class YatraRegistration(Document):
             + self.children_seats * sevasubtype_doc.child_cost
         )
         if self.donor:
-            self.donor_name = frappe.get_value("Donor", self.donor, "full_name")
+            self.donor_name, self.preacher = frappe.get_value("Donor", self.donor, ["full_name" ,"llp_preacher"])
+            
         elif self.donor_creation_request:
-            self.donor_name = frappe.get_value(
-                "Donor Creation Request", self.donor_creation_request, "full_name"
+            self.donor_name , self.preacher = frappe.get_value(
+                "Donor Creation Request", self.donor_creation_request, ["full_name", "llp_preacher"] 
             )
         else:
             frappe.throw("At least one of Donor or Donor Creation Request is required")
+    def validate(self):
+     
+        total_seats = frappe.db.get_value("Seva Subtype", self.seva_subtype, "seats")
+        booked_seats = frappe.db.sql(
+            f"""select sum(adult_seats + children_seats) from `tabYatra Registration` where seva_subtype = '{self.seva_subtype}' and docstatus = 1""",
+        )[0][0]
+        if (total_seats - booked_seats ) < (self.adult_seats + self.children_seats):
+            frappe.throw(f"Only {total_seats - booked_seats} seats are available for {self.seva_subtype}")

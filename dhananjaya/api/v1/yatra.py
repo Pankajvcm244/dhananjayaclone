@@ -7,7 +7,7 @@ def get_yatra_details(id):
 
     yatra_details.setdefault(
         "bookings",
-        frappe.get_all(
+        frappe.db.get_list(
             "Yatra Registration",
             fields=["*"],
             filters={"seva_subtype": id, "docstatus": 1},
