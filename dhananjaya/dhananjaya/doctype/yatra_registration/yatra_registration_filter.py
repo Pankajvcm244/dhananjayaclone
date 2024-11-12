@@ -32,8 +32,14 @@ def single(doc, user=None, permission_type=None):
     user_roles = frappe.get_roles(user)
 
     full_access = any(role in DCC_EXCLUDE_ROLES for role in user_roles)
+    donor_preacher = frappe.db.get_value("Donor" , doc.donor, "llp_preacher");
 
-    if full_access or (doc.preacher in get_preachers()):
+    donor_request_preacher = frappe.db.get_value("Donor Creation Request", doc.donor_creation_request, "llp_preacher"); 
+    
+    if full_access or (donor_preacher in get_preachers())  or (donor_request_preacher in get_preachers()):
+        print("full_access or (doc.preacher in get_preachers())");
         return True
+
+        
 
     return False
