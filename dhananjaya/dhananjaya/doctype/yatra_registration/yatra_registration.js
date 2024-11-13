@@ -11,10 +11,11 @@ frappe.ui.form.on("Yatra Registration", {
         },
       };
     });
-    frm.set_query("donor_creation_request", () => {
+    frm.set_query("donor_creation_request",  () => {
       return {
         filters: {
           status: "Open",
+          docstatus: 1
         },
       };
     });
