@@ -47,7 +47,7 @@ class YatraRegistration(Document):
         self.set_data()
         total_seats = frappe.db.get_value("Seva Subtype", self.seva_subtype, "seats")
         booked_seats = frappe.db.sql(
-            f"""select sum(adult_seats + children_seats) from `tabYatra Registration` where seva_subtype = '{self.seva_subtype}' and docstatus = 1""",
+            f"""select ifnull(sum(adult_seats + children_seats),0) from `tabYatra Registration` where seva_subtype = '{self.seva_subtype}' and docstatus = 1""",
         )[0][0]
         if (total_seats - booked_seats ) < (self.adult_seats + self.children_seats):
             frappe.throw(f"Only {total_seats - booked_seats} seats are available for {self.seva_subtype}")

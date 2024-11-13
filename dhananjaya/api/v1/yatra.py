@@ -5,7 +5,7 @@ from dhananjaya.dhananjaya.utils import get_preachers
 def get_yatra_details(id):
     yatra_details = frappe.get_doc("Seva Subtype", id).as_dict()
     total_booking = frappe.db.sql(
-            f"""select sum(adult_seats + children_seats) from `tabYatra Registration` where seva_subtype = '{id}' and docstatus = 1""",
+            f"""select ifnull(sum(adult_seats + children_seats),0) from `tabYatra Registration` where seva_subtype = '{id}' and docstatus = 1""",
         )[0][0]
     
     yatra_details.setdefault("total_bookings", total_booking)
