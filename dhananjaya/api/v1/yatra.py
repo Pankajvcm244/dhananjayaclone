@@ -1,3 +1,4 @@
+import json
 import frappe
 from dhananjaya.dhananjaya.utils import get_preachers
 
@@ -27,3 +28,39 @@ def get_yatra_details(id):
     """,as_dict=1))
 
     return yatra_details
+
+@frappe.whitelist()
+def get_yatra_tiles():
+    page_size = 20
+    data = json.loads(frappe.request.data)
+    # print("hare " , data)
+    
+    query = frappe.db.sql(f"""
+        SELECT 
+            tss.name,
+            tss.from_date,
+            tss.to_date,
+            tss.seats,
+            tss.adult_cost,
+            tss.child_cost,
+            tss.creation,
+            
+            IFNULL(SUM(tyr.adult_seats + tyr.children_seats), 0) as total_booked_seats,
+            IFNULL(tss.seats - IFNULL(SUM(tyr.adult_seats + tyr.children_seats), 0), tss.seats) as remaining_seats
+        FROM `tabSeva Subtype` tss
+        LEFT JOIN `tabYatra Registration` tyr
+            ON tss.name = tyr.seva_subtype AND tyr.docstatus = 1
+        WHERE tss.is_a_yatra = 1
+            AND tss.enabled = 1
+        GROUP BY tss.name
+        ORDER BY 
+            tss.{data.get("sortfield")} {data.get("sortOrder")}
+        LIMIT {page_size * data.get("Page", 0)}, {page_size}    
+            
+        """
+    ,as_dict=1)
+
+
+
+    # print("hare " , query)
+    return query
