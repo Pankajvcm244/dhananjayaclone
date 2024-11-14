@@ -17,9 +17,7 @@ class SevaSubtype(NestedSet):
     from typing import TYPE_CHECKING
 
     if TYPE_CHECKING:
-        from dhananjaya.dhananjaya.doctype.seva_subtype_cost_center.seva_subtype_cost_center import (
-            SevaSubtypeCostCenter,
-        )
+        from dhananjaya.dhananjaya.doctype.seva_subtype_cost_center.seva_subtype_cost_center import SevaSubtypeCostCenter
         from frappe.types import DF
 
         adult_cost: DF.Currency
