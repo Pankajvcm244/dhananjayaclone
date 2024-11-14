@@ -146,24 +146,27 @@
    "fieldname": "adult_cost",
    "fieldtype": "Currency",
    "label": "Adult Cost",
-   "mandatory_depends_on": "eval:doc.is_a_yatra"
+   "mandatory_depends_on": "eval:doc.is_a_yatra",
+   "non_negative": 1
   },
   {
    "fieldname": "child_cost",
    "fieldtype": "Currency",
    "label": "Child Cost",
-   "mandatory_depends_on": "eval:doc.is_a_yatra"
+   "mandatory_depends_on": "eval:doc.is_a_yatra",
+   "non_negative": 1
   },
   {
    "fieldname": "seats",
    "fieldtype": "Int",
-   "label": "Seats"
+   "label": "Seats",
+   "non_negative": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2024-11-07 12:45:18.440590",
+ "modified": "2024-11-14 15:57:12.742020",
  "modified_by": "Administrator",
  "module": "Dhananjaya",
  "name": "Seva Subtype",
