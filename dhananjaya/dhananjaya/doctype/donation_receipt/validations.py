@@ -58,6 +58,7 @@ def get_donation_of_the_day(doc):
             AND payment_method = '{doc.payment_method}' 
             AND receipt_date = '{doc.receipt_date}'
             AND docstatus != 2
+            AND company = '{doc.company}'
             AND name != '{doc.name}'
             """
     )
