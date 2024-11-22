@@ -4,6 +4,14 @@
 frappe.query_reports["Dimension-Wise Donation"] = {
 	"filters": [
 		{
+			fieldname: "dimension",
+			label: __("Select Dimension"),
+			fieldtype: "Select",
+			default: "Project",
+			options: get_accounting_dimension_options(),
+			reqd: 1,
+		},
+		{
 			"fieldname": "from_date",
 			"label": __("From Date"),
 			"fieldtype": "Date",
@@ -19,14 +27,7 @@ frappe.query_reports["Dimension-Wise Donation"] = {
 			"width": 80,
 			"default": frappe.datetime.get_today(),
 		  },
-		  {
-			fieldname: "dimension",
-			label: __("Select Dimension"),
-			fieldtype: "Select",
-			default: "Project",
-			options: get_accounting_dimension_options(),
-			reqd: 1,
-		},
+		
 		
 	]
 };

@@ -35,7 +35,7 @@ def get_columns(filters ,weeks , dimension_list , dimensions):
 				"fieldname": "project",
 				"label": "<b>Project</b>",
 				"fieldtype": "Data",
-				"width": 120,
+				"width": 300,
 			}
 			
 		]
@@ -46,7 +46,7 @@ def get_columns(filters ,weeks , dimension_list , dimensions):
 				"fieldname": "cost_center",
 				"label": "<b>Cost Center</b>",
 				"fieldtype": "Data",
-				"width": 120,
+				"width": 300,
 			}
 			
 		]
@@ -122,9 +122,9 @@ def get_data(filters, weeks , dimension_list , dimensions):
 						"total": 0  
 						}
 						)
-					for idx , week in enumerate(weeks):
+					for idx , week in enumerate(weeks , 1):
 						project[entry["project"]].setdefault(f"week{idx}", 0)
-				for idx , week in enumerate(weeks):
+				for idx , week in enumerate(weeks , 1):
 					if entry["receipt_date"] >= week[0] and entry["receipt_date"] <= week[1]:
 						project[entry["project"]][f"week{idx}"] += entry["amount"]
 						break
@@ -168,9 +168,9 @@ def get_data(filters, weeks , dimension_list , dimensions):
 						"total": 0  
 						}
 						)
-					for idx , week in enumerate(weeks):
+					for idx , week in enumerate(weeks , 1):
 						cost_center[entry["cost_center"]].setdefault(f"week{idx}", 0)
-				for idx , week in enumerate(weeks):
+				for idx , week in enumerate(weeks , 1):
 					if entry["receipt_date"] >= week[0] and entry["receipt_date"] <= week[1]:
 						cost_center[entry["cost_center"]][f"week{idx}"] += entry["amount"]
 						break
@@ -226,9 +226,9 @@ def get_data(filters, weeks , dimension_list , dimensions):
 						"total": 0  
 						}
 						)
-					for idx , week in enumerate(weeks):
+					for idx , week in enumerate(weeks , 1):
 						dimension_data[entry["dimension"]].setdefault(f"week{idx}", 0)
-				for idx , week in enumerate(weeks):
+				for idx , week in enumerate(weeks , 1):
 					if entry["receipt_date"] >= week[0] and entry["receipt_date"] <= week[1]:
 						project[entry["dimension"]][f"week{idx}"] += entry["amount"]
 						break
