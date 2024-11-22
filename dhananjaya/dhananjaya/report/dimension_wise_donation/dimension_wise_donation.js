@@ -7,7 +7,7 @@ frappe.query_reports["Dimension-Wise Donation"] = {
 			"fieldname": "from_date",
 			"label": __("From Date"),
 			"fieldtype": "Date",
-			"default" : frappe.datetime.add_months(frappe.datetime.get_today(), -1),
+			"default" : frappe.datetime.add_months(frappe.datetime.get_today(), -6),
 			"reqd": 1,
 			"width" : 80,
 		  },
@@ -19,6 +19,23 @@ frappe.query_reports["Dimension-Wise Donation"] = {
 			"width": 80,
 			"default": frappe.datetime.get_today(),
 		  },
+		  {
+			fieldname: "dimension",
+			label: __("Select Dimension"),
+			fieldtype: "Select",
+			default: "Project",
+			options: get_accounting_dimension_options(),
+			reqd: 1,
+		},
 		
 	]
 };
+function get_accounting_dimension_options() {
+	let options = ["Cost Center", "Project"];
+	frappe.db.get_list("Accounting Dimension", { fields: ["document_type"] }).then((res) => {
+		res.forEach((dimension) => {
+			options.push(dimension.document_type);
+		});
+	});
+	return options;
+}
