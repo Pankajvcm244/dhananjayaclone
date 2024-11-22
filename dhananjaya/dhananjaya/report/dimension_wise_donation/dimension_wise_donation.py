@@ -59,7 +59,7 @@ def get_data(filters, weeks):
 				DATE(dr.receipt_date) AS receipt_date,
    				p.project_name AS project,
        			dr.name , 
-          		dr.amount AS amount 
+				dr.amount
 			FROM `tabDonation Receipt` dr
 			LEFT JOIN `tabProject` p 
    				ON p.name = dr.project
@@ -95,7 +95,7 @@ def get_data(filters, weeks):
 			if entry["receipt_date"] >= week[0] and entry["receipt_date"] <= week[1]:
 				project[entry["project"]][f"week{idx}"] += entry["amount"]
 				break
-		entry["project"]["total"] += entry["amount"]		
+		project[entry["project"]]["total"] += entry["amount"]		
 	data = list(project.values())
              
 	return  data    
