@@ -205,8 +205,7 @@ def get_data(filters, weeks , dimension_list , dimensions):
 						ON st.name = dr.seva_type
 					LEFT JOIN `tabSeva Subtype` sst 
 						ON sst.name = dr.seva_subtype
-					WHERE dr.workflow_state = 'Realized'
-						AND preacher.include_in_analysis = 1
+					WHERE preacher.include_in_analysis = 1
 						AND st.include_in_analysis = 1
 						AND sst.include_in_analysis = 1
 						AND dr.receipt_date BETWEEN '{filters.get("from_date")}' AND '{filters.get("to_date")}'
@@ -230,7 +229,7 @@ def get_data(filters, weeks , dimension_list , dimensions):
 						dimension_data[entry["dimension"]].setdefault(f"week{idx}", 0)
 				for idx , week in enumerate(weeks , 1):
 					if entry["receipt_date"] >= week[0] and entry["receipt_date"] <= week[1]:
-						project[entry["dimension"]][f"week{idx}"] += entry["amount"]
+						dimension_data[entry["dimension"]][f"week{idx}"] += entry["amount"]
 						break
 				dimension_data[entry["dimension"]]["total"] += entry["amount"]		
 	data = list(dimension_data.values())				
