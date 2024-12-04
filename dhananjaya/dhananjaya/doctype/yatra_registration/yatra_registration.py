@@ -52,8 +52,18 @@ class YatraRegistration(Document):
         else:
             frappe.throw("At least one of Donor or Donor Creation Request is required")
 
+    
+    def validate_duplicate(self):
+        seat = [i.seat_type for i in self.seats]
+        duplicates = set([s for s in seat if seat.count(s) > 1])
+        if duplicates:
+            frappe.throw(
+                f"Duplicates Entry Not Allowed"
+            )
+    
     def validate(self):
         self.validate_donor()
+        self.validate_duplicate()
         seats_map = self.get_seats_map()
         total_amount = 0
         for rs in self.seats:
@@ -72,7 +82,7 @@ class YatraRegistration(Document):
                     WHERE
                         tyr.seva_subtype = '{self.seva_subtype}'
                         AND tyr.docstatus = 1
-                        AND tyr.seat_type = '{rs.seat_type}' """,
+                        AND trsd.seat_type = '{rs.seat_type}' """,
             )[0][0]
 
             if (booked_seats + rs.count) > seats_map[rs.seat_type].count:
