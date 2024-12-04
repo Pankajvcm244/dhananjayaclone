@@ -18,11 +18,10 @@ class SevaSubtype(NestedSet):
 
     if TYPE_CHECKING:
         from dhananjaya.dhananjaya.doctype.seva_subtype_cost_center.seva_subtype_cost_center import SevaSubtypeCostCenter
+        from dhananjaya.dhananjaya.doctype.yatra_seat_detail.yatra_seat_detail import YatraSeatDetail
         from frappe.types import DF
 
-        adult_cost: DF.Currency
         amount: DF.Currency
-        child_cost: DF.Currency
         cost_centers: DF.Table[SevaSubtypeCostCenter]
         enabled: DF.Check
         from_date: DF.Date | None
@@ -35,7 +34,7 @@ class SevaSubtype(NestedSet):
         patronship_allowed: DF.Check
         priority: DF.Int
         rgt: DF.Int
-        seats: DF.Int
+        seats: DF.Table[YatraSeatDetail]
         seva_name: DF.Data
         to_date: DF.Date | None
     # end: auto-generated types

@@ -1,0 +1,42 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-12-04 08:37:12.050182",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "seat_type",
+  "count"
+ ],
+ "fields": [
+  {
+   "fieldname": "seat_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Seat Type",
+   "options": "Yatra Seat Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "count",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Count",
+   "non_negative": 1,
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-12-04 08:38:15.160205",
+ "modified_by": "Administrator",
+ "module": "Dhananjaya",
+ "name": "Registration Seat Detail",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
