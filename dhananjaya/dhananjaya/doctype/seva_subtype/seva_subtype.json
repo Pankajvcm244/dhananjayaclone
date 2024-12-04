@@ -20,14 +20,14 @@
   "patronship_allowed",
   "include_in_analysis",
   "priority",
+  "yatra_tab",
   "is_a_yatra",
   "yatra_details_section",
   "from_date",
-  "to_date",
-  "seats",
   "column_break_ornx",
-  "adult_cost",
-  "child_cost"
+  "to_date",
+  "seat_details_section",
+  "seats"
  ],
  "fields": [
   {
@@ -143,30 +143,27 @@
    "label": "Yatra Details"
   },
   {
-   "fieldname": "adult_cost",
-   "fieldtype": "Currency",
-   "label": "Adult Cost",
-   "mandatory_depends_on": "eval:doc.is_a_yatra",
-   "non_negative": 1
-  },
-  {
-   "fieldname": "child_cost",
-   "fieldtype": "Currency",
-   "label": "Child Cost",
-   "mandatory_depends_on": "eval:doc.is_a_yatra",
-   "non_negative": 1
-  },
-  {
    "fieldname": "seats",
-   "fieldtype": "Int",
+   "fieldtype": "Table",
    "label": "Seats",
-   "non_negative": 1
+   "options": "Yatra Seat Detail"
+  },
+  {
+   "fieldname": "yatra_tab",
+   "fieldtype": "Tab Break",
+   "label": "Yatra"
+  },
+  {
+   "depends_on": "eval:doc.is_a_yatra",
+   "fieldname": "seat_details_section",
+   "fieldtype": "Section Break",
+   "label": "Seat Details"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2024-11-14 15:57:12.742020",
+ "modified": "2024-12-04 08:45:10.342360",
  "modified_by": "Administrator",
  "module": "Dhananjaya",
  "name": "Seva Subtype",

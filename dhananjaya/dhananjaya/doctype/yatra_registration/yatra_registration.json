@@ -17,9 +17,9 @@
   "donor_name",
   "preacher",
   "column_break_hszn",
-  "adult_seats",
-  "children_seats",
-  "total_cost"
+  "total_cost",
+  "section_break_hgzh",
+  "seats"
  ],
  "fields": [
   {
@@ -74,18 +74,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "adult_seats",
-   "fieldtype": "Int",
-   "label": "Adult Seats",
-   "non_negative": 1
-  },
-  {
-   "fieldname": "children_seats",
-   "fieldtype": "Int",
-   "label": "Children Seats",
-   "non_negative": 1
-  },
-  {
    "fieldname": "total_cost",
    "fieldtype": "Currency",
    "label": "Total Cost",
@@ -114,12 +102,22 @@
    "label": "Preacher",
    "options": "LLP Preacher",
    "read_only": 1
+  },
+  {
+   "fieldname": "section_break_hgzh",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "seats",
+   "fieldtype": "Table",
+   "label": "Seats",
+   "options": "Registration Seat Detail"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-11-12 12:52:42.356700",
+ "modified": "2024-12-04 08:43:28.448999",
  "modified_by": "Administrator",
  "module": "Dhananjaya",
  "name": "Yatra Registration",
