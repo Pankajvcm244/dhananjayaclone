@@ -55,7 +55,7 @@ def get_seats_status(seva_subtype):
     for seat in seats:
         for item in query:
             if item["name"] == seat["seat_type"]:                
-                seat["total_booked_seats"] = item["total_booked_seats"]
+                seat["total_booked_seats"] = item["total_booked_seats"] 
                 
                 break
             
