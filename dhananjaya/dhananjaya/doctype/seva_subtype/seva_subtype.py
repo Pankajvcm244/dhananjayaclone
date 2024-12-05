@@ -57,8 +57,17 @@ class SevaSubtype(NestedSet):
         return super().validate_from_to_dates(from_date_field, to_date_field)
 
     def validate(self):
+        self.validate_duplicate()
         self.validate_from_to_dates("from_date", "to_date")
 
+
+    def validate_duplicate(self):
+        seat = [i.seat_type for i in self.seats]
+        duplicates = set([s for s in seat if seat.count(s) > 1])
+        if duplicates:
+            frappe.throw(
+                f"Duplicates Entry Not Allowed"
+            )
 
 @frappe.whitelist()
 def get_cached_documents():
