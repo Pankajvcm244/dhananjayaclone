@@ -78,7 +78,7 @@ class YatraRegistration(Document):
                     JOIN `tabYatra Registration` tyr
                         ON tyr.name = trsd.parent
                     WHERE
-                        tyr.seva_subtype = '{self.seva_subtype}'
+                        tyr.seva_subtype = '{self.seva_subtype.replace("'", "''")}'
                         AND tyr.docstatus = 1
                         AND trsd.seat_type = '{rs.seat_type}' """,
             )[0][0]
