@@ -20,7 +20,6 @@ def get_yatra_details(id):
         "bookings": get_yatra_bookings(id),
     }
     status = (get_seats_status(id),)
-    print(status)
     return yatra
 
 
@@ -31,10 +30,10 @@ def get_seats_status(seva_subtype):
         filters={"seva_subtype": seva_subtype, "docstatus": 1},
         pluck="name",
     )
-    yatra_registration_str = ", ".join([f"'{name}'" for name in yatra_registration])
+    yatra_registration_str = ", ".join([f"'{name}'" for name in yatra_registration]) or "NULL"
 
     query = frappe.db.sql(
-        f"""
+    f"""
     SELECT 
         rsd.seat_type AS name,
         tyst.seat_type AS seat_type,
@@ -45,8 +44,9 @@ def get_seats_status(seva_subtype):
     WHERE rsd.parent IN ({yatra_registration_str})
     GROUP BY rsd.seat_type
     """,
-        as_dict=1,
-    )
+    as_dict=1,
+)
+
     seats = frappe.get_all(
         "Yatra Seat Detail",
         filters={"parent": seva_subtype},
