@@ -17,6 +17,7 @@ from .validations import (
     validate_modes_account,
     validate_atg_required,
     validate_donor,
+    validate_yatra_required,
     validate_govt_laws,
     validate_cheque_details,
     validate_cheque_screenshot,
@@ -149,12 +150,14 @@ class DonationReceipt(AccountsController):
         validate_donor(self)
         validate_atg_required(self)
         validate_govt_laws(self)
+        validate_yatra_required(self)
         validate_cheque_details(self)
         # Hundi Donations are to be separately managed by accounts
         # validate_cheque_screenshot(self) # Need to change in API before uncommenting this as screenshot is uploaded post creation
         # validate_reference_number(self)
         return
 
+    
     def is_kyc_available(self):
         kyc_available = False
         if self.donor:
@@ -276,6 +279,7 @@ class DonationReceipt(AccountsController):
     ###### BEFORE SAVE : SETTINGS DEFAULT ACCOUNTS OF COMPANY ######
 
     def before_save(self):
+        validate_yatra_required(self)
         self.set_receipt_date()
         self.amount_in_words = money_in_words(self.amount, main_currency="Rupees")
         company_detail = get_company_defaults(self.company)
@@ -410,6 +414,7 @@ class DonationReceipt(AccountsController):
             return
         validate_donation_account(self)
         validate_modes_account(self)
+        validate_yatra_required(self)
         return
 
     ###### ON INSERT : AUTO CREATE JOURNAL ENTRY CHECK ######
