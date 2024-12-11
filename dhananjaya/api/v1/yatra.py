@@ -119,8 +119,7 @@ def get_total_paid_amount(seva_subtype, booking):
         },
         pluck="amount",
     )
-    total_paid_amount = 0
-    total_paid_amount = sum(receipt)
+    total_paid_amount = sum(receipt) if receipt else 0
 
     return total_paid_amount
 
