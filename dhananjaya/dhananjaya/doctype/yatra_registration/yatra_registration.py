@@ -22,6 +22,7 @@ class YatraRegistration(Document):
         donor_name: DF.Data | None
         from_date: DF.Date | None
         preacher: DF.Link | None
+        received_amount: DF.Data | None
         seats: DF.Table[RegistrationSeatDetail]
         seva_subtype: DF.Link
         to_date: DF.Date | None
@@ -59,9 +60,19 @@ class YatraRegistration(Document):
                 f"Duplicates Entry Not Allowed"
             )
     
+    
+    def validate_seats(self):
+        proper_seats = [s for s in self.seats if s.count != 0]
+
+        if not proper_seats:
+            frappe.throw("At least one seat is required")
+        
+        self.seats = proper_seats
+                
     def validate(self):
         self.validate_donor()
         self.validate_duplicate()
+        self.validate_seats()
         seats_map = self.get_seats_map()
         total_amount = 0
         for rs in self.seats:
@@ -97,3 +108,10 @@ class YatraRegistration(Document):
             pluck="name",
         ):
             frappe.db.set_value("Donation Receipt", d, "yatra_registration", None)
+    def on_submit(self):
+        proper_seats = [s for s in self.seats if s.count != 0]
+
+        if not proper_seats:
+            frappe.throw("At least one seat is required")
+        
+        self.seats = proper_seats

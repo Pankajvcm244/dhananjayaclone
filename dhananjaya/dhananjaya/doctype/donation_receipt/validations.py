@@ -71,7 +71,11 @@ def validate_donor(doc):
     if not (doc.donor or doc.donor_creation_request):
         frappe.throw("At Least one of Donor or Donor Creation Request is required.")
     return
+def validate_yatra_required(doc):
+    if frappe.db.get_value("Seva Subtype", doc.seva_subtype, "is_a_yatra") and not doc.yatra_registration:
+        frappe.throw("Yatra Registration is required.")
 
+    return
 
 def validate_cheque_screenshot(doc):
     if doc.payment_method == CHEQUE_MODE and not doc.payment_screenshot:
