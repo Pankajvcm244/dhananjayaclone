@@ -13,7 +13,9 @@ class YatraRegistration(Document):
     from typing import TYPE_CHECKING
 
     if TYPE_CHECKING:
-        from dhananjaya.dhananjaya.doctype.registration_seat_detail.registration_seat_detail import RegistrationSeatDetail
+        from dhananjaya.dhananjaya.doctype.registration_seat_detail.registration_seat_detail import (
+            RegistrationSeatDetail,
+        )
         from frappe.types import DF
 
         amended_from: DF.Link | None
@@ -22,12 +24,18 @@ class YatraRegistration(Document):
         donor_name: DF.Data | None
         from_date: DF.Date | None
         preacher: DF.Link | None
-        received_amount: DF.Data | None
+        received_amount: DF.Currency
         seats: DF.Table[RegistrationSeatDetail]
         seva_subtype: DF.Link
         to_date: DF.Date | None
         total_cost: DF.Currency
     # end: auto-generated types
+
+    @property
+    def received_amount(self):
+        return frappe.db.sql(
+            f'SELECT IFNULL( SUM(amount), 0 ) FROM `tabDonation Receipt` WHERE workflow_state = \'Realized\' AND seva_subtype = "{self.seva_subtype}" AND yatra_registration = "{self.name}"'
+        )[0][0]
 
     def get_seats_map(self):
         sevasubtype_doc = frappe.get_doc("Seva Subtype", self.seva_subtype)
@@ -51,24 +59,20 @@ class YatraRegistration(Document):
         else:
             frappe.throw("At least one of Donor or Donor Creation Request is required")
 
-    
     def validate_duplicate(self):
         seat = [i.seat_type for i in self.seats]
         duplicates = set([s for s in seat if seat.count(s) > 1])
         if duplicates:
-            frappe.throw(
-                f"Duplicates Entry Not Allowed"
-            )
-    
-    
+            frappe.throw(f"Duplicates Entry Not Allowed")
+
     def validate_seats(self):
         proper_seats = [s for s in self.seats if s.count != 0]
 
         if not proper_seats:
             frappe.throw("At least one seat is required")
-        
+
         self.seats = proper_seats
-                
+
     def validate(self):
         self.validate_donor()
         self.validate_duplicate()
@@ -108,10 +112,11 @@ class YatraRegistration(Document):
             pluck="name",
         ):
             frappe.db.set_value("Donation Receipt", d, "yatra_registration", None)
+
     def on_submit(self):
         proper_seats = [s for s in self.seats if s.count != 0]
 
         if not proper_seats:
             frappe.throw("At least one seat is required")
-        
+
         self.seats = proper_seats

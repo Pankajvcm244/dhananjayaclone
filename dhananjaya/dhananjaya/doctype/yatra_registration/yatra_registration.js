@@ -11,11 +11,11 @@ frappe.ui.form.on("Yatra Registration", {
         },
       };
     });
-    frm.set_query("donor_creation_request",  () => {
+    frm.set_query("donor_creation_request", () => {
       return {
         filters: {
           status: "Open",
-          docstatus: 1
+          docstatus: 1,
         },
       };
     });
@@ -24,39 +24,30 @@ frappe.ui.form.on("Yatra Registration", {
     // }
   },
 
-
   onload(frm) {
-    if (!frm.is_new()) {
-      getTotalPaidAmount(frm);
-    }
-   
+    // if (!frm.is_new()) {
+    //   getTotalPaidAmount(frm);
+    // }
   },
-
-
 });
 
-
-function getTotalPaidAmount(frm){
+function getTotalPaidAmount(frm) {
   frappe.call({
-      method: "dhananjaya.api.v1.yatra.get_total_paid_amount",
-      args: {
-        seva_subtype: frm.doc.seva_subtype,
-        booking: frm.doc.name
-          
-      },
-      freeze: true,
-      async: true,
-      callback: function(r) {
-          if(r.message) {
-            console.log(r.message);
-              
-              frm.doc.received_amount = r.message
-          }
-          else {
-            var r = "00"
-            frm.doc.received_amount = r
-          }
+    method: "dhananjaya.api.v1.yatra.get_total_paid_amount",
+    args: {
+      seva_subtype: frm.doc.seva_subtype,
+      booking: frm.doc.name,
+    },
+    freeze: true,
+    async: true,
+    callback: function (r) {
+      if (r.message) {
+        console.log(r.message);
+        frm.doc.received_amount = r.message;
+      } else {
+        var r = "00";
+        frm.doc.received_amount = r;
       }
+    },
   });
-
 }
