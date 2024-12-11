@@ -13,9 +13,7 @@ class YatraRegistration(Document):
     from typing import TYPE_CHECKING
 
     if TYPE_CHECKING:
-        from dhananjaya.dhananjaya.doctype.registration_seat_detail.registration_seat_detail import (
-            RegistrationSeatDetail,
-        )
+        from dhananjaya.dhananjaya.doctype.registration_seat_detail.registration_seat_detail import RegistrationSeatDetail
         from frappe.types import DF
 
         amended_from: DF.Link | None
@@ -80,7 +78,7 @@ class YatraRegistration(Document):
                     JOIN `tabYatra Registration` tyr
                         ON tyr.name = trsd.parent
                     WHERE
-                        tyr.seva_subtype = '{self.seva_subtype}'
+                        tyr.seva_subtype = '{self.seva_subtype.replace("'", "''")}'
                         AND tyr.docstatus = 1
                         AND trsd.seat_type = '{rs.seat_type}' """,
             )[0][0]
