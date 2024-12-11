@@ -113,7 +113,7 @@ def get_total_paid_amount(seva_subtype, booking):
     receipt = frappe.get_all(
         "Donation Receipt",
         filters={
-            "workflow_state": "Received by Cashier",
+            "workflow_state": "Realized",
             "seva_subtype": seva_subtype,
             "yatra_registration": booking,
         },
