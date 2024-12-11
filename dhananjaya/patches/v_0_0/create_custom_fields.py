@@ -38,3 +38,4 @@ fields = {
 
 def execute():
     create_custom_fields(fields, update=True)
+

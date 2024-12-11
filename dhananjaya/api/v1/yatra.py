@@ -66,9 +66,6 @@ def get_seats_status(seva_subtype):
     return seats
 
 
-
-
-
 def get_yatra_bookings(seva_subtype):
     preachers = get_preachers()
 
@@ -111,7 +108,7 @@ def get_yatra_bookings(seva_subtype):
         booking["total_paid_amount"] = get_total_paid_amount(seva_subtype, booking.name)
     return bookings
 
-
+@frappe.whitelist()
 def get_total_paid_amount(seva_subtype, booking):
     receipt = frappe.get_all(
         "Donation Receipt",
@@ -122,9 +119,8 @@ def get_total_paid_amount(seva_subtype, booking):
         },
         pluck="amount",
     )
-    total_paid_amount = 0
-    for i in receipt:
-        total_paid_amount += i
+    total_paid_amount = sum(receipt) if receipt else 0
+
     return total_paid_amount
 
 
