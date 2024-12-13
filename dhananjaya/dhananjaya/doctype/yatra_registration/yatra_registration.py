@@ -13,9 +13,7 @@ class YatraRegistration(Document):
     from typing import TYPE_CHECKING
 
     if TYPE_CHECKING:
-        from dhananjaya.dhananjaya.doctype.registration_seat_detail.registration_seat_detail import (
-            RegistrationSeatDetail,
-        )
+        from dhananjaya.dhananjaya.doctype.registration_seat_detail.registration_seat_detail import RegistrationSeatDetail
         from frappe.types import DF
 
         amended_from: DF.Link | None

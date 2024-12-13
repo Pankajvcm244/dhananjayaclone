@@ -46,6 +46,9 @@ def create_receipt():
     if "print_remarks_on_receipt" in donation:
         doc.print_remarks_on_receipt = donation["print_remarks_on_receipt"]
 
+    if "yatra_registration" in donation:
+        doc.yatra_registration = donation["yatra_registration"]
+
     doc.payment_method = donation["payment_method"]
     doc.amount = donation["amount"]
     if "remarks" in donation:

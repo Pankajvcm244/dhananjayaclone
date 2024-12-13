@@ -125,7 +125,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-12-11 18:31:07.607572",
+ "modified": "2024-12-13 10:50:27.752411",
  "modified_by": "Administrator",
  "module": "Dhananjaya",
  "name": "Yatra Registration",
@@ -147,6 +147,8 @@
    "write": 1
   },
   {
+   "amend": 1,
+   "cancel": 1,
    "create": 1,
    "delete": 1,
    "email": 1,
@@ -157,6 +159,7 @@
    "role": "Yatra Manager",
    "select": 1,
    "share": 1,
+   "submit": 1,
    "write": 1
   }
  ],
