@@ -127,6 +127,7 @@ class DonationReceipt(AccountsController):
         tds_account: DF.Link | None
         user_remarks: DF.Text | None
         yatra_registration: DF.Link | None
+
     # end: auto-generated types
     def autoname(self):
 
@@ -157,7 +158,6 @@ class DonationReceipt(AccountsController):
         # validate_reference_number(self)
         return
 
-    
     def is_kyc_available(self):
         kyc_available = False
         if self.donor:
@@ -336,15 +336,16 @@ class DonationReceipt(AccountsController):
             self.gateway_expense_account = company_detail.gateway_expense_account
 
         ## Setting Cost Center:
-        if not self.cost_center:
-            if self.seva_subtype:
-                seva_subtype_doc = frappe.get_cached_doc(
-                    "Seva Subtype", self.seva_subtype
-                )
-                for c in seva_subtype_doc.cost_centers:
-                    if c.company == self.company:
-                        self.cost_center = c.cost_center
-                        break
+        self.update_accounting_dimensions()
+        # if not self.cost_center:
+        #     if self.seva_subtype:
+        #         seva_subtype_doc = frappe.get_cached_doc(
+        #             "Seva Subtype", self.seva_subtype
+        #         )
+        #         for c in seva_subtype_doc.cost_centers:
+        #             if c.company == self.company:
+        #                 self.cost_center = c.cost_center
+        #                 break
 
     def set_receipt_date(self):
         """
@@ -816,17 +817,17 @@ class DonationReceipt(AccountsController):
         gateway_doc.receipt_created = 1
         gateway_doc.save()
 
-    # def update_accounting_dimensions(self, je_row):
-    #     for dimension in get_accounting_dimensions():
-    #         je_row.update({dimension: self.get(dimension)})
-
-    #     je_row["cost_center"] = self.cost_center
-    #     je_row["project"] = self.project
-
-    #     if not je_row["cost_center"]:
-    #         je_row["cost_center"] = frappe.get_cached_value(
-    #             "Company", self.company, "cost_center"
-    #         )
+    def update_accounting_dimensions(self):
+        DEFAULTS = None
+        if self.seva_subtype:
+            DEFAULTS = frappe.get_doc("Seva Subtype", self.seva_subtype).get(
+                "cost_centers"
+            )
+            DEFAULTS = next((c for c in DEFAULTS if c.company == self.company), None)
+        if DEFAULTS:
+            dimensions = ["cost_center", "project"] + get_accounting_dimensions()
+            for dimension in dimensions:
+                self.update({dimension: DEFAULTS.get(dimension)})
 
     # TODO Update Onchnage
     # COST_CENTER = None

@@ -17,12 +17,16 @@ class SevaSubtype(NestedSet):
     from typing import TYPE_CHECKING
 
     if TYPE_CHECKING:
-        from dhananjaya.dhananjaya.doctype.seva_subtype_cost_center.seva_subtype_cost_center import SevaSubtypeCostCenter
-        from dhananjaya.dhananjaya.doctype.yatra_seat_detail.yatra_seat_detail import YatraSeatDetail
+        from dhananjaya.dhananjaya.doctype.seva_subtype_defaults.seva_subtype_defaults import (
+            SevaSubtypeDefaults,
+        )
+        from dhananjaya.dhananjaya.doctype.yatra_seat_detail.yatra_seat_detail import (
+            YatraSeatDetail,
+        )
         from frappe.types import DF
 
         amount: DF.Currency
-        cost_centers: DF.Table[SevaSubtypeCostCenter]
+        cost_centers: DF.Table[SevaSubtypeDefaults]
         enabled: DF.Check
         from_date: DF.Date | None
         include_in_analysis: DF.Check
@@ -60,14 +64,12 @@ class SevaSubtype(NestedSet):
         self.validate_duplicate()
         self.validate_from_to_dates("from_date", "to_date")
 
-
     def validate_duplicate(self):
         seat = [i.seat_type for i in self.seats]
         duplicates = set([s for s in seat if seat.count(s) > 1])
         if duplicates:
-            frappe.throw(
-                f"Duplicates Entry Not Allowed"
-            )
+            frappe.throw(f"Duplicates Entry Not Allowed")
+
 
 @frappe.whitelist()
 def get_cached_documents():

@@ -97,7 +97,7 @@ after_migrate = "dhananjaya.setup.after_install"
 permission_query_conditions = {
     "Donation Receipt": "dhananjaya.dhananjaya.doctype.donation_receipt.donation_receipt_filter.list",
     "Donor": "dhananjaya.dhananjaya.doctype.donor.donor_filter.list",
-    "Yatra Registration" : "dhananjaya.dhananjaya.doctype.yatra_registration.yatra_registration_filter.list",
+    "Yatra Registration": "dhananjaya.dhananjaya.doctype.yatra_registration.yatra_registration_filter.list",
     "Patron": "dhananjaya.dhananjaya.doctype.patron.patron_filter.list",
     "LLP Preacher": "dhananjaya.dhananjaya.doctype.llp_preacher.llp_preacher_filter.list",
     "Donor Creation Request": "dhananjaya.dhananjaya.doctype.donor_creation_request.donor_creation_request_filter.list",
@@ -107,7 +107,7 @@ permission_query_conditions = {
 has_permission = {
     "Donation Receipt": "dhananjaya.dhananjaya.doctype.donation_receipt.donation_receipt_filter.single",
     "Donor": "dhananjaya.dhananjaya.doctype.donor.donor_filter.single",
-    "Yatra Registration" : "dhananjaya.dhananjaya.doctype.yatra_registration.yatra_registration_filter.single",
+    "Yatra Registration": "dhananjaya.dhananjaya.doctype.yatra_registration.yatra_registration_filter.single",
     "Patron": "dhananjaya.dhananjaya.doctype.patron.patron_filter.single",
     "LLP Preacher": "dhananjaya.dhananjaya.doctype.llp_preacher.llp_preacher_filter.single",
     "Donor Creation Request": "dhananjaya.dhananjaya.doctype.donor_creation_request.donor_creation_request_filter.single",
@@ -251,7 +251,7 @@ scheduler_events = {
 # ]
 
 
-accounting_dimension_doctypes = ["Donation Receipt"]
+accounting_dimension_doctypes = ["Donation Receipt", "Seva Subtype Defaults"]
 
 invoice_doctypes = ["Donation Receipt"]
 

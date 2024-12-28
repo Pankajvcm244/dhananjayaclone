@@ -2,6 +2,12 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Yatra Registration", {
+  setup: function (frm) {
+    frm.ignore_doctypes_on_cancel_all = [
+      "Bank Transaction",
+      "Donation Receipt",
+    ];
+  },
   refresh(frm) {
     frm.set_query("seva_subtype", () => {
       return {

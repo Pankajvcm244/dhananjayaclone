@@ -105,7 +105,7 @@
    "fieldname": "cost_centers",
    "fieldtype": "Table",
    "label": "Cost Centers",
-   "options": "Seva Subtype Cost Center"
+   "options": "Seva Subtype Defaults"
   },
   {
    "default": "0",
@@ -163,7 +163,7 @@
  "index_web_pages_for_search": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2024-12-04 08:45:10.342360",
+ "modified": "2024-12-23 00:04:18.634085",
  "modified_by": "Administrator",
  "module": "Dhananjaya",
  "name": "Seva Subtype",
