@@ -247,6 +247,5 @@ def update_yatra_registration():
          
     yatra_registration.flags.ignore_submit = True
     yatra_registration.validate()
-    print(yatra_registration.get_all_children())
     yatra_registration.flags.ignore_validate_update_after_submit = True
     yatra_registration.save() 
