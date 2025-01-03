@@ -137,11 +137,8 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
-<<<<<<< HEAD
  "modified": "2024-12-31 18:36:37.325058",
-=======
- "modified": "2024-12-31 18:37:32.963668",
->>>>>>> 0166f7f (now in yatra participants are there)
+
  "modified_by": "Administrator",
  "module": "Dhananjaya",
  "name": "Yatra Registration",

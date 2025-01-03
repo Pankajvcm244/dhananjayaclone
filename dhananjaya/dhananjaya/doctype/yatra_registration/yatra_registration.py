@@ -14,11 +14,10 @@ class YatraRegistration(Document):
 
     if TYPE_CHECKING:
         from dhananjaya.dhananjaya.doctype.registration_seat_detail.registration_seat_detail import RegistrationSeatDetail
-<<<<<<< HEAD
-=======
-        from dhananjaya.dhananjaya.doctype.yatra_participant_details.yatra_participant_details import YatraParticipantDetails
->>>>>>> 0166f7f (now in yatra participants are there)
+
         from frappe.types import DF
+        from dhananjaya.dhananjaya.doctype.yatra_participant_details.yatra_participant_details import YatraParticipantDetails
+
 
         amended_from: DF.Link | None
         donor: DF.Link | None
