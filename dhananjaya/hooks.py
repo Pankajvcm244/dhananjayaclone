@@ -174,6 +174,7 @@ scheduler_events = {
         "dhananjaya.dhananjaya.doctype.donation_receipt.tasks.update_last_donation",
         "dhananjaya.dhananjaya.doctype.donation_receipt.tasks.update_patron_calculation",
         "dhananjaya.dhananjaya.doctype.donation_receipt.tasks.clean_dhananjaya_data",
+        "dhananjaya.tasks.auto_cancel_yatra_registration",
     ],
     "cron": {
         "* * * * *": [

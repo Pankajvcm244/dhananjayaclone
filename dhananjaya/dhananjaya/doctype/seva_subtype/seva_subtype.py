@@ -17,15 +17,12 @@ class SevaSubtype(NestedSet):
     from typing import TYPE_CHECKING
 
     if TYPE_CHECKING:
-        from dhananjaya.dhananjaya.doctype.seva_subtype_defaults.seva_subtype_defaults import (
-            SevaSubtypeDefaults,
-        )
-        from dhananjaya.dhananjaya.doctype.yatra_seat_detail.yatra_seat_detail import (
-            YatraSeatDetail,
-        )
+        from dhananjaya.dhananjaya.doctype.seva_subtype_defaults.seva_subtype_defaults import SevaSubtypeDefaults
+        from dhananjaya.dhananjaya.doctype.yatra_seat_detail.yatra_seat_detail import YatraSeatDetail
         from frappe.types import DF
 
         amount: DF.Currency
+        auto_cancel: DF.Int
         cost_centers: DF.Table[SevaSubtypeDefaults]
         enabled: DF.Check
         from_date: DF.Date | None

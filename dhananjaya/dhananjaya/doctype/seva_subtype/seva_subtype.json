@@ -27,7 +27,9 @@
   "column_break_ornx",
   "to_date",
   "seat_details_section",
-  "seats"
+  "seats",
+  "auto_cancellation_days_section",
+  "auto_cancel"
  ],
  "fields": [
   {
@@ -158,12 +160,23 @@
    "fieldname": "seat_details_section",
    "fieldtype": "Section Break",
    "label": "Seat Details"
+  },
+  {
+   "fieldname": "auto_cancellation_days_section",
+   "fieldtype": "Section Break",
+   "label": "Auto Cancellation Days"
+  },
+  {
+   "description": "Yatra registration will be automatically canceled after these days if no receipt is made against the particular Yatra",
+   "fieldname": "auto_cancel",
+   "fieldtype": "Int",
+   "label": "Days"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2024-12-23 00:04:18.634085",
+ "modified": "2025-01-06 18:08:59.676002",
  "modified_by": "Administrator",
  "module": "Dhananjaya",
  "name": "Seva Subtype",
