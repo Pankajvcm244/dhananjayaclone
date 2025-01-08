@@ -189,7 +189,7 @@ scheduler_events = {
         ],
         
         "0 16 * * *" : [
-            "dhananjaya.tasks.auto_cancel_yatra_registration"
+            "dhananjaya.dhananjaya.doctype.yatra_registration.tasks.auto_cancel_yatra_registration"
         ],
     },
 }
