@@ -58,9 +58,17 @@ class SevaSubtype(NestedSet):
         return super().validate_from_to_dates(from_date_field, to_date_field)
 
     def validate(self):
+        self.validate_empty_seats()
         self.validate_duplicate()
         self.validate_from_to_dates("from_date", "to_date")
 
+<<<<<<< HEAD
+=======
+    def validate_empty_seats(self):
+        seat = [i.seat_type for i in self.seats if i.count == 0]
+        if seat:
+            frappe.throw(f"Empty Seats Not Allowed")
+>>>>>>> 0166f7f (now in yatra participants are there)
     def validate_duplicate(self):
         seat = [i.seat_type for i in self.seats]
         duplicates = set([s for s in seat if seat.count(s) > 1])

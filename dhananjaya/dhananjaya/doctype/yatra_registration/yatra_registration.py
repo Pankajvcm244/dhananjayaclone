@@ -14,6 +14,10 @@ class YatraRegistration(Document):
 
     if TYPE_CHECKING:
         from dhananjaya.dhananjaya.doctype.registration_seat_detail.registration_seat_detail import RegistrationSeatDetail
+<<<<<<< HEAD
+=======
+        from dhananjaya.dhananjaya.doctype.yatra_participant_details.yatra_participant_details import YatraParticipantDetails
+>>>>>>> 0166f7f (now in yatra participants are there)
         from frappe.types import DF
 
         amended_from: DF.Link | None
@@ -21,6 +25,7 @@ class YatraRegistration(Document):
         donor_creation_request: DF.Link | None
         donor_name: DF.Data | None
         from_date: DF.Date | None
+        participants: DF.Table[YatraParticipantDetails]
         preacher: DF.Link | None
         received_amount: DF.Currency
         seats: DF.Table[RegistrationSeatDetail]
@@ -57,6 +62,7 @@ class YatraRegistration(Document):
         else:
             frappe.throw("At least one of Donor or Donor Creation Request is required")
 
+
     def validate_duplicate(self):
         seat = [i.seat_type for i in self.seats]
         duplicates = set([s for s in seat if seat.count(s) > 1])
@@ -65,17 +71,21 @@ class YatraRegistration(Document):
 
     def validate_seats(self):
         proper_seats = [s for s in self.seats if s.count != 0]
-
         if not proper_seats:
             frappe.throw("At least one seat is required")
-
         self.seats = proper_seats
 
+    def validate_participants(self):
+        seats = sum(s.count for s in self.seats if s.count != 0)
+        if len(self.participants) > seats:
+           return frappe.throw("Passenger count cannot be greater than seats")
     def validate(self):
         self.validate_donor()
         self.validate_duplicate()
         self.validate_seats()
         seats_map = self.get_seats_map()
+        self.validate_participants()
+
         total_amount = 0
         for rs in self.seats:
             if rs.seat_type not in seats_map:
@@ -112,6 +122,9 @@ class YatraRegistration(Document):
             frappe.db.set_value("Donation Receipt", d, "yatra_registration", None)
 
     def on_submit(self):
+        seats = sum(s.count for s in self.seats if s.count != 0)
+        if len(self.participants) > seats:
+           return frappe.throw("Passenger count cannot be greater than seats")
         proper_seats = [s for s in self.seats if s.count != 0]
 
         if not proper_seats:

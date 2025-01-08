@@ -19,12 +19,10 @@ def get_yatra_details(id):
         "total_bookings": get_total_seats(id) - get_available_seats(id),
         "bookings": get_yatra_bookings(id),
     }
-    status = (get_seats_status(id),)
     return yatra
 
 
 def get_seats_status(seva_subtype):
-    status = {}
     yatra_registration = frappe.get_all(
         "Yatra Registration",
         filters={"seva_subtype": seva_subtype, "docstatus": 1},
@@ -90,6 +88,7 @@ def get_yatra_bookings(seva_subtype):
     seat_costs = get_seat_costs(seva_subtype)
     for booking in bookings:
         booking["seats"] = []
+        booking["participants"] = []
 
         booking_tile = frappe.get_all(
             "Registration Seat Detail",
@@ -99,8 +98,21 @@ def get_yatra_bookings(seva_subtype):
                 "count",
             ],
         )
-        for i in booking_tile:
+        
+        booking["participants"]= frappe.get_all(
+            "Yatra Participant Details" ,
+            filters={"parent": booking.name},
+            fields = [
+                "travelller_name",
+                "gender",
+                "age",
+                "mobile_number" ,
+                "aadhaar_number" ,
+            ]
+        )
+        
 
+        for i in booking_tile:
             seat_total_cost = i.count * seat_costs.get(i.seat_type, 0)
             booking["seats"].append(
                 {"seat_type": i.seat_type, "count": i.count, "cost": seat_total_cost}
@@ -210,3 +222,31 @@ def get_seat_costs(seva_subtype):
     for seat in seats:
         cost[seat.seat_type] = seat.cost
     return cost
+
+
+@frappe.whitelist()
+def update_yatra_registration():
+    data = json.loads(frappe.request.data)
+    yatra_registration =  frappe.get_doc("Yatra Registration", data["name"])
+    yatra_registration.participants = []
+    yatra_registration.seats = []
+
+    for i in data.get("seats"):
+        yatra_registration.append("seats", {"seat_type": i.get("seat_type"), "count": i.get("count")})
+    for i in data.get("participants"):
+        yatra_registration.append(
+            "participants",
+            {
+                "travelller_name": i.get("travelller_name"),
+                "gender": i.get("gender"),
+                "age": i.get("age"),
+                "mobile_number": i.get("mobile_number"),
+                "aadhaar_number": i.get("aadhaar_number"),
+            },
+        )   
+         
+    yatra_registration.flags.ignore_submit = True
+    yatra_registration.validate()
+    print(yatra_registration.get_all_children())
+    yatra_registration.flags.ignore_validate_update_after_submit = True
+    yatra_registration.save() 
