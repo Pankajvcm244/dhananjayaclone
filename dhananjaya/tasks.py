@@ -33,16 +33,16 @@ def auto_cancel_yatra_registration():
             
             fields=["name" , "donor_name"],
         ):  
-            receipt = frappe.get_all(
+            if not frappe.db.exists(
                 "Donation Receipt",
-                filters={
-            "seva_subtype": i.name,
-            "yatra_registration": j.name,
-            "docstatus": ["!=", 2],
+                {
+                    "seva_subtype": i.name,
+                    "yatra_registration": j.name,
+                    "docstatus": ["!=", 2],
+                    "workflow_state" : ['!=', 'Trashed'],
                 },
-                fields=["name"],
-            )
-            if not receipt:            
-                frappe.db.set_value("Yatra Registration", j.name, "docstatus", 2)
+            ):
+                frappe.get_doc("Yatra Registration", j.name).cancel()
+        
     frappe.db.commit()
     return
