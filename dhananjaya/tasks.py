@@ -3,6 +3,7 @@ from warnings import filters
 
 from attr import field
 import frappe
+from frappe.model import workflow
 def auto_cancel_yatra_registration():
    
     for i in  frappe.get_all(
@@ -10,7 +11,7 @@ def auto_cancel_yatra_registration():
         filters={
             "is_a_yatra": 1, 
             "enabled": 1,
-            "from_date": ["<", datetime.now().strftime("%Y-%m-%d")]
+            # "from_date": ["<", datetime.now().strftime("%Y-%m-%d")]
             },
         fields=["name" , "auto_cancel"]
     ):
@@ -30,19 +31,18 @@ def auto_cancel_yatra_registration():
                 "docstatus": 1,
             },
             
-            fields=["name"]
-        ):
+            fields=["name" , "donor_name"],
+        ):  
             receipt = frappe.get_all(
                 "Donation Receipt",
                 filters={
             "seva_subtype": i.name,
             "yatra_registration": j.name,
-            "docstatus": 1
+            "docstatus": ["!=", 2],
                 },
-            limit_page_length=1,    
-                pluck="name",
+                fields=["name"],
             )
-            if not receipt:
+            if not receipt:            
                 frappe.db.set_value("Yatra Registration", j.name, "docstatus", 2)
     frappe.db.commit()
     return

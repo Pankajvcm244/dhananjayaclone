@@ -174,7 +174,6 @@ scheduler_events = {
         "dhananjaya.dhananjaya.doctype.donation_receipt.tasks.update_last_donation",
         "dhananjaya.dhananjaya.doctype.donation_receipt.tasks.update_patron_calculation",
         "dhananjaya.dhananjaya.doctype.donation_receipt.tasks.clean_dhananjaya_data",
-        "dhananjaya.tasks.auto_cancel_yatra_registration",
     ],
     "cron": {
         "* * * * *": [
@@ -187,6 +186,10 @@ scheduler_events = {
         # Every 4 hours with offset by 12 minutes
         "13 */4 * * *": [
             "dhananjaya.dhananjaya.doctype.donation_receipt.tasks.update_donation_calculation"
+        ],
+        
+        "0 16 * * *" : [
+            "dhananjaya.tasks.auto_cancel_yatra_registration"
         ],
     },
 }
