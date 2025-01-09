@@ -20,7 +20,9 @@
   "total_cost",
   "received_amount",
   "section_break_hgzh",
-  "seats"
+  "seats",
+  "section_break_ijae",
+  "participants"
  ],
  "fields": [
   {
@@ -120,6 +122,16 @@
    "is_virtual": 1,
    "label": "Total Paid",
    "read_only": 1
+  },
+  {
+   "fieldname": "section_break_ijae",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "participants",
+   "fieldtype": "Table",
+   "label": "Participants",
+   "options": "Yatra Participant Details"
   }
  ],
  "index_web_pages_for_search": 1,
