@@ -45,6 +45,8 @@ def create_receipt():
     ## Print Reference ID
     if "print_remarks_on_receipt" in donation:
         doc.print_remarks_on_receipt = donation["print_remarks_on_receipt"]
+    if "yatra_registration" in donation:
+        doc.yatra_registration = donation["yatra_registration"]    
 
     if "yatra_registration" in donation:
         doc.yatra_registration = donation["yatra_registration"]
