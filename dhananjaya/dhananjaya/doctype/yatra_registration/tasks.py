@@ -4,7 +4,9 @@ from warnings import filters
 from attr import field
 import frappe
 from frappe.model import workflow
+
 def auto_cancel_yatra_registration():
+    return
    
     for i in  frappe.get_all(
         "Seva Subtype",

@@ -3,7 +3,6 @@
 
 # import frappe
 from hmac import new
-from dhananjaya.api.v1.yatra import get_available_seats
 import frappe
 from frappe.model import document
 from frappe.model.document import Document
@@ -141,19 +140,37 @@ class YatraRegistration(Document):
             new_seats_map[i.seat_type] = i.count
         for seat, new_count in new_seats_map.items():
             previous_count = previous_seats_map.get(seat, 0)
-
-            if new_count == previous_count:
+            if new_count <= previous_count:
                 continue
-
-            if new_count < previous_count:
-                continue
-
             extra_new_seats = new_count - previous_count
-            available_seats = get_available_seats(self.seva_subtype)
-
-            if available_seats < extra_new_seats:
-                 frappe.throw(
-                        f"Only {available_seats} seats are available for {self.seva_subtype}."
-                    )
+            get_available_seats(self.seva_subtype  , seat , extra_new_seats)
         if len(self.participants or []) > sum(s.count for s in self.seats if s.count != 0):
-           return frappe.throw("Passenger count cannot be greater than seats")            
+           return frappe.throw("Passenger count cannot be greater than seats") 
+       
+def get_available_seats(seva_subtype , seat , count):
+      seats_map = get_seats_map(seva_subtype)
+      booked_seats = frappe.db.sql(
+          f"""SELECT 
+                  ifnull(sum(`count`),0)
+              FROM `tabRegistration Seat Detail` trsd
+              JOIN `tabYatra Registration` tyr
+                  ON tyr.name = trsd.parent
+              WHERE
+                  tyr.seva_subtype = '{seva_subtype.replace("'", "''")}'
+                  AND tyr.docstatus = 1
+                  AND trsd.seat_type = '{seat}' """,
+      )[0][0]
+      if (booked_seats + count) > seats_map[seat].count:
+                frappe.throw(
+                    f"Only {seats_map[seat].count - booked_seats} for category : {seat} are available for {seva_subtype}"
+                ) 
+      
+      return              
+    
+    
+def get_seats_map(seva_subtype):
+        sevasubtype_doc = frappe.get_doc("Seva Subtype", seva_subtype)
+        seats_map = {}
+        for s in sevasubtype_doc.seats:
+            seats_map[s.seat_type] = frappe._dict(count=s.count, cost=s.cost)
+        return seats_map        

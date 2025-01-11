@@ -89,7 +89,8 @@ def get_yatra_bookings(seva_subtype):
     for booking in bookings:
         booking["seats"] = []
         booking["participants"] = []
-
+        booking["total_cost"] =  get_total_payble_amount(seva_subtype, booking.name)
+        
         booking_tile = frappe.get_all(
             "Registration Seat Detail",
             filters={"parent": booking.name},
@@ -119,6 +120,25 @@ def get_yatra_bookings(seva_subtype):
             )
         booking["total_paid_amount"] = get_total_paid_amount(seva_subtype, booking.name)
     return bookings
+
+def get_seats_map(seva_subtype):
+        sevasubtype_doc = frappe.get_doc("Seva Subtype", seva_subtype)
+        seats_map = {}
+        for s in sevasubtype_doc.seats:
+            seats_map[s.seat_type] = frappe._dict(count=s.count, cost=s.cost)
+        return seats_map
+def get_total_payble_amount(seva_subtype, booking):
+    seats_map = get_seats_map(seva_subtype)
+    total_amount = 0
+    seats =  frappe.get_doc("Yatra Registration", booking).seats
+    for rs in seats:
+            if rs.seat_type not in seats_map:
+                frappe.throw(
+                    f"Seat Type : {rs.seat_type} is not available for {seva_subtype}"
+                )
+            total_amount = total_amount + rs.count * seats_map[rs.seat_type].cost
+
+    return total_amount
 
 @frappe.whitelist()
 def get_total_paid_amount(seva_subtype, booking):
@@ -244,5 +264,19 @@ def update_yatra_registration():
                 "aadhaar_number": i.get("aadhaar_number"),
             },
         )  
-    yatra_registration.save()     
-       
+    yatra_registration.save()
+    yatra_registration = frappe.get_doc("Yatra Registration", data["name"])
+    seats_map = get_seats_map(yatra_registration.seva_subtype)  
+    total_amount = 0
+    seats =  yatra_registration.seats
+    for rs in seats:
+            if rs.seat_type not in seats_map:
+                frappe.throw(
+                    f"Seat Type : {rs.seat_type} is not available for {yatra_registration.seva_subtype}"
+                )
+            total_amount = total_amount + rs.count * seats_map[rs.seat_type].cost
+
+    yatra_registration.total_cost = total_amount 
+    yatra_registration.flags.ignore_submit = True
+    yatra_registration.flags.ignore_validate_update_after_submit = True
+    yatra_registration.save() 
