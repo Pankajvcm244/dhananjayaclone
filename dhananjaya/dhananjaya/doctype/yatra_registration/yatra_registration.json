@@ -22,6 +22,7 @@
   "section_break_hgzh",
   "seats",
   "section_break_ijae",
+  "column_break_zmte",
   "participants"
  ],
  "fields": [
@@ -107,10 +108,12 @@
    "read_only": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "section_break_hgzh",
    "fieldtype": "Section Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "seats",
    "fieldtype": "Table",
    "label": "Seats",
@@ -124,20 +127,27 @@
    "read_only": 1
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "section_break_ijae",
    "fieldtype": "Section Break"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "participants",
    "fieldtype": "Table",
    "label": "Participants",
    "options": "Yatra Participant Details"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "column_break_zmte",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-01-08 16:34:48.323935",
+ "modified": "2025-01-11 08:52:30.603815",
  "modified_by": "Administrator",
  "module": "Dhananjaya",
  "name": "Yatra Registration",

@@ -2,7 +2,10 @@
 # For license information, please see license.txt
 
 # import frappe
+from hmac import new
+from dhananjaya.api.v1.yatra import get_available_seats
 import frappe
+from frappe.model import document
 from frappe.model.document import Document
 
 
@@ -14,10 +17,8 @@ class YatraRegistration(Document):
 
     if TYPE_CHECKING:
         from dhananjaya.dhananjaya.doctype.registration_seat_detail.registration_seat_detail import RegistrationSeatDetail
-
-        from frappe.types import DF
         from dhananjaya.dhananjaya.doctype.yatra_participant_details.yatra_participant_details import YatraParticipantDetails
-
+        from frappe.types import DF
 
         amended_from: DF.Link | None
         donor: DF.Link | None
@@ -130,3 +131,29 @@ class YatraRegistration(Document):
             frappe.throw("At least one seat is required")
 
         self.seats = proper_seats
+    def before_update_after_submit(self):
+        document = frappe.get_doc(
+            "Yatra Registration", self.name
+        )
+        previous_seats_map = {seat.seat_type: seat.count for seat in document.seats}
+        new_seats_map = {seat.seat_type: seat.count for seat in self.seats}
+        for i in self.seats:
+            new_seats_map[i.seat_type] = i.count
+        for seat, new_count in new_seats_map.items():
+            previous_count = previous_seats_map.get(seat, 0)
+
+            if new_count == previous_count:
+                continue
+
+            if new_count < previous_count:
+                continue
+
+            extra_new_seats = new_count - previous_count
+            available_seats = get_available_seats(self.seva_subtype)
+
+            if available_seats < extra_new_seats:
+                 frappe.throw(
+                        f"Only {available_seats} seats are available for {self.seva_subtype}."
+                    )
+        if len(self.participants or []) > sum(s.count for s in self.seats if s.count != 0):
+           return frappe.throw("Passenger count cannot be greater than seats")            

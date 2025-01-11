@@ -243,9 +243,6 @@ def update_yatra_registration():
                 "mobile_number": i.get("mobile_number"),
                 "aadhaar_number": i.get("aadhaar_number"),
             },
-        )   
-         
-    yatra_registration.flags.ignore_submit = True
-    yatra_registration.validate()
-    yatra_registration.flags.ignore_validate_update_after_submit = True
-    yatra_registration.save() 
+        )  
+    yatra_registration.save()     
+       
